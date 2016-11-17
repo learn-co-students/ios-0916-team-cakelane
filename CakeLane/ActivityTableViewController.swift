@@ -38,7 +38,7 @@ class ActivityTableViewController: UITableViewController {
             self.activities = newActivites
             self.tableView.reloadData()
         })
-
+        SlackAPIClient.getUserInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
