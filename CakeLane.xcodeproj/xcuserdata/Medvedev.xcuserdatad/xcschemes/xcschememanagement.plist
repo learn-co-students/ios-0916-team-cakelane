@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>slackOAuth.xcscheme</key>
+		<key>CakeLane.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>E5041BC61DDB53B6009E4078</key>
+		<key>1BDF62341DDD06C400C3D12E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
