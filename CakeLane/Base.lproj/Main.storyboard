@@ -12,7 +12,7 @@
         <!--Activity Table View Controller-->
         <scene sceneID="nXd-In-qHN">
             <objects>
-                <tableViewController id="rX8-sh-ot7" customClass="ActivityTableViewController" customModule="FireBaseTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="rX8-sh-ot7" customClass="ActivityTableViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="jM4-Ig-W3d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -63,7 +63,7 @@
         <!--View Controller-->
         <scene sceneID="eNY-FY-vK9">
             <objects>
-                <viewController id="yI5-9V-7wn" customClass="ViewController" customModule="FireBaseTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yI5-9V-7wn" customClass="ViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X1A-OW-dZS"/>
                         <viewControllerLayoutGuide type="bottom" id="TOU-aM-Peq"/>
@@ -95,6 +95,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="dateTextfield:" destination="yI5-9V-7wn" eventType="editingDidBegin" id="RpZ-g5-T0d"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCz-Wf-4ol">
                                 <rect key="frame" x="91" y="425" width="176" height="30"/>

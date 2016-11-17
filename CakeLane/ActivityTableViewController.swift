@@ -21,9 +21,9 @@ class ActivityTableViewController: UITableViewController {
 //        let activitiesRef = FIRDatabase.database().reference(withPath: "activities")
         let databaseRef = FIRDatabase.database().reference()
         let users = databaseRef.child("users")
-        let newUser = users.child("SlackUserID123434")
-        let dictionary = ["My activities":["ActID1","ActID6"], "Attending":["ActID5","ActID8"]]
-        let userDictionary = ["name": "Henry","Activities": dictionary] as [String : Any]
+        let newUser = users.child("slackUserID123434")
+        let dictionary = ["activitiesCreated":[], "attendedActivities":[]]
+        let userDictionary = ["name": "Henry","activities": dictionary] as [String : Any]
         newUser.setValue(userDictionary)
         
         // Mark: - How to retrieve information from firebase
