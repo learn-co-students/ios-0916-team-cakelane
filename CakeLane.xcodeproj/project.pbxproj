@@ -17,6 +17,10 @@
 		A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */; };
 		A2ECAA801DDD1866000E3CC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7F1DDD1866000E3CC6 /* ViewController.swift */; };
 		A2ECAA841DDD19F4000E3CC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2ECAA831DDD19F4000E3CC6 /* GoogleService-Info.plist */; };
+		E5EE90A21DDE4F7B00A344A5 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A11DDE4F7B00A344A5 /* Secrets.swift */; };
+		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
+		E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */; };
+		E5EE90A81DDE777C00A344A5 /* SlackDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A71DDE777C00A344A5 /* SlackDataStore.swift */; };
 		EE688E4B4700EA0CCBD857F7 /* Pods_CakeLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +40,10 @@
 		A2ECAA7F1DDD1866000E3CC6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A2ECAA831DDD19F4000E3CC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C41D7E374498749BF12BE214 /* Pods-CakeLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CakeLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CakeLane/Pods-CakeLane.debug.xcconfig"; sourceTree = "<group>"; };
+		E5EE90A11DDE4F7B00A344A5 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E5EE90A71DDE777C00A344A5 /* SlackDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,12 +84,16 @@
 				A2ECAA7F1DDD1866000E3CC6 /* ViewController.swift */,
 				A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */,
 				A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */,
+				E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */,
+				E5EE90A11DDE4F7B00A344A5 /* Secrets.swift */,
+				E5EE90A71DDE777C00A344A5 /* SlackDataStore.swift */,
+				75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */,
+				E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */,
 				1BDF623C1DDD06C500C3D12E /* Main.storyboard */,
 				1BDF62421DDD06C500C3D12E /* Assets.xcassets */,
 				1BDF62441DDD06C500C3D12E /* LaunchScreen.storyboard */,
 				1BDF62471DDD06C500C3D12E /* Info.plist */,
 				1BDF623F1DDD06C500C3D12E /* CakeLane.xcdatamodeld */,
-				75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */,
 			);
 			path = CakeLane;
 			sourceTree = "<group>";
@@ -227,8 +239,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* ViewController.swift in Sources */,
 				A2ECAA7B1DDD17A9000E3CC6 /* ActivityTableViewController.swift in Sources */,
+				E5EE90A81DDE777C00A344A5 /* SlackDataStore.swift in Sources */,
+				E5EE90A21DDE4F7B00A344A5 /* Secrets.swift in Sources */,
+				E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */,
 				1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */,
 				A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */,
 				A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */,
