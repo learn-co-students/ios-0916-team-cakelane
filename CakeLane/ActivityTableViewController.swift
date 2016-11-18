@@ -26,8 +26,8 @@ class ActivityTableViewController: UITableViewController {
         let userDictionary = ["name": "Henry","Activities": dictionary] as [String : Any]
         newUser.setValue(userDictionary)
         
-        // Mark: - How to retrieve information from firebase
-         activitiesRef.observe(.value, with: { (snapshot) in
+        // MARK: - How to retrieve information from firebase
+        self.activitiesRef.observe(.value, with: { (snapshot) in
             var newActivites = [Activity]()
             
             for activity in snapshot.children {
@@ -36,9 +36,16 @@ class ActivityTableViewController: UITableViewController {
             }
             
             self.activities = newActivites
+            
             self.tableView.reloadData()
+            
         })
-
+        
+        SlackAPIClient.getUserInfo { userInfo in
+            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+            dump(userInfo)
+            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

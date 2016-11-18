@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ntv-NG-Fd6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,7 +12,7 @@
         <!--Activity Table View Controller-->
         <scene sceneID="nXd-In-qHN">
             <objects>
-                <tableViewController id="rX8-sh-ot7" customClass="ActivityTableViewController" customModule="FireBaseTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="activity-table-view-controller" id="rX8-sh-ot7" customClass="ActivityTableViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="jM4-Ig-W3d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,10 +60,10 @@
             </objects>
             <point key="canvasLocation" x="1160.8" y="88.605697151424295"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Activity Controller-->
         <scene sceneID="eNY-FY-vK9">
             <objects>
-                <viewController id="yI5-9V-7wn" customClass="ViewController" customModule="FireBaseTesting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="add-activity-view-controller" id="yI5-9V-7wn" customClass="AddActivityController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X1A-OW-dZS"/>
                         <viewControllerLayoutGuide type="bottom" id="TOU-aM-Peq"/>
@@ -95,6 +95,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="dateTextfield:" destination="yI5-9V-7wn" eventType="editingDidBegin" id="upl-H9-ijM"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCz-Wf-4ol">
                                 <rect key="frame" x="91" y="425" width="176" height="30"/>
@@ -117,10 +120,31 @@
             </objects>
             <point key="canvasLocation" x="2018.4000000000001" y="87.706146926536732"/>
         </scene>
+        <!--App Controller-->
+        <scene sceneID="WI1-gf-cJQ">
+            <objects>
+                <viewController id="B1N-bQ-mRQ" customClass="AppController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wvV-Ji-r7g"/>
+                        <viewControllerLayoutGuide type="bottom" id="eKf-6a-xST"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LXy-1p-AXf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="LXy-1p-AXf" id="zIs-SM-TzZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GNl-Uy-0qg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-654" y="-198"/>
+        </scene>
         <!--Activities-->
         <scene sceneID="HG8-J6-bTa">
             <objects>
-                <navigationController title="Activities" automaticallyAdjustsScrollViewInsets="NO" id="Ntv-NG-Fd6" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="activity-navigation-view-controller" title="Activities" automaticallyAdjustsScrollViewInsets="NO" id="Ntv-NG-Fd6" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XNh-nK-UyQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -134,6 +158,66 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MTH-lt-yPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="221.59999999999999" y="88.605697151424295"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="7Fw-PL-kW3">
+            <objects>
+                <viewController storyboardIdentifier="login-view-controller" id="ELh-lF-fEi" customClass="LoginViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O6z-cN-yeg"/>
+                        <viewControllerLayoutGuide type="bottom" id="BVq-qL-KCD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3bB-gu-5M8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZ5-Bq-Kcg">
+                                <rect key="frame" x="127" y="582" width="120" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign in with Slack"/>
+                                <connections>
+                                    <action selector="signInWithSlackButtonTapped:" destination="ELh-lF-fEi" eventType="touchUpInside" id="OR6-o7-oAV"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Access Token:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfg-7l-r7I">
+                                <rect key="frame" x="16" y="256" width="167" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="blank" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVo-AR-dCi">
+                                <rect key="frame" x="181" y="256" width="178" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Team ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etX-Bq-CuE">
+                                <rect key="frame" x="16" y="301" width="157" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="blank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfs-Im-tzu">
+                                <rect key="frame" x="181" y="301" width="178" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="accessToken" destination="zVo-AR-dCi" id="iV8-Pe-wSS"/>
+                        <outlet property="teamID" destination="Nfs-Im-tzu" id="Tfj-Ef-Ldm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J5W-MM-Eye" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="222" y="-677"/>
         </scene>
     </scenes>
 </document>
