@@ -34,10 +34,14 @@ class ViewController: UIViewController , UITextFieldDelegate{
     @IBAction func saveButton(_ sender: Any) {
         // create an activity
         
-        let randomID = UUID().uuidString
         guard let unwrappedName = self.activityName.text else {return}
         let owner = self.activityOwner.text ?? ""
-        let date = self.activityDate.text ?? ""
+        var date = ""
+        if date == "" {
+            date = String(describing: Date())
+        }else{
+            date = self.activityDate.text ?? ""
+        }
         let newActivity = Activity(owner: owner, name: unwrappedName, date: date)
         let addedActivity = self.databaseReference.child("activities").childByAutoId()
         let key = addedActivity.key
@@ -45,11 +49,13 @@ class ViewController: UIViewController , UITextFieldDelegate{
         
         // add activity with its ID to the user
         
-        let newactivity = [randomID:[key,date]]
+        let newactivity = [key:date]
         self.databaseReference.child("users").child("slackUserID123434").child("activities").child("activitiesCreated").updateChildValues(newactivity)
         dismiss(animated: true, completion: nil)
         
     }
+    
+    // MARK: - add date picker to the Date field
     
     @IBAction func dateTextfield(_ sender: UITextField) {
         
