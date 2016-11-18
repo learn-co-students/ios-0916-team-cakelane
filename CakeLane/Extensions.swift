@@ -8,6 +8,17 @@
 
 import Foundation
 
+extension Notification.Name {
+    static let closeSafariVC = Notification.Name("close-safari-view-controller")
+    static let closeLoginVC = Notification.Name("close-login-view-controller")
+    static let closeActivitiesTVC = Notification.Name("close-activity-table-view-controller")
+}
+
+//// extension to close SafariVC
+//extension Notification.Name {
+//    static let closeSafariVC = Notification.Name(rawValue: "close safari")
+//}
+
 extension URL {
     func getQueryItemValue(named name: String) -> String? {
         

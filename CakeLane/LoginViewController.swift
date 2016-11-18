@@ -58,7 +58,7 @@ class LoginViewController: UIViewController {
                 
                 // store token in SlackDataStore singleton
                 SlackDataStore.sharedInstance.token = token
-                
+                NotificationCenter.default.post(name: .closeLoginVC, object: self)
                 OperationQueue.main.addOperation {
                     self.accessToken.text = SlackDataStore.sharedInstance.token
                 }

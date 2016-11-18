@@ -68,8 +68,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-// extension to close SafariVC
-extension Notification.Name {
-    static let closeSafariVC = Notification.Name(rawValue: "close safari")
-}
-
