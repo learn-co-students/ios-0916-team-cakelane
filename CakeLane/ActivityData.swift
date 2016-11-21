@@ -16,9 +16,10 @@ struct Activity {
     var name: String
     var owner: String
     var date: String
+// var description: String
 //    var location: String
-//    var time: String
 //    var attendees: [String]
+// var image: UIImage?
     let reference : FIRDatabaseReference?
    
     // Mark: - initializer for activity object
