@@ -9,9 +9,10 @@
 import UIKit
 import Firebase
 
-class AddActivityController: UIViewController, UITextFieldDelegate {
+class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var databaseReference = FIRDatabase.database().reference()
+    let imagePicker = UIImagePickerController()
     
     @IBOutlet weak var activityName: UITextField!
     
@@ -19,8 +20,16 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var activityDate: UITextField!
     
+    @IBOutlet weak var activityLocation: UITextField!
+    
+    @IBOutlet weak var descriptionActivity: UITextView!
+   
+    @IBOutlet weak var activityImage: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        imagePicker.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -31,6 +40,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     
     
     // Mark: - create an activity on firebase using textfield's information
+    
     @IBAction func saveButton(_ sender: Any) {
         // create an activity
         
@@ -76,6 +86,47 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
         
     }
     
+    // MARK: - Add Cancel Button
     
+    @IBAction func cancelButton(_ sender: Any) {
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func addImageButton(_ sender: Any) {
+        
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+        
+    }
+    
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        var newImage: UIImage
+        if let possibleImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            newImage = possibleImage
+        } else {
+            return
+        }
+        OperationQueue.main.addOperation {
+            self.activityImage.contentMode = .scaleToFill
+            self.activityImage.image = newImage
+        }
+  
+        dismiss(animated: true, completion: nil)
+    }
+  
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+  
 }
 

@@ -34,13 +34,14 @@ class ActivityTableViewController: UITableViewController {
             for activity in snapshot.children {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
                 newActivites.append(item)
-                self.activities = self.sortedActivities(newActivites)
             }
-        })
-        OperationQueue.main.addOperation {
+            self.activities = self.sortedActivities(newActivites)
+            OperationQueue.main.addOperation {
+                
+                self.tableView.reloadData()
+            }
             
-            self.tableView.reloadData()
-        }
+        })
         
         
         SlackAPIClient.getUserId { userInfo in
