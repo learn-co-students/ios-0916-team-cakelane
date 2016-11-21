@@ -33,10 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let sourceAppKey = options[UIApplicationOpenURLOptionsKey.sourceApplication] {
             
             if (String(describing: sourceAppKey) == "com.apple.SafariViewService") {
-                
-                let code = url.getQueryItemValue(named: "code")
-                
-                NotificationCenter.default.post(name: .closeSafariVC, object: code)
+                DispatchQueue.main.async {
+                    let code = url.getQueryItemValue(named: "code")
+                    
+                    NotificationCenter.default.post(name: .closeSafariVC, object: code)
+                }
                 return true
             }
         }

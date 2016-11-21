@@ -25,9 +25,10 @@ class ActivityTableViewController: UITableViewController {
         let dictionary = ["My activities":["ActID1","ActID6"], "Attending":["ActID5","ActID8"]]
         let userDictionary = ["name": "Henry","Activities": dictionary] as [String : Any]
         newUser.setValue(userDictionary)
-        
+        print("A")
         // MARK: - How to retrieve information from firebase
         self.activitiesRef.observe(.value, with: { (snapshot) in
+            
             var newActivites = [Activity]()
             
             for activity in snapshot.children {
@@ -37,7 +38,10 @@ class ActivityTableViewController: UITableViewController {
             
             self.activities = newActivites
             
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                print("B")
+            }
             
         })
         

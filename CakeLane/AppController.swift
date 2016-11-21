@@ -18,9 +18,11 @@ class AppController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DispatchQueue.main.async {
+            self.loadInitialViewController()
+            self.addNotificationObservers()
+        }
         
-        loadInitialViewController()
-        addNotificationObservers()
         
     }
     

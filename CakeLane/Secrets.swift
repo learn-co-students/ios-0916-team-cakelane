@@ -10,5 +10,5 @@ import Foundation
 
 struct Secrets {
     static let clientID = "102008071409.104940225778"
-    static let clientSecret = "5bfc451d55590e99c3cdad257e98c455"
+    static let clientSecret = "65fa9161a17255cbbe28a547b67f1205"
 }

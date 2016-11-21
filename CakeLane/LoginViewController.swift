@@ -33,7 +33,9 @@ class LoginViewController: UIViewController {
         let url = URL(string: urlString)!
         
         self.safariViewController = SFSafariViewController(url: url)
-        present(self.safariViewController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(self.safariViewController, animated: true, completion: nil)
+        }
         
     }
     
@@ -66,7 +68,9 @@ class LoginViewController: UIViewController {
             }.resume()
             
         }
-        safariViewController.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.safariViewController.dismiss(animated: true, completion: nil)
+        }
     }
     
 }
