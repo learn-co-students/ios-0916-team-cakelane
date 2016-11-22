@@ -16,6 +16,7 @@ class ActivityTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Mark: - example of how to create child on firebase
         
 //        let activitiesRef = FIRDatabase.database().reference(withPath: "activities")
@@ -25,7 +26,7 @@ class ActivityTableViewController: UITableViewController {
         let dictionary = ["My activities":["ActID1","ActID6"], "Attending":["ActID5","ActID8"]]
         let userDictionary = ["name": "Henry","Activities": dictionary] as [String : Any]
         newUser.setValue(userDictionary)
-        print("A")
+        
         // MARK: - How to retrieve information from firebase
         self.activitiesRef.observe(.value, with: { (snapshot) in
             
@@ -40,7 +41,6 @@ class ActivityTableViewController: UITableViewController {
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-                print("B")
             }
             
         })

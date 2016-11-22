@@ -24,10 +24,12 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/NSData+zlib (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
+  - Locksmith (3.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - Firebase/Database
+  - Locksmith
 
 SPEC CHECKSUMS:
   Alamofire: e266cf991b933498df791e645e0d8ac294492153
@@ -39,7 +41,8 @@ SPEC CHECKSUMS:
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
 
-PODFILE CHECKSUM: a394fbc12befe946b12699d9b7fa937a574a816d
+PODFILE CHECKSUM: 40c08a53fd5f245726b6da61c0dd14270a8c6a08
 
 COCOAPODS: 1.1.1

@@ -11,6 +11,7 @@ import SafariServices
 
 class LoginViewController: UIViewController {
     
+    // TODO: DELETE token & id labels -> make legit signup/login window
     @IBOutlet weak var accessToken: UILabel!
     @IBOutlet weak var teamID: UILabel!
     var safariViewController: SFSafariViewController!
@@ -27,17 +28,13 @@ class LoginViewController: UIViewController {
         let baseURL = "https://slack.com/oauth/"
         let path = "authorize"
         let query = "?client_id=\(Secrets.clientID)&scope=identity.basic"
-        let scope = "&scope=\"identify,read,post,client\""
         
-        let urlString = baseURL + path + query + scope
+        let urlString = baseURL + path + query
         
         let url = URL(string: urlString)!
         
         self.safariViewController = SFSafariViewController(url: url)
-        DispatchQueue.main.async {
-            self.present(self.safariViewController, animated: true, completion: nil)
-        }
-        
+        self.present(self.safariViewController, animated: true, completion: nil)
     }
     
     func redirectFromSlack(_ notification: Notification) {
@@ -45,7 +42,7 @@ class LoginViewController: UIViewController {
         // NOTE: Use temporary code received from Slack to request access token
         let code = notification.object as! String
         
-        let baseURL = "https://slack.com/appi/oauth.access"
+        let baseURL = "https://slack.com/api/oauth.access"
         let query = "?client_id=\(Secrets.clientID)&client_secret=\(Secrets.clientSecret)&code=\(code)"
         var request = URLRequest(url: URL(string: baseURL + query)!)
         request.httpMethod = "POST"
@@ -59,20 +56,16 @@ class LoginViewController: UIViewController {
                 print(json)
                 let token = json["access_token"] as! String
                 
-                // store token in SlackDataStore singleton
-                SlackDataStore.sharedInstance.token = token
-                NotificationCenter.default.post(name: .closeLoginVC, object: self)
-                OperationQueue.main.addOperation {
-                    self.accessToken.text = SlackDataStore.sharedInstance.token
-                }
-                
-            }.resume()
+                // save SlackAccount uid using UserDefaults
+                let defaults = UserDefaults.standard
+                defaults.setValue(token, forKey: "SlackToken")
+                defaults.synchronize()
             
-        }
-        DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .closeLoginVC, object: self)
+            }.resume()
             self.safariViewController.dismiss(animated: true, completion: nil)
         }
     }
-    
+
 }
 

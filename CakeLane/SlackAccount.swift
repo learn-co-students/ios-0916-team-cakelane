@@ -9,13 +9,6 @@
 import Foundation
 import Locksmith
 
-class SlackDataStore {
-    static let sharedInstance = SlackDataStore()
-    private init() {}
-    
-    var uid: String?
-}
-
 struct SlackAccount: CreateableSecureStorable, GenericPasswordSecureStorable {
     let userID: String
     let accessToken: String
