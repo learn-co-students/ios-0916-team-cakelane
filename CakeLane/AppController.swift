@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class AppController: UIViewController {
 
     @IBOutlet weak var containerView: UIView!
     var actingViewController: UIViewController!
-    var token = SlackDataStore.sharedInstance.token
+    var token: String?
     
     // MARK: View lifecycle
     
@@ -21,14 +22,15 @@ class AppController: UIViewController {
         
         loadInitialViewController()
         addNotificationObservers()
-        
     }
     
     // MARK: Set Up
     
     private func loadInitialViewController() {
-        
-        if token == "" {
+        // access defaults
+        // NOTE: token is stored as Optional value
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "SlackToken") == nil {
             actingViewController = loadViewController(withID: .loginVC)
         } else {
             actingViewController = loadViewController(withID: .activitiesTVC)
