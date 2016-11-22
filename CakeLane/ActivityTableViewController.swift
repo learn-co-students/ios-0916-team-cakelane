@@ -27,7 +27,7 @@ class ActivityTableViewController: UITableViewController {
         
         // Mark: - How to retrieve information from firebase
         
-        self.activitiesRef.queryOrderedByKey().observe(.value, with: { (snapshot) in
+        self.activitiesRef.observe(.value, with: { (snapshot) in
             
             var newActivites = [Activity]()
             
@@ -44,11 +44,11 @@ class ActivityTableViewController: UITableViewController {
         })
         
         
-        SlackAPIClient.getUserId { userInfo in
-            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
-            print(userInfo)
-            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
-        }
+//        SlackAPIClient.getUserId { userInfo in
+//            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+//            print(userInfo)
+//            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+//        }
         
     }
     

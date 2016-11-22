@@ -8,6 +8,7 @@ target 'CakeLane' do
 
   # Pods for CakeLane
 pod 'Firebase/Database'
+pod 'Firebase/Storage'
 pod 'Alamofire'
 
 end

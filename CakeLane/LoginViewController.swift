@@ -49,8 +49,6 @@ class LoginViewController: UIViewController {
         let query = "?client_id=\(Secrets.clientID)&client_secret=\(Secrets.clientSecret)&code=\(code)"
         var request = URLRequest(url: URL(string: baseURL + query)!)
         request.httpMethod = "POST"
-        print("&&&&&&&&&&&&&&&&&&")
-        print(request)
         let queue = OperationQueue()
         queue.addOperation {
             

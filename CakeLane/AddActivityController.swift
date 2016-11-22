@@ -9,9 +9,12 @@
 import UIKit
 import Firebase
 
-class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+
+class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     var databaseReference = FIRDatabase.database().reference()
+    
     let imagePicker = UIImagePickerController()
     
     @IBOutlet weak var activityName: UITextField!
@@ -30,12 +33,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -52,15 +53,36 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         }else {
             date = self.activityDate.text ?? ""
         }
-        let newActivity = Activity(owner: owner, name: unwrappedName, date: date)
-        let addedActivity = self.databaseReference.child("activities").childByAutoId()
-        let key = addedActivity.key
-        addedActivity.setValue(newActivity.toAnyObject())
+        let imageName = NSUUID().uuidString
+        let storageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("locationImages").child("\(imageName).png")
+        if let image = self.activityImage.image {
+        if let uploadData = UIImagePNGRepresentation(image) {
+            
+            storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                
+                if error != nil {
+                    print(error!)
+                    return
+                }
+            
+                if let locationImageUrl = metadata?.downloadURL()?.absoluteString {
+                    print("&&&&&&&&&&&&&&")
+                   print(locationImageUrl)
+                    let newActivity = Activity(owner: owner, name: unwrappedName, date: date, image: locationImageUrl)
+                    let addedActivity = self.databaseReference.child("activities").childByAutoId()
+                    let key = addedActivity.key
+                    addedActivity.setValue(newActivity.toAnyObject())
+                    // add activity with its ID to the user
+                    let newactivity = [key:date]
+                    self.databaseReference.child("users").child("slackUserID123434").child("activities").child("activitiesCreated").updateChildValues(newactivity)
+                }
+            })
+            
+        }
         
-        // add activity with its ID to the user
+        }
         
-        let newactivity = [key:date]
-        self.databaseReference.child("users").child("slackUserID123434").child("activities").child("activitiesCreated").updateChildValues(newactivity)
+        
         dismiss(animated: true, completion: nil)
         
     }
@@ -102,6 +124,11 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         
     }
     
+     // MARK: - try to upload image to firebase
+    
+    }
+
+extension AddActivityController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - UIImagePickerControllerDelegate Methods
     
@@ -118,15 +145,16 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
             self.activityImage.contentMode = .scaleToFill
             self.activityImage.image = newImage
         }
-  
+        
         dismiss(animated: true, completion: nil)
     }
-  
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
     
-  
+
+    
 }
 

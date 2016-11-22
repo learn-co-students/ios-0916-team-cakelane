@@ -16,6 +16,7 @@ struct Activity {
     var name: String
     var owner: String
     var date: String
+    var image: String
 // var description: String
 //    var location: String
 //    var attendees: [String]
@@ -24,11 +25,12 @@ struct Activity {
    
     // Mark: - initializer for activity object
     
-    init(owner: String, name: String, date: String) {
+    init(owner: String, name: String, date: String, image: String) {
         
         self.name = name
         self.owner = owner
         self.date = date
+        self.image = image
         self.reference = nil
     }
     
@@ -40,6 +42,7 @@ struct Activity {
         name = snapshotValue["name"] as! String
         owner = snapshotValue["owner"] as! String
         date = snapshotValue["date"] as! String
+        image = snapshotValue["image"] as! String
         reference = snapshot.ref
     }
     
@@ -50,7 +53,8 @@ struct Activity {
         return [
             "name":name,
             "owner":owner,
-            "date":date
+            "date":date,
+           "image":image
         ]
     }
     
