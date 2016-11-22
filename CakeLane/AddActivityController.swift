@@ -26,7 +26,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var activityLocation: UITextField!
     
     @IBOutlet weak var descriptionActivity: UITextView!
-   
+    
     @IBOutlet weak var activityImage: UIImageView!
     
     
@@ -43,8 +43,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     // Mark: - create an activity on firebase using textfield's information
     
     @IBAction func saveButton(_ sender: Any) {
-        // create an activity
         
+        // create an activity
         guard let unwrappedName = self.activityName.text else {return}
         let owner = self.activityOwner.text ?? ""
         var date = ""
@@ -53,33 +53,35 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         }else {
             date = self.activityDate.text ?? ""
         }
+        // upload image to the storage on Firebase
         let imageName = NSUUID().uuidString
-        let storageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("locationImages").child("\(imageName).png")
+        let storageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("activityImages").child("\(imageName).png")
         if let image = self.activityImage.image {
-        if let uploadData = UIImagePNGRepresentation(image) {
-            
-            storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+            if let uploadData = UIImagePNGRepresentation(image) {
                 
-                if error != nil {
-                    print(error!)
-                    return
-                }
+                storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                    
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    
+                    if let locationImageUrl = metadata?.downloadURL()?.absoluteString {
+                        
+                        let newActivity = Activity(owner: owner, name: unwrappedName, date: date, image: locationImageUrl)
+                        
+                        let addedActivity = self.databaseReference.child("activities").childByAutoId()
+                        let key = addedActivity.key
+                        
+                        addedActivity.setValue(newActivity.toAnyObject())
+                        // add activity with its ID to the user
+                        let newactivity = [key:date]
+                        self.databaseReference.child("users").child("slackUserID123434").child("activities").child("activitiesCreated").updateChildValues(newactivity)
+                    }
+                })
+                
+            }
             
-                if let locationImageUrl = metadata?.downloadURL()?.absoluteString {
-                    print("&&&&&&&&&&&&&&")
-                   print(locationImageUrl)
-                    let newActivity = Activity(owner: owner, name: unwrappedName, date: date, image: locationImageUrl)
-                    let addedActivity = self.databaseReference.child("activities").childByAutoId()
-                    let key = addedActivity.key
-                    addedActivity.setValue(newActivity.toAnyObject())
-                    // add activity with its ID to the user
-                    let newactivity = [key:date]
-                    self.databaseReference.child("users").child("slackUserID123434").child("activities").child("activitiesCreated").updateChildValues(newactivity)
-                }
-            })
-            
-        }
-        
         }
         
         
@@ -124,13 +126,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         
     }
     
-     // MARK: - try to upload image to firebase
-    
-    }
+}
 
+// MARK: - UIImagePickerControllerDelegate Methods
 extension AddActivityController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    // MARK: - UIImagePickerControllerDelegate Methods
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         var newImage: UIImage
@@ -154,7 +153,7 @@ extension AddActivityController: UIImagePickerControllerDelegate, UINavigationCo
         dismiss(animated: true, completion: nil)
     }
     
-
+    
     
 }
 
