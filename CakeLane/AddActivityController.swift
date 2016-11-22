@@ -11,7 +11,7 @@ import Firebase
 
 
 
-class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class AddActivityController: UIViewController, UITextFieldDelegate {
     
     var databaseReference = FIRDatabase.database().reference()
     
@@ -25,7 +25,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     @IBOutlet weak var activityLocation: UITextField!
     
-    @IBOutlet weak var descriptionActivity: UITextView!
+    @IBOutlet weak var activityDescription: UITextField!
     
     @IBOutlet weak var activityImage: UIImageView!
     
@@ -47,6 +47,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         // create an activity
         guard let unwrappedName = self.activityName.text else {return}
         let owner = self.activityOwner.text ?? ""
+        let location = self.activityLocation.text ?? ""
+        let description = self.activityDescription.text ?? ""
         var date = ""
         if self.activityDate.text == "" {
             date = String(describing: Date())
@@ -66,9 +68,9 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                         return
                     }
                     
-                    if let locationImageUrl = metadata?.downloadURL()?.absoluteString {
+                    if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
                         
-                        let newActivity = Activity(owner: owner, name: unwrappedName, date: date, image: locationImageUrl)
+                        let newActivity = Activity(owner: owner, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
                         
                         let addedActivity = self.databaseReference.child("activities").childByAutoId()
                         let key = addedActivity.key

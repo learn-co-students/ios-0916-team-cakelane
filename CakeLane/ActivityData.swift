@@ -17,20 +17,22 @@ struct Activity {
     var owner: String
     var date: String
     var image: String
-// var description: String
-//    var location: String
+    var description: String
+    var location: String
 //    var attendees: [String]
 // var image: UIImage?
     let reference : FIRDatabaseReference?
    
     // Mark: - initializer for activity object
     
-    init(owner: String, name: String, date: String, image: String) {
+    init(owner: String, name: String, date: String, image: String, location: String, description: String) {
         
         self.name = name
         self.owner = owner
         self.date = date
         self.image = image
+        self.location = location
+        self.description = description
         self.reference = nil
     }
     
@@ -43,6 +45,8 @@ struct Activity {
         owner = snapshotValue["owner"] as! String
         date = snapshotValue["date"] as! String
         image = snapshotValue["image"] as! String
+        location = snapshotValue["location"] as! String
+        description = snapshotValue["description"] as! String
         reference = snapshot.ref
     }
     
@@ -54,7 +58,9 @@ struct Activity {
             "name":name,
             "owner":owner,
             "date":date,
-           "image":image
+           "image":image,
+           "location":location,
+           "description":description
         ]
     }
     
