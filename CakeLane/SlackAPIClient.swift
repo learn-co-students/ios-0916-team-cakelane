@@ -8,16 +8,15 @@
 
 import Foundation
 import Alamofire
-import Locksmith
 
 class SlackAPIClient {
     
     class func getUserInfo(with completion: @escaping ([String: Any])->()) {
-        // TODO: extract token from Locksmith
+        // extract slack token & user id from user defaults
+        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
+        guard let userID = UserDefaults.standard.object(forKey: "SlackUser") else { return }
         
-        let token = ""
-        
-        let urlString = "https://slack.com/api/users.info?token=\(token)"
+        let urlString = "https://slack.com/api/users.info?user=\(userID)&token=\(token)"
         guard let url = URL(string: urlString) else { return }
         
         Alamofire.request(url).responseJSON { response in
@@ -27,5 +26,6 @@ class SlackAPIClient {
         }
         
     }
+    
 }
 

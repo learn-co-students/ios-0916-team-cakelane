@@ -9,8 +9,10 @@
 import Foundation
 
 enum StoryboardID: String {
+    // TODO: remove unnecessary cases
     case loginVC = "login-view-controller"
     case activitiesTVC = "activity-table-view-controller"
     case activitiesNavVC = "activity-navigation-view-controller"
+    case activityDetails = "activity-detail-view-controller"
     case addActivitiesVC = "add-activity-view-controller"
 }

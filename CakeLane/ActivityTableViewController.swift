@@ -47,9 +47,12 @@ class ActivityTableViewController: UITableViewController {
         
         SlackAPIClient.getUserInfo { userInfo in
             print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
-            dump(userInfo)
+            print(UserDefaults.standard.object(forKey: "SlackToken"))
+            print(UserDefaults.standard.object(forKey: "SlackUser"))
+            print(userInfo)
             print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

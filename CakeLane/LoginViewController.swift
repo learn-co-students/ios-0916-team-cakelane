@@ -27,7 +27,8 @@ class LoginViewController: UIViewController {
         // NOTE: Direct user to Slack for authentication
         let baseURL = "https://slack.com/oauth/"
         let path = "authorize"
-        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic"
+        // NOTE: set up initial scopes so that user doesn't have to go through authorization multiple times
+        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read"
         
         let urlString = baseURL + path + query
         
@@ -53,12 +54,22 @@ class LoginViewController: UIViewController {
             URLSession.shared.dataTask(with: request) { (data, response, error) in
                 
                 let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
-                print(json)
-                let token = json["access_token"] as! String
                 
-                // save SlackAccount uid using UserDefaults
+//                print("+++++++++++++++*********++++++++++")
+//                dump(json)
+//                print("+++++++++++++++*********++++++++++")
+                
+                let token = json["access_token"] as! String
+                let teamName = json["team_name"] as! String
+                let teamID = json["team_id"] as! String
+                let userID = json["user_id"] as! String
+                
+                // save slack account token, user id, team id, and team name using UserDefaults
                 let defaults = UserDefaults.standard
                 defaults.setValue(token, forKey: "SlackToken")
+                defaults.set(userID, forKey: "SlackUser")
+                defaults.set(teamID, forKey: "TeamID")
+                defaults.set(teamName, forKey: "TeamName")
                 defaults.synchronize()
             
                 NotificationCenter.default.post(name: .closeLoginVC, object: self)

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Locksmith
 
-struct SlackAccount: CreateableSecureStorable, GenericPasswordSecureStorable {
+struct SlackAccount {
     let userID: String
     let accessToken: String
     
