@@ -37,17 +37,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             var newActivites = [Activity]()
             
             for activity in snapshot.children {
-                var item = Activity(snapshot: activity as! FIRDataSnapshot)
-//                item.downloadImage(at: item.image, completion: { (success, image) in
-//                    item.imageview = image
-//                    print("%%%%%%%%%%%%%%%%%%")
-//                    print(item.imageview)
-//                    
-//                })
+                let item = Activity(snapshot: activity as! FIRDataSnapshot)
                 newActivites.append(item)
                 
             }
-            
             self.activities = self.sortedActivities(newActivites)
             OperationQueue.main.addOperation {
                 self.activitiesCollectionView.reloadData()
