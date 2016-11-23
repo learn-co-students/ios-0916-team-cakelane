@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import UIKit
 
 // MARK: - Create Model Data
 
@@ -20,7 +21,7 @@ struct Activity {
     var description: String
     var location: String
 //    var attendees: [String]
-// var image: UIImage?
+    var imageview: UIImage?
     let reference : FIRDatabaseReference?
    
     // Mark: - initializer for activity object
@@ -64,6 +65,5 @@ struct Activity {
         ]
     }
     
-    
-    
+       
 }

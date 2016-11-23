@@ -19,13 +19,13 @@
 		A2ECAA841DDD19F4000E3CC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2ECAA831DDD19F4000E3CC6 /* GoogleService-Info.plist */; };
 		A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA851DDDED55000E3CC6 /* UserData.swift */; };
 		A2F4B8D21DE39E5300933A94 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D11DE39E5300933A94 /* Secrets.swift */; };
+		A2F4B8D41DE4D46F00933A94 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D31DE4D46F00933A94 /* DataStore.swift */; };
+		A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */; };
+		A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */; };
 		E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139B1DDF63F800A3C41C /* AppController.swift */; };
 		E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139E1DDF651F00A3C41C /* Constants.swift */; };
-		E5D504041DE39CA9008452FB /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D504031DE39CA9008452FB /* DataStore.swift */; };
-		E5EE90A21DDE4F7B00A344A5 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A11DDE4F7B00A344A5 /* Secrets.swift */; };
 		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
 		E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */; };
-		E5EE90A81DDE777C00A344A5 /* SlackAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A71DDE777C00A344A5 /* SlackAccount.swift */; };
 		EE688E4B4700EA0CCBD857F7 /* Pods_CakeLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,15 +46,15 @@
 		A2ECAA831DDD19F4000E3CC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A2ECAA851DDDED55000E3CC6 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		A2F4B8D11DE39E5300933A94 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		A2F4B8D31DE4D46F00933A94 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
+		A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesCollectionViewCell.swift; sourceTree = "<group>"; };
 		C41D7E374498749BF12BE214 /* Pods-CakeLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CakeLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CakeLane/Pods-CakeLane.debug.xcconfig"; sourceTree = "<group>"; };
 		E50D139B1DDF63F800A3C41C /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		E50D139E1DDF651F00A3C41C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E5D504021DE353A2008452FB /* CakeLane.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CakeLane.entitlements; sourceTree = "<group>"; };
-		E5D504031DE39CA9008452FB /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
-		E5EE90A11DDE4F7B00A344A5 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		E5EE90A71DDE777C00A344A5 /* SlackAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAccount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +110,7 @@
 			children = (
 				A2ECAA851DDDED55000E3CC6 /* UserData.swift */,
 				A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */,
-				E5EE90A71DDE777C00A344A5 /* SlackDataStore.swift */,
+				A2F4B8D31DE4D46F00933A94 /* DataStore.swift */,
 				75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */,
 			);
 			name = Model;
@@ -132,6 +132,8 @@
 				A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */,
 				E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */,
 				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
+				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
+				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -144,17 +146,6 @@
 				E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */,
 			);
 			name = Constants;
-			sourceTree = "<group>";
-		};
-		E5D504011DE34710008452FB /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */,
-				E5D504031DE39CA9008452FB /* DataStore.swift */,
-				75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */,
-				E5EE90A71DDE777C00A344A5 /* SlackAccount.swift */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		E7D76156BC8025C34B746C8D /* Frameworks */ = {
@@ -295,17 +286,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */,
 				A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */,
-				E5D504041DE39CA9008452FB /* DataStore.swift in Sources */,
-				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */,
 				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
+				A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */,
 				A2ECAA7B1DDD17A9000E3CC6 /* ActivityTableViewController.swift in Sources */,
-				E5EE90A81DDE777C00A344A5 /* SlackDataStore.swift in Sources */,
-				E5EE90A81DDE777C00A344A5 /* SlackAccount.swift in Sources */,
-				E5EE90A21DDE4F7B00A344A5 /* Secrets.swift in Sources */,
 				E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */,
 				E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */,
+				A2F4B8D41DE4D46F00933A94 /* DataStore.swift in Sources */,
 				1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */,
 				A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */,
 				A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */,
