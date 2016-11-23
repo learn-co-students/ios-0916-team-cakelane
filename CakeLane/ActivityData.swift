@@ -42,12 +42,12 @@ struct Activity {
     init(snapshot: FIRDataSnapshot) {
         
         let snapshotValue = snapshot.value as! [String: Any]
-        name = snapshotValue["name"] as! String
-        owner = snapshotValue["owner"] as! String
-        date = snapshotValue["date"] as! String
-        image = snapshotValue["image"] as! String
-        location = snapshotValue["location"] as! String
-        description = snapshotValue["description"] as! String
+        name = snapshotValue["name"] as? String ?? "No name"
+        owner = snapshotValue["owner"] as? String ?? "No owner"
+        date = snapshotValue["date"] as? String ?? "No date"
+        image = snapshotValue["image"] as? String ?? "No image"
+        location = snapshotValue["location"] as? String ?? "No location"
+        description = snapshotValue["description"] as? String ?? "No description"
         reference = snapshot.ref
     }
     

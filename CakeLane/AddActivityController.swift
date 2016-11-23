@@ -45,10 +45,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     @IBAction func saveButton(_ sender: Any) {
         
         // create an activity
-        guard let unwrappedName = self.activityName.text else {return}
-        let owner = self.activityOwner.text ?? ""
-        let location = self.activityLocation.text ?? ""
-        let description = self.activityDescription.text ?? ""
+        let unwrappedName = self.activityName.text ?? " "
+        let owner = self.activityOwner.text ?? " "
+        let location = self.activityLocation.text ?? " "
+        let description = self.activityDescription.text ?? " "
         var date = ""
         if self.activityDate.text == "" {
             date = String(describing: Date())
