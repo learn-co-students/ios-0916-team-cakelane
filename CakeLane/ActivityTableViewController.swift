@@ -36,7 +36,7 @@ class ActivityTableViewController: UITableViewController {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
                 newActivites.append(item)
             }
-            
+
             self.activities = self.sortedActivities(newActivites)
             OperationQueue.main.addOperation {
 
@@ -47,11 +47,14 @@ class ActivityTableViewController: UITableViewController {
         })
 
 
-//        SlackAPIClient.getUserId { userInfo in
-//            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
-//            print(userInfo)
-//            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
-//        }
+        SlackAPIClient.getUserInfo { userInfo in
+            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+            print(UserDefaults.standard.object(forKey: "SlackToken"))
+            print(UserDefaults.standard.object(forKey: "SlackUser"))
+            print(userInfo)
+            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+        }
+
 
     }
 
