@@ -170,12 +170,13 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
        self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
-        self.downloadImage(at: activity.image) { (success, image) in
-            DispatchQueue.main.async {
-                self.activityImageView.image = image
-                self.setNeedsLayout()
-            }
-        }
+        self.activityImageView.image = UIImage(named: "snow")
+//        self.downloadImage(at: activity.image) { (success, image) in
+//            DispatchQueue.main.async {
+//                self.activityImageView.image = image
+//                self.setNeedsLayout()
+//            }
+//        }
         
         
     }
