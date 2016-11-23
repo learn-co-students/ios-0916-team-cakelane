@@ -38,6 +38,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             
             for activity in snapshot.children {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
+                print("********************")
+                dump(item)
+                print("********************")
                 newActivites.append(item)
                 
             }
