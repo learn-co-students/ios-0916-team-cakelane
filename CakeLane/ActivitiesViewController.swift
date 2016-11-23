@@ -23,6 +23,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // MARK: Test basic slack API call
+        SlackAPIClient.getUserInfo { userInfo in
+            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+            print(UserDefaults.standard.object(forKey: "SlackToken"))
+            print(UserDefaults.standard.object(forKey: "SlackUser"))
+            print(userInfo)
+            print("SLACK JSON+++++++++++++++++++++++++++++++++\n\n")
+        }
+        
         navigationItem.title = "Best App"
 //        let leftBarItem = UIBarButtonItem(title: "When", style: .plain, target: self, action: #selector(getter: UIDynamicBehavior.action))
 //        self.navigationItem.leftBarButtonItem = leftBarItem
