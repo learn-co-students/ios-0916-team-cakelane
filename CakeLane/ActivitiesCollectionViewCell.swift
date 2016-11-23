@@ -55,7 +55,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         
         
         activityImageView.addSubview(activityLabel)
-       // activityLabel.text = "Activity Name"
         activityLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         activityLabel.textColor = UIColor.white
         activityLabel.snp.makeConstraints { (make) in
@@ -65,7 +64,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         
         
         activityImageView.addSubview(locationLabel)
-       // locationLabel.text = "Location"
         locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         locationLabel.textColor = UIColor.white
         locationLabel.snp.makeConstraints { (make) in
@@ -74,7 +72,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         }
         
         activityImageView.addSubview(dateLabel)
-       // dateLabel.text = "11/21/2016"
         dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         dateLabel.textColor = UIColor.white
         dateLabel.snp.makeConstraints { (make) in

@@ -33,7 +33,7 @@ class AppController: UIViewController {
         if defaults.object(forKey: "SlackToken") == nil {
             actingViewController = loadViewController(withID: .loginVC)
         } else {
-            actingViewController = loadViewController(withID: .activitiesTVC)
+            actingViewController = loadViewController(withID: .activitiesVC)
         }
         addActing(viewController: actingViewController)
         
@@ -56,8 +56,8 @@ class AppController: UIViewController {
         switch id {
         case .loginVC:
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! LoginViewController
-        case .activitiesTVC:
-            let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivityTableViewController
+        case .activitiesVC:
+            let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivitiesViewController
             let navVC = UINavigationController(rootViewController: vc)
             return navVC
         default:
@@ -81,7 +81,7 @@ class AppController: UIViewController {
         
         switch notification.name {
         case Notification.Name.closeLoginVC:
-            switchToViewController(withID: .activitiesTVC)
+            switchToViewController(withID: .activitiesVC)
         case Notification.Name.closeActivitiesTVC:
             switchToViewController(withID: .loginVC)
         default:
