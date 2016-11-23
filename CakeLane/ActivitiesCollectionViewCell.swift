@@ -23,9 +23,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
     
-    
-    
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -153,9 +150,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             let request = URLRequest(url: unwrappedUrl)
             let task = session.dataTask(with: request) { (data, response, error) in
                 guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
-                
-                
-                print(data)
+
                 guard let image = UIImage(data: data) else { return }
                 completion(true, image)
             }
@@ -168,6 +163,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
         self.activityImageView.image = UIImage(named: "snow")
+        
+        // MARK: download activity image from firebase
 //        self.downloadImage(at: activity.image) { (success, image) in
 //            DispatchQueue.main.async {
 //                self.activityImageView.image = image

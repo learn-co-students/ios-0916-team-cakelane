@@ -29,7 +29,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 //        let rightBarItem = UIBarButtonItem(title: "What", style: .plain, target: self, action: #selector(getter: UIDynamicBehavior.action))
 //        self.navigationItem.rightBarButtonItem = rightBarItem
         
-        
         setUpActivityCollectionCells()
         createLayout()
         self.activitiesRef.observe(.value, with: { (snapshot) in
@@ -38,9 +37,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             
             for activity in snapshot.children {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                print("********************")
-                dump(item)
-                print("********************")
+                
+                // MARK: make sure incoming acitivity (firebase) has all of the desired properties (version issue)
+//                print("********************")
+//                dump(item)
+//                print("********************")
                 newActivites.append(item)
                 
             }

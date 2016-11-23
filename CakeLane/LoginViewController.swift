@@ -29,8 +29,7 @@ class LoginViewController: UIViewController {
         let path = "authorize"
 
         // NOTE: set up initial scopes so that user doesn't have to go through authorization multiple times
-        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read"
-
+        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,incoming-webhook,bot"
 
         let urlString = baseURL + path + query
 
@@ -57,9 +56,9 @@ class LoginViewController: UIViewController {
 
                 let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
 
-//                print("+++++++++++++++*********++++++++++")
-//                dump(json)
-//                print("+++++++++++++++*********++++++++++")
+                print("+++++++++++++++*********++++++++++")
+                dump(json)
+                print("+++++++++++++++*********++++++++++")
 
                 let token = json["access_token"] as! String
                 let teamName = json["team_name"] as! String
