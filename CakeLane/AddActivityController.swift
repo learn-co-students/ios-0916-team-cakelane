@@ -33,6 +33,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
+        activityImage.image = #imageLiteral(resourceName: "addphoto-2")
+        self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,7 +59,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
         }
         // upload image to the storage on Firebase
         let imageName = NSUUID().uuidString
-        let storageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("activityImages").child("\(imageName).png")
+        let storageRef = FIRStorage.storage().reference().child("activityImages").child("\(imageName).png")
         if let image = self.activityImage.image {
             if let uploadData = UIImagePNGRepresentation(image) {
                 
@@ -119,14 +121,14 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    
-    @IBAction func addImageButton(_ sender: Any) {
-        
+    // MARK: - Add activity image
+    func addImage() {
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
-        
+  
     }
+    
     
 }
 
