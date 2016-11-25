@@ -121,6 +121,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return cell
      }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showDetails", sender: self)
+    }
+    
+    
+    
     // MARK: _ Sort the activities based on time
     func sortedActivities(_ array: [Activity]) -> [Activity] {
         let sortedArray = array.sorted { (a, b) -> Bool in
@@ -139,5 +145,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return sortedArray
     }
 
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetails" {
+            let dest = segue.destination as! ActivityDetailsViewController
+            print(dest)
+        }
+    }
     
 }

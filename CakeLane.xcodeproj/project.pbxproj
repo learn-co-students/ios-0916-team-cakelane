@@ -12,6 +12,7 @@
 		1BDF62431DDD06C500C3D12E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62421DDD06C500C3D12E /* Assets.xcassets */; };
 		1BDF62461DDD06C500C3D12E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62441DDD06C500C3D12E /* LaunchScreen.storyboard */; };
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
+		A2E001941DE8D3DC00C24F49 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E001931DE8D3DC00C24F49 /* ActivityDetailsViewController.swift */; };
 		A2ECAA7B1DDD17A9000E3CC6 /* ActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */; };
 		A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */; };
 		A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 		1BDF62471DDD06C500C3D12E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CakeLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
+		A2E001931DE8D3DC00C24F49 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTableViewController.swift; sourceTree = "<group>"; };
 		A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
 				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
 				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
+				A2E001931DE8D3DC00C24F49 /* ActivityDetailsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2E001941DE8D3DC00C24F49 /* ActivityDetailsViewController.swift in Sources */,
 				A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */,
 				A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */,

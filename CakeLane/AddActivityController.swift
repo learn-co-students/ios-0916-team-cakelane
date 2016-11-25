@@ -33,7 +33,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        activityImage.image = #imageLiteral(resourceName: "addphoto-2")
+        self.hideKeyboardWhenTappedAround()
         self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
     }
     
@@ -157,6 +157,15 @@ extension AddActivityController: UIImagePickerControllerDelegate, UINavigationCo
         dismiss(animated: true, completion: nil)
     }
     
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboardView))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboardView() {
+        view.endEditing(true)
+    }
     
     
 }
