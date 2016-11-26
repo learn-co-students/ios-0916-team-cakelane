@@ -53,7 +53,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="FUa-jV-pOJ" kind="presentation" identifier="showDetails" modalTransitionStyle="flipHorizontal" id="Xjo-Pk-aun"/>
+                        <segue destination="FUa-jV-pOJ" kind="presentation" identifier="showDetails" id="Xjo-Pk-aun"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>

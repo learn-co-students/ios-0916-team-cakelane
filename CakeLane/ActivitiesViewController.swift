@@ -24,12 +24,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         super.viewDidLoad()
         
         navigationItem.title = "Best App"
-//        let leftBarItem = UIBarButtonItem(title: "When", style: .plain, target: self, action: #selector(getter: UIDynamicBehavior.action))
-//        self.navigationItem.leftBarButtonItem = leftBarItem
-//        let rightBarItem = UIBarButtonItem(title: "What", style: .plain, target: self, action: #selector(getter: UIDynamicBehavior.action))
-//        self.navigationItem.rightBarButtonItem = rightBarItem
-        
-        
         setUpActivityCollectionCells()
         createLayout()
         self.activitiesRef.observe(.value, with: { (snapshot) in
@@ -47,26 +41,17 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             }
             
         })
-        
-
-        
+ 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        UIView.transition(with: self.activitiesCollectionView, duration: 0.4, options: .transitionCrossDissolve, animations:{
+            self.activitiesCollectionView.alpha = 1.0
+        }) { _ in }
     }
     
     
-    
-    
-    func navigationBar(){
-        
-        
-        
-        
-        //        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 415, height: 60))
-        //        view.addSubview(navBar)
-        //        let navTitle = UINavigationItem(title: "Best App")
-        //        navBar.setItems([navTitle], animated: true)
-    }
-    
-    func createLayout() {
+      func createLayout() {
         
         view.backgroundColor = UIColor.white
         
@@ -76,7 +61,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             make.top.equalTo(view.snp.top)
             make.height.equalTo(view.snp.height)
             make.left.equalTo(view.snp.left)
-            
             make.right.equalTo(view.snp.right)
         }
         
@@ -149,7 +133,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetails" {
             let dest = segue.destination as! ActivityDetailsViewController
-            print(dest)
+            if let index = self.activitiesCollectionView.indexPathsForSelectedItems?[0].item {
+            dest.selectedActivity = self.activities[index]
+            }
         }
     }
     

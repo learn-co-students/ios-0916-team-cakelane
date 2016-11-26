@@ -9,16 +9,25 @@
 import UIKit
 
 class ActivityDetailsViewController: UIViewController {
+    
+    var selectedActivity: Activity!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 415, height: 60))
+               view.addSubview(navBar)
+        //ToDo: -
+//        if selectedActivity.owner == userID {
+//            display editable activity details
+//        }else{
+//            display regural activity details
+//
+//        }
           performAnimations()
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -39,14 +48,5 @@ class ActivityDetailsViewController: UIViewController {
         
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+   
 }
