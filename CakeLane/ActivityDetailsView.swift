@@ -1,42 +1,43 @@
 //
-//  ActivityDetailView.swift
+//  ActivityDetailsView.swift
 //  CakeLane
 //
-//  Created by Rama Milaneh on 11/25/16.
+//  Created by Rama Milaneh on 11/26/16.
 //  Copyright © 2016 FlatironSchool. All rights reserved.
 //
 
 import UIKit
 
-class ActivityDetailView: UIView {
-
+class ActivityDetailsView: UIView {
+   
     @IBOutlet var contentView: UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInt()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInt()
+       commonInit()
     }
     
-    func commonInt() {
-        Bundle.main.loadNibNamed("ActivityDetailView", owner: self, options: nil)
+    private func commonInit() {
+        Bundle.main.loadNibNamed("ActivityDetailsView", owner: self, options: nil)
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.constrainEdges(to: self)
         self.addSubview(contentView)
-        
+        contentView.constrainEdges(to: self)
+        contentView.backgroundColor = UIColor.blue
     }
+    
 }
 
 extension UIView {
-    
     func constrainEdges(to view: UIView) {
         leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-     }
+    }
+
 }

@@ -12,10 +12,14 @@ class ActivityDetailsViewController: UIViewController {
     
     var selectedActivity: Activity!
 
+    @IBOutlet weak var activityView: ActivityDetailsView!
+ 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 415, height: 60))
-               view.addSubview(navBar)
+        setup()
+        
         //ToDo: -
 //        if selectedActivity.owner == userID {
 //            display editable activity details
@@ -29,6 +33,29 @@ class ActivityDetailsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    
+    
+   
+}
+
+extension ActivityDetailsViewController {
+    
+    //MARK: - Setup function
+    
+    func setup() {
+        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 415, height: 60))
+        self.view.addSubview(navBar)
+        self.activityView.contentView = ActivityDetailsView(frame: self.view.frame)
+        self.activityView.translatesAutoresizingMaskIntoConstraints = false
+        self.activityView.constrainEdges(to: self.view)
+    }
+    
+    
     
     
     //MARK: - dismiss the view when the user tab on any point
@@ -47,6 +74,7 @@ class ActivityDetailsViewController: UIViewController {
         }
         
     }
+ 
     
-   
+    
 }
