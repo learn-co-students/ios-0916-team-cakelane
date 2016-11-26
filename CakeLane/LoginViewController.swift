@@ -29,7 +29,8 @@ class LoginViewController: UIViewController {
         let path = "authorize"
 
         // NOTE: set up initial scopes so that user doesn't have to go through authorization multiple times
-        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,incoming-webhook,bot"
+        // let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,incoming-webhook,bot"
+        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=incoming-webhook"
 
         let urlString = baseURL + path + query
 
