@@ -27,7 +27,7 @@ class ActivityDetailsViewController: UIViewController {
 //            display regural activity details
 //
 //        }
-          performAnimations()
+        //  performAnimations()
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,22 +48,16 @@ extension ActivityDetailsViewController {
     //MARK: - Setup function
     
     func setup() {
-        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 415, height: 60))
-        self.view.addSubview(navBar)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
         self.activityView.contentView = ActivityDetailsView(frame: self.view.frame)
         self.activityView.translatesAutoresizingMaskIntoConstraints = false
-        self.activityView.constrainEdges(to: self.view)
-    }
-    
-    
-    
-    
-    //MARK: - dismiss the view when the user tab on any point
-    
-    func performAnimations() {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissView))
-        gestureRecognizer.numberOfTapsRequired = 1
-        view.addGestureRecognizer(gestureRecognizer)
+        self.activityView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        self.activityView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        self.activityView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        self.activityView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        self.activityView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
     }
     
     func dismissView() {

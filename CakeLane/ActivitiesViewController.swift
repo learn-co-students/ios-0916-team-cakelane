@@ -22,7 +22,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = "Best App"
         setUpActivityCollectionCells()
         createLayout()
@@ -53,7 +52,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     
       func createLayout() {
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.black
         
         view.addSubview(activitiesCollectionView)
         activitiesCollectionView.backgroundColor = UIColor.clear
