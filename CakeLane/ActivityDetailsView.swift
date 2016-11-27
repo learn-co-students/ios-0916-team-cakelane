@@ -13,17 +13,23 @@ class ActivityDetailsView: UIView {
     @IBOutlet var contentView: UIView!
     var activityImageView: UIImageView!
     var closeButton : UIButton!
+    var nameLabel = UILabel()
+    var activityOverlay = UIView()
+    var numberOfAttendeesLabel = UILabel()
+    var firstProfileImage = UIImageView()
+    var secondProfileImage = UIImageView()
+    var thirdProfileImage = UIImageView()
     var selectedActivity: Activity! {
         
         didSet {
           // activityImageView.image = selectedActivity.imageview
-           dateLabel.text = selectedActivity.name
+           nameLabel.text = selectedActivity.name
             
         }
         
     
     }
-    var dateLabel = UILabel()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,10 +46,11 @@ class ActivityDetailsView: UIView {
        contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(contentView)
         contentView.constrainEdges(to: self)
-        contentView.backgroundColor = UIColor.black
+        contentView.backgroundColor = UIColor.white
         setupImageView()
         setupCloseButton()
-        setypLabel()
+        setupLabel()
+        setupActivityOverLay()
     }
     
     func setupImageView() {
@@ -73,16 +80,60 @@ class ActivityDetailsView: UIView {
         
            }
     
-    func setypLabel() {
-        self.activityImageView.addSubview(dateLabel)
-        dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 26)
-        dateLabel.textColor = UIColor.white
-        self.dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.dateLabel.bottomAnchor.constraint(equalTo: self.activityImageView.bottomAnchor, constant: -20).isActive = true
-        self.dateLabel.leftAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-      
+    func setupLabel() {
+        
+        self.activityImageView.addSubview(nameLabel)
+        nameLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 26)
+        nameLabel.textColor = UIColor.white
+        self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.nameLabel.bottomAnchor.constraint(equalTo: self.activityImageView.bottomAnchor, constant: -20).isActive = true
+        self.nameLabel.leftAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+     }
+    
+    
+    func setupActivityOverLay() {
+        
+        self.contentView.addSubview(activityOverlay)
+        activityOverlay.backgroundColor = UIColor.white
+        activityOverlay.layer.borderWidth = 1.3
+        activityOverlay.layer.borderColor = UIColor.lightGray.cgColor
+        activityOverlay.translatesAutoresizingMaskIntoConstraints = false
+        activityOverlay.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        activityOverlay.topAnchor.constraint(equalTo: activityImageView.bottomAnchor).isActive = true
+        activityOverlay.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        activityOverlay.heightAnchor.constraint(equalTo: self.activityImageView.heightAnchor, multiplier: 0.12).isActive = true
+        
+        activityOverlay.addSubview(numberOfAttendeesLabel)
+        numberOfAttendeesLabel.text = "10 Attending"
+        numberOfAttendeesLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 12)
+        numberOfAttendeesLabel.textColor = UIColor.black
+        numberOfAttendeesLabel.translatesAutoresizingMaskIntoConstraints = false
+        numberOfAttendeesLabel.topAnchor.constraint(equalTo: self.activityOverlay.topAnchor, constant: 10).isActive = true
+        numberOfAttendeesLabel.rightAnchor.constraint(equalTo: self.activityOverlay.rightAnchor, constant: -20).isActive = true
+
+
+        addSubViewToOverlay(profileImage: firstProfileImage)
+        addSubViewToOverlay(profileImage: secondProfileImage)
+        addSubViewToOverlay(profileImage: thirdProfileImage)
+        
+        firstProfileImage.leftAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.leftAnchor, constant: 5).isActive = true
+        secondProfileImage.leftAnchor.constraint(equalTo: self.firstProfileImage.rightAnchor, constant: 3).isActive = true
+        thirdProfileImage.leftAnchor.constraint(equalTo: self.secondProfileImage.rightAnchor, constant: 3).isActive = true
+        
     }
     
+    func addSubViewToOverlay(profileImage: UIImageView) {
+        activityOverlay.addSubview(profileImage)
+        profileImage.backgroundColor = UIColor.green
+        profileImage.layer.masksToBounds = true
+        profileImage.layer.borderColor = UIColor.black.cgColor
+        profileImage.layer.cornerRadius = 18
+        profileImage.clipsToBounds = true
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.topAnchor.constraint(equalTo: self.activityOverlay.topAnchor, constant: 1.5).isActive = true
+        profileImage.widthAnchor.constraint(equalTo: self.activityOverlay.widthAnchor, multiplier: 1/12).isActive = true
+        profileImage.heightAnchor.constraint(equalTo: self.activityOverlay.heightAnchor, multiplier: 1/1.1).isActive = true
+    }
     
 }
 
