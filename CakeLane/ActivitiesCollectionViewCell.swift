@@ -81,7 +81,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         
         
         activityImageView.addSubview(timeLabel)
-       // timeLabel.text = "06:40"
         timeLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         timeLabel.textColor = UIColor.white
         timeLabel.snp.makeConstraints { (make) in
@@ -168,6 +167,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
         self.activityImageView.image = UIImage(named: "snow")
+        
 //        self.downloadImage(at: activity.image) { (success, image) in
 //            DispatchQueue.main.async {
 //                self.activityImageView.image = image

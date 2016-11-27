@@ -13,6 +13,17 @@ class ActivityDetailsView: UIView {
     @IBOutlet var contentView: UIView!
     var activityImageView: UIImageView!
     var closeButton : UIButton!
+    var selectedActivity: Activity! {
+        
+        didSet {
+          // activityImageView.image = selectedActivity.imageview
+           dateLabel.text = selectedActivity.name
+            
+        }
+        
+    
+    }
+    var dateLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +43,7 @@ class ActivityDetailsView: UIView {
         contentView.backgroundColor = UIColor.black
         setupImageView()
         setupCloseButton()
+        setypLabel()
     }
     
     func setupImageView() {
@@ -60,6 +72,16 @@ class ActivityDetailsView: UIView {
         self.closeButton.backgroundColor = UIColor.clear
         
            }
+    
+    func setypLabel() {
+        self.activityImageView.addSubview(dateLabel)
+        dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 26)
+        dateLabel.textColor = UIColor.white
+        self.dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.dateLabel.bottomAnchor.constraint(equalTo: self.activityImageView.bottomAnchor, constant: -20).isActive = true
+        self.dateLabel.leftAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+      
+    }
     
     
 }

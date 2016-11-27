@@ -33,6 +33,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
                 newActivites.append(item)
                 
+                
             }
             self.activities = self.sortedActivities(newActivites)
             OperationQueue.main.addOperation {
@@ -53,7 +54,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
       func createLayout() {
         
         view.backgroundColor = UIColor.black
-        
         view.addSubview(activitiesCollectionView)
         activitiesCollectionView.backgroundColor = UIColor.clear
         activitiesCollectionView.snp.makeConstraints { (make) in
