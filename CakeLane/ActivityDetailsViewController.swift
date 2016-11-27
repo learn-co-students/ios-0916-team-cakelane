@@ -14,8 +14,6 @@ class ActivityDetailsViewController: UIViewController {
 
     @IBOutlet weak var activityView: ActivityDetailsView!
  
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -27,7 +25,6 @@ class ActivityDetailsViewController: UIViewController {
 //            display regural activity details
 //
 //        }
-        //  performAnimations()
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,10 +34,7 @@ class ActivityDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    
-    
-   
+ 
 }
 
 extension ActivityDetailsViewController {
