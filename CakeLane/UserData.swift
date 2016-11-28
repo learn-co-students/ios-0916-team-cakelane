@@ -14,6 +14,8 @@ import Firebase
 struct User {
     
     // TODO: Add phone number property (available through Slack)
+    var slackID: String
+    var teamID: String
     var username: String
     var firstName: String
     var lastName: String
@@ -30,6 +32,8 @@ struct User {
     
     // MARK: - initializer for activity object
     init(dictionary: [String:Any]) {
+        let slackID = dictionary["id"] as! String
+        let teamID = dictionary["team_id"] as! String
         let profile = dictionary["profile"] as! [String:Any]
         let username = dictionary["name"] as! String
         let firstName = profile["first_name"] as? String ?? ""
@@ -40,6 +44,8 @@ struct User {
         let image512 = profile["image_512"] as? String ?? ""
         let timeZoneLabel = dictionary["tz_label"] as? String ?? ""
         
+        self.slackID = slackID
+        self.teamID = teamID
         self.username = username
         self.firstName = firstName
         self.lastName = lastName
@@ -64,13 +70,19 @@ struct User {
 //    }
     
     // MARK: - create a dictionary
-    
     func toAnyObject() -> Any {
         
         return [
-//            "name":name,
-//            "owner":owner,
-//            "date":date
+            "slackID": slackID,
+            "teamID": teamID,
+            "username": username,
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "isAdmin": isAdmin,
+            "image72": image72,
+            "image512": image512,
+            "timeZoneLabel": timeZoneLabel
         ]
     }
     

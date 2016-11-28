@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import Firebase
 
 class AppController: UIViewController {
 
@@ -94,15 +94,30 @@ class AppController: UIViewController {
                 // process Slack API response
                 let userData = userInfo["user"] as! [String: Any]
                 
-                // instantiate user profile
-                let userProfile = User(dictionary: userData)
-                
-                print("**********USER_PROFILE************")
-                print(userProfile)
-                print("**********USER_PROFILE************")
-                
-                // persist user profile info via Core Data
-                
+                DispatchQueue.main.async {
+                    // instantiate user profile
+                    let userProfile = User(dictionary: userData)
+                    let defaults = UserDefaults.standard
+                    defaults.set(userProfile.slackID, forKey: "slackID")
+                    defaults.set(userProfile.teamID, forKey: "teamID")
+                    defaults.set(userProfile.username, forKey: "username")
+                    defaults.set(userProfile.firstName, forKey: "firstName")
+                    defaults.set(userProfile.lastName, forKey: "lastName")
+                    defaults.set(userProfile.email, forKey: "email")
+                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
+                    defaults.set(userProfile.image72, forKey: "image72")
+                    defaults.set(userProfile.image512, forKey: "image512")
+                    defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
+                    defaults.synchronize()
+                    
+//                    print("**********USER_PROFILE************")
+//                    print(userProfile)
+//                    print("**********USER_PROFILE************")
+                    
+                    // TODO: write user profile info to Firebase
+                    let reference = FIRDatabase.database().reference()
+                    reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
+                }
                 
             }
             

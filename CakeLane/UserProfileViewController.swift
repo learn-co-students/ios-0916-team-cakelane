@@ -22,34 +22,46 @@ class UserProfileViewController: FormViewController {
         
         // добавить logout
         
+        // MARK: access user defaults
+        let defaults = UserDefaults.standard
+        guard let slackID = defaults.string(forKey: "slackID") else { return }
+        guard let teamID = defaults.string(forKey: "teamID") else { return }
+        guard let username = defaults.string(forKey: "username") else { return }
+        guard let firstName = defaults.string(forKey: "firstName") else { return }
+        guard let lastName = defaults.string(forKey: "lastName") else { return }
+        guard let email = defaults.string(forKey: "email") else { return }
+        // TODO: check if user is admin ~ present different profile view
+        guard let isAdmin = defaults.string(forKey: "isAdmin") else { return }
+        guard let image72url = defaults.string(forKey: "image72") else { return }
+        guard let image512url = defaults.string(forKey: "image512") else { return }
+        guard let timeZoneLabel = defaults.string(forKey: "timeZoneLabel") else { return }
+        
         // create form via eureka
         form +++ Section("Basic Info")
             
-            // MARK: Core Data fetch request
-            
-            <<< TextRow() { row in
+            <<< TextRow(){ row in
                 row.title = "First Name"
-                row.placeholder = "Enter first name here"
+                row.placeholder = firstName
             }
             
-            <<< TextRow() { row in
+            <<< TextRow(){ row in
                 row.title = "Last Name"
-                row.placeholder = "Enter last name here"
+                row.placeholder = lastName
             }
             
-            <<< TextRow() { row in
+            <<< TextRow(){ row in
                 row.title = "Email"
-                row.placeholder = "Enter email here"
+                row.placeholder = email
             }
             
-            <<< PhoneRow() {
-                $0.title = "Phone Number"
-                $0.placeholder = "And your number here"
-            }
+//            <<< PhoneRow() {
+//                $0.title = "Phone Number"
+//                $0.placeholder = "And your number here"
+//            }
             
-            <<< TextRow() { row in
+            <<< TextRow(){ row in
                 row.title = "Time Zone"
-                row.placeholder = "Enter time zone here"
+                row.placeholder = timeZoneLabel
             }
     }
     
@@ -58,7 +70,7 @@ class UserProfileViewController: FormViewController {
         
     }
     
-    // MARK: If there are changes on Slack, update Core Data & form contents
+    // MARK: If there are changes on Slack, update User Defaults & form contents
     func updateUserProfileLocally() {
         
     }
