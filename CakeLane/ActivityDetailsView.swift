@@ -27,6 +27,7 @@ class ActivityDetailsView: UIView {
         //  activityImageView.image = selectedActivity.imageview
           nameLabel.text = selectedActivity.name
          locationLabel.text = selectedActivity.location
+         
             
         }
         
@@ -37,6 +38,7 @@ class ActivityDetailsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

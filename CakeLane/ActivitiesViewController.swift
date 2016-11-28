@@ -13,18 +13,33 @@ import Firebase
 class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     var activitiesCollectionView: UICollectionView!
-    var contentView = UIView()
     var activities = [Activity]()
+    var blurEffectView: UIVisualEffectView!
+    var detailView: ActivityDetailsView!
     let activitiesRef = FIRDatabase.database().reference(withPath: "activities")
     
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         navigationItem.title = "Best App"
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        
+        let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.05*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
+        
+        self.detailView = ActivityDetailsView(frame: frame)
         setUpActivityCollectionCells()
         createLayout()
+        
         self.activitiesRef.observe(.value, with: { (snapshot) in
             
             var newActivites = [Activity]()
@@ -37,25 +52,19 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             }
             self.activities = self.sortedActivities(newActivites)
             OperationQueue.main.addOperation {
+                
                 self.activitiesCollectionView.reloadData()
             }
             
         })
- 
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        UIView.transition(with: self.activitiesCollectionView, duration: 0.4, options: .transitionCrossDissolve, animations:{
-            self.activitiesCollectionView.alpha = 1.0
-        }) { _ in }
-    }
-    
-    
-      func createLayout() {
+    func createLayout() {
         
         view.backgroundColor = UIColor.black
         view.addSubview(activitiesCollectionView)
-        activitiesCollectionView.backgroundColor = UIColor.clear
+        activitiesCollectionView.backgroundColor = UIColor.white
         activitiesCollectionView.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top)
             make.height.equalTo(view.snp.height)
@@ -85,10 +94,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         activitiesCollectionView.register(ActivitiesCollectionViewCell.self, forCellWithReuseIdentifier: "activityCell")
     }
     
-    
-    
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return activities.count
     }
@@ -100,13 +105,23 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             cell.updateCell(with: self.activities[indexPath.row])
             self.activities[indexPath.row].imageview = cell.activityImageView.image
             
-
         }
         return cell
-     }
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showDetails", sender: self)
+        self.detailView.selectedActivity = self.activities[indexPath.row]
+        self.detailView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
+        self.view.addSubview(blurEffectView)
+        self.view.addSubview(self.detailView)
+        self.detailView.alpha = 0
+        self.detailView.layer.cornerRadius = 10
+        self.detailView.clipsToBounds = true
+        UIView.transition(with: self.activitiesCollectionView, duration: 0.4, options: .transitionCrossDissolve, animations:{
+            self.detailView.alpha = 1.0
+        }) { _ in }
+        
+        
     }
     
     
@@ -128,18 +143,29 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
         return sortedArray
     }
-
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetails" {
-            let dest = segue.destination as! ActivityDetailsViewController
-           // let indexPath = self.activitiesCollectionView.indexPathsForSelectedItems?[0]
-            if let index = self.activitiesCollectionView.indexPathsForSelectedItems?[0].item {
-            dest.selectedActivity = self.activities[index]
-             //let  selectedCell = activitiesCollectionView.cellForItem(at:indexPath!) as! ActivitiesCollectionViewCell
-              //  dest.selectedActivity.imageview =  selectedCell.activityImageView.image
-            }
-        }
+        
+        guard segue.identifier == "showDetails" else { return }
+        
+        let selectedActivity = sender as! Activity
+        
+        let destVC = segue.destination as! ActivityDetailsViewController
+        
+        destVC.selectedActivity = selectedActivity
+        
+    }
+    
+    func dismissView() {
+        
+        UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
+            self.blurEffectView.removeFromSuperview()
+            self.detailView.removeFromSuperview()
+            self.activitiesCollectionView.alpha = 1
+        }) { _ in }
+        
+        
     }
     
 }

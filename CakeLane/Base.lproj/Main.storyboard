@@ -30,7 +30,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.23426724137931035" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="UuN-WA-0X3"/>
                     <connections>
@@ -63,7 +63,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="FUa-jV-pOJ" kind="presentation" identifier="showDetails" id="eIm-Ra-EGu"/>
+                        <segue destination="FUa-jV-pOJ" kind="presentation" identifier="showDetails" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="eIm-Ra-EGu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>

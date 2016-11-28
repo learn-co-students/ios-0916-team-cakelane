@@ -17,8 +17,9 @@ class ActivityDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        self.activityView.selectedActivity = self.selectedActivity
-//ToDo: -
+        activityView.selectedActivity = selectedActivity
+        
+        //ToDo: -
 //        if selectedActivity.owner == userID {
 //            display editable activity details
 //        }else{
@@ -34,7 +35,8 @@ class ActivityDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
- 
+    
+  
 }
 
 extension ActivityDetailsViewController {
@@ -51,17 +53,11 @@ extension ActivityDetailsViewController {
         self.activityView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         self.activityView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         self.activityView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        self.activityView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
+      //  self.activityView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
         
     }
     
-    func dismissView() {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.view.subviews.forEach { $0.alpha = 0.0 }
-        }) { _ in
-            self.dismiss(animated: false, completion: nil)
-        }
-        
-    }
+    
  
 }
+
