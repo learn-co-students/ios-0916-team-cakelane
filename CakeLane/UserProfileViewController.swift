@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import Eureka
 
-class UserProfileViewController: FormViewController {
+class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,34 +34,7 @@ class UserProfileViewController: FormViewController {
         guard let image72url = defaults.string(forKey: "image72") else { return }
         guard let image512url = defaults.string(forKey: "image512") else { return }
         guard let timeZoneLabel = defaults.string(forKey: "timeZoneLabel") else { return }
-        
-        // create form via eureka
-        form +++ Section("Basic Info")
-            
-            <<< TextRow(){ row in
-                row.title = "First Name"
-                row.placeholder = firstName
-            }
-            
-            <<< TextRow(){ row in
-                row.title = "Last Name"
-                row.placeholder = lastName
-            }
-            
-            <<< TextRow(){ row in
-                row.title = "Email"
-                row.placeholder = email
-            }
-            
-//            <<< PhoneRow() {
-//                $0.title = "Phone Number"
-//                $0.placeholder = "And your number here"
-//            }
-            
-            <<< TextRow(){ row in
-                row.title = "Time Zone"
-                row.placeholder = timeZoneLabel
-            }
+     
     }
     
     // MARK: Retrieve user profile data from Slack API
