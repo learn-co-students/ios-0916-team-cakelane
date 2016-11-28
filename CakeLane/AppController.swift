@@ -33,7 +33,7 @@ class AppController: UIViewController {
         if defaults.object(forKey: "SlackToken") == nil {
             actingViewController = loadViewController(withID: .loginVC)
         } else {
-            actingViewController = loadViewController(withID: .activitiesVC)
+            actingViewController = loadViewController(withID: .feedVC)
         }
         addActing(viewController: actingViewController)
         
@@ -56,7 +56,7 @@ class AppController: UIViewController {
         switch id {
         case .loginVC:
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! LoginViewController
-        case .activitiesVC:
+        case .feedVC:
             let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivitiesViewController
             let navVC = UINavigationController(rootViewController: vc)
             return navVC
@@ -81,7 +81,33 @@ class AppController: UIViewController {
         
         switch notification.name {
         case Notification.Name.closeLoginVC:
-            switchToViewController(withID: .activitiesVC)
+            // MARK: Basic Slack API call ~ used to populate user profile (called once during signup)
+            SlackAPIClient.getUserInfo { userInfo in
+                
+                // MARK: Debug response
+//                print("SLACK OAUTH JSON+++++++++++++++++++++++++++++++++")
+//                print(UserDefaults.standard.object(forKey: "SlackToken"))
+//                print(UserDefaults.standard.object(forKey: "SlackUser"))
+//                print(userInfo)
+//                print("SLACK OAUTH JSON+++++++++++++++++++++++++++++++++")
+                
+                // process Slack API response
+                let userData = userInfo["user"] as! [String: Any]
+                
+                // instantiate user profile
+                let userProfile = User(dictionary: userData)
+                
+                print("**********USER_PROFILE************")
+                print(userProfile)
+                print("**********USER_PROFILE************")
+                
+                // persist user profile info via Core Data
+                
+                
+            }
+            
+            // MARK: Switch from Login Flow to Main Flow (Activity Feed)
+            switchToViewController(withID: .feedVC)
         case Notification.Name.closeActivitiesTVC:
             switchToViewController(withID: .loginVC)
         default:

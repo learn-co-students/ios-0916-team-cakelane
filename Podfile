@@ -11,6 +11,7 @@ pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'SnapKit'
 pod 'Alamofire'
+pod ‘Eureka’, '~> 2.0.0-beta.1'
 
 end
 

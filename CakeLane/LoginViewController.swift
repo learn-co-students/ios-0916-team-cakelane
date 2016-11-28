@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
 
         // NOTE: set up initial scopes so that user doesn't have to go through authorization multiple times
         // let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,incoming-webhook,bot"
-        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=incoming-webhook"
+        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read"
 
         let urlString = baseURL + path + query
 
@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
 
     func redirectFromSlack(_ notification: Notification) {
 
-        // NOTE: Use temporary code received from Slack to request access token
+        // MARK: Use temporary code received from Slack to request access token
         let code = notification.object as! String
 
         let baseURL = "https://slack.com/api/oauth.access"
@@ -57,9 +57,9 @@ class LoginViewController: UIViewController {
 
                 let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
 
-                print("+++++++++++++++*********++++++++++")
-                dump(json)
-                print("+++++++++++++++*********++++++++++")
+//                print("+++++++++++++++*********++++++++++")
+//                dump(json)
+//                print("+++++++++++++++*********++++++++++")
 
                 let token = json["access_token"] as! String
                 let teamName = json["team_name"] as! String
@@ -67,7 +67,6 @@ class LoginViewController: UIViewController {
                 let userID = json["user_id"] as! String
 
                 // save slack account token, user id, team id, and team name using UserDefaults
-
                 let defaults = UserDefaults.standard
                 defaults.setValue(token, forKey: "SlackToken")
                 defaults.set(userID, forKey: "SlackUser")
@@ -79,6 +78,7 @@ class LoginViewController: UIViewController {
             }.resume()
             self.safariViewController.dismiss(animated: true, completion: nil)
         }
+        
     }
 
 }

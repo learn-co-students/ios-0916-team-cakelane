@@ -12,7 +12,7 @@
         <!--Activities View Controller-->
         <scene sceneID="Kyh-Es-c9f">
             <objects>
-                <viewController storyboardIdentifier="activities-view-controller" id="zGe-9S-kX3" customClass="ActivitiesViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="feed-view-controller" id="zGe-9S-kX3" customClass="ActivitiesViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GYt-tY-Xek"/>
                         <viewControllerLayoutGuide type="bottom" id="gaO-JS-WDd"/>
@@ -219,7 +219,7 @@
         <!--Navigation Controller-->
         <scene sceneID="KwY-ge-OZW">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1hp-iN-GZG" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="feed-navigation-view-controller" automaticallyAdjustsScrollViewInsets="NO" id="1hp-iN-GZG" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hcl-w3-8bT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
