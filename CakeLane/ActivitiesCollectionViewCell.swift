@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class ActivitiesCollectionViewCell: UICollectionViewCell {
-    
+
     var activityImageView = UIImageView()
     var activityOverlay = UIView()
     var transparentButton = UIButton()
@@ -22,14 +22,11 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     var firstProfileImage = UIImageView()
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
-    
-    
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        
+
+
         contentView.addSubview(activityImageView)
         activityImageView.backgroundColor = UIColor.blue
         activityImageView.layer.borderWidth = 1
@@ -41,8 +38,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(contentView.snp.width)
             make.height.equalTo(contentView.snp.height)
         }
-        
-        
+
+
         activityImageView.addSubview(activityOverlay)
         activityOverlay.backgroundColor = UIColor.white
         activityOverlay.snp.makeConstraints { (make) in
@@ -51,9 +48,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.right.equalTo(activityImageView.snp.right)
             make.height.equalTo(activityImageView.snp.height).dividedBy(10)
         }
-        
-        
-        
+
+
+
         activityImageView.addSubview(activityLabel)
         activityLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         activityLabel.textColor = UIColor.white
@@ -61,8 +58,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.left.equalTo(activityImageView.snp.left).offset(10)
             make.top.equalTo(activityImageView.snp.bottom).offset(-120)
         }
-        
-        
+
+
         activityImageView.addSubview(locationLabel)
         locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         locationLabel.textColor = UIColor.white
@@ -70,7 +67,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.left.equalTo(activityImageView.snp.left).offset(10)
             make.top.equalTo(activityLabel.snp.bottom)
         }
-        
+
         activityImageView.addSubview(dateLabel)
         dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         dateLabel.textColor = UIColor.white
@@ -78,17 +75,17 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.left.equalTo(activityImageView.snp.left).offset(10)
             make.top.equalTo(locationLabel.snp.bottom)
         }
-        
-        
+
+
         activityImageView.addSubview(timeLabel)
         timeLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
         timeLabel.textColor = UIColor.white
         timeLabel.snp.makeConstraints { (make) in
             make.left.equalTo(dateLabel.snp.right).offset(5)
             make.top.equalTo(locationLabel.snp.bottom)
-            
+
         }
-        
+
         activityOverlay.addSubview(firstProfileImage)
         firstProfileImage.backgroundColor = UIColor.green
         firstProfileImage.layer.masksToBounds = true
@@ -101,7 +98,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(activityOverlay.snp.width).dividedBy(12)
             make.height.equalTo(activityOverlay.snp.height).dividedBy(1.1)
         }
-        
+
         activityOverlay.addSubview(secondProfileImage)
         secondProfileImage.backgroundColor = UIColor.green
         secondProfileImage.layer.masksToBounds = true
@@ -114,7 +111,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(activityOverlay.snp.width).dividedBy(12)
             make.height.equalTo(activityOverlay.snp.height).dividedBy(1.1)
         }
-        
+
         activityOverlay.addSubview(thirdProfileImage)
         thirdProfileImage.backgroundColor = UIColor.green
         thirdProfileImage.layer.masksToBounds = true
@@ -127,7 +124,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(activityOverlay.snp.width).dividedBy(12)
             make.height.equalTo(activityOverlay.snp.height).dividedBy(1.1)
         }
-        
+
         activityOverlay.addSubview(numberOfAttendeesLabel)
         numberOfAttendeesLabel.text = "10 Attending"
         numberOfAttendeesLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 12)
@@ -135,16 +132,16 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         numberOfAttendeesLabel.snp.makeConstraints { (make) in
             make.right.equalTo(activityOverlay.snp.right).offset(-20)
             make.top.equalTo(activityOverlay.snp.top).offset(8)
-            
+
         }
-        
+
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
+
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)
@@ -152,31 +149,31 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             let request = URLRequest(url: unwrappedUrl)
             let task = session.dataTask(with: request) { (data, response, error) in
                 guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
-                
-                
-                print(data)
+
                 guard let image = UIImage(data: data) else { return }
                 completion(true, image)
             }
             task.resume()
         }
-        
+
     }
     func updateCell(with activity: Activity) {
-        
+
         self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
         self.activityImageView.image = UIImage(named: "snow")
-        
-        //        self.downloadImage(at: activity.image) { (success, image) in
-        //            DispatchQueue.main.async {
-        //                self.activityImageView.image = image
-        //
-        //                self.setNeedsLayout()
-        //            }
-        //        }
-        
+
+
+        // MARK: download activity image from firebase
+//        self.downloadImage(at: activity.image) { (success, image) in
+//            DispatchQueue.main.async {
+//                self.activityImageView.image = image
+//                self.setNeedsLayout()
+//            }
+//        }
+
+
     }
-    
+
 }

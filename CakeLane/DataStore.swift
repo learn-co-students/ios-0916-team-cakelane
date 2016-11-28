@@ -15,7 +15,7 @@ class DataStore {
     
     lazy var persistentContainer: NSPersistentContainer = {
         
-        let container = NSPersistentContainer(name: "Account")
+        let container = NSPersistentContainer(name: "UserProfile")
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

@@ -9,10 +9,13 @@
 import Foundation
 
 enum StoryboardID: String {
-    // TODO: remove unnecessary cases
+    // TODO: fix conflicts & refactor all controller files for consistency
     case loginVC = "login-view-controller"
-    case activitiesVC = "activities-view-controller"
-    case activitiesNavVC = "activity-navigation-view-controller"
+    case feedVC = "feed-view-controller"
+    case feedNavVC = "feed-navigation-view-controller"
     case activityDetails = "activity-detail-view-controller"
-    case addActivitiesVC = "add-activity-view-controller"
+    case addActivityVC = "add-activity-view-controller"
+    case userProfileVC = "user-profile-view-controller"
+    case calendarVC = "calendar-view-controller"
+    // TODO: add Firebase (child) constants
 }

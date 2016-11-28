@@ -13,7 +13,7 @@ import UIKit
 // MARK: - Create Model Data
 
 struct Activity {
-    
+
     var name: String
     var owner: String
     var date: String
@@ -23,11 +23,11 @@ struct Activity {
 //    var attendees: [String]
     var imageview: UIImage?
     let reference : FIRDatabaseReference?
-   
+
     // Mark: - initializer for activity object
-    
+
     init(owner: String, name: String, date: String, image: String, location: String, description: String) {
-        
+
         self.name = name
         self.owner = owner
         self.date = date
@@ -36,11 +36,11 @@ struct Activity {
         self.description = description
         self.reference = nil
     }
-    
-    
+
+
     // Mark: - creating objects using firbase data
     init(snapshot: FIRDataSnapshot) {
-        
+
         let snapshotValue = snapshot.value as! [String: Any]
         name = snapshotValue["name"] as? String ?? "No name"
         owner = snapshotValue["owner"] as? String ?? "No owner"
@@ -50,11 +50,11 @@ struct Activity {
         description = snapshotValue["description"] as? String ?? "No description"
         reference = snapshot.ref
     }
-    
+
     // Mark: - create a dictionary
-    
+
     func toAnyObject() -> Any {
-        
+
         return [
             "name":name,
             "owner":owner,
@@ -64,6 +64,6 @@ struct Activity {
            "description":description
         ]
     }
-    
-       
+
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -15,7 +15,7 @@
         <!--Activities View Controller-->
         <scene sceneID="Kyh-Es-c9f">
             <objects>
-                <viewController storyboardIdentifier="activities-view-controller" id="zGe-9S-kX3" customClass="ActivitiesViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="feed-view-controller" id="zGe-9S-kX3" customClass="ActivitiesViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GYt-tY-Xek"/>
                         <viewControllerLayoutGuide type="bottom" id="gaO-JS-WDd"/>
@@ -168,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GNl-Uy-0qg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-654" y="-198"/>
+            <point key="canvasLocation" x="236" y="532"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="7Fw-PL-kW3">
@@ -228,12 +228,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J5W-MM-Eye" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="222" y="-677"/>
+            <point key="canvasLocation" x="1132" y="955"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KwY-ge-OZW">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1hp-iN-GZG" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="feed-navigation-view-controller" automaticallyAdjustsScrollViewInsets="NO" id="1hp-iN-GZG" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hcl-w3-8bT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

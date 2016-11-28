@@ -23,11 +23,13 @@ class SlackAPIClient {
         Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { return }
             let completeJSON = JSON as! [String : Any]
-            print(completeJSON)
+//            print(completeJSON)
             completion(completeJSON)
         }
 
     }
+    
+    
 
 
 

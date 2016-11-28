@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import Firebase
 
 class AppController: UIViewController {
 
@@ -33,7 +33,7 @@ class AppController: UIViewController {
         if defaults.object(forKey: "SlackToken") == nil {
             actingViewController = loadViewController(withID: .loginVC)
         } else {
-            actingViewController = loadViewController(withID: .activitiesVC)
+            actingViewController = loadViewController(withID: .feedVC)
         }
         addActing(viewController: actingViewController)
         
@@ -56,7 +56,7 @@ class AppController: UIViewController {
         switch id {
         case .loginVC:
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! LoginViewController
-        case .activitiesVC:
+        case .feedVC:
             let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivitiesViewController
             let navVC = UINavigationController(rootViewController: vc)
             return navVC
@@ -81,7 +81,48 @@ class AppController: UIViewController {
         
         switch notification.name {
         case Notification.Name.closeLoginVC:
-            switchToViewController(withID: .activitiesVC)
+            // MARK: Basic Slack API call ~ used to populate user profile (called once during signup)
+            SlackAPIClient.getUserInfo { userInfo in
+                
+                // MARK: Debug response
+//                print("SLACK OAUTH JSON+++++++++++++++++++++++++++++++++")
+//                print(UserDefaults.standard.object(forKey: "SlackToken"))
+//                print(UserDefaults.standard.object(forKey: "SlackUser"))
+//                print(userInfo)
+//                print("SLACK OAUTH JSON+++++++++++++++++++++++++++++++++")
+                
+                // process Slack API response
+                let userData = userInfo["user"] as! [String: Any]
+                
+                DispatchQueue.main.async {
+                    // instantiate user profile
+                    let userProfile = User(dictionary: userData)
+                    let defaults = UserDefaults.standard
+                    defaults.set(userProfile.slackID, forKey: "slackID")
+                    defaults.set(userProfile.teamID, forKey: "teamID")
+                    defaults.set(userProfile.username, forKey: "username")
+                    defaults.set(userProfile.firstName, forKey: "firstName")
+                    defaults.set(userProfile.lastName, forKey: "lastName")
+                    defaults.set(userProfile.email, forKey: "email")
+                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
+                    defaults.set(userProfile.image72, forKey: "image72")
+                    defaults.set(userProfile.image512, forKey: "image512")
+                    defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
+                    defaults.synchronize()
+                    
+//                    print("**********USER_PROFILE************")
+//                    print(userProfile)
+//                    print("**********USER_PROFILE************")
+                    
+                    // TODO: write user profile info to Firebase
+                    let reference = FIRDatabase.database().reference()
+                    reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
+                }
+                
+            }
+            
+            // MARK: Switch from Login Flow to Main Flow (Activity Feed)
+            switchToViewController(withID: .feedVC)
         case Notification.Name.closeActivitiesTVC:
             switchToViewController(withID: .loginVC)
         default:
