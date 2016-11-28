@@ -59,7 +59,7 @@ class ActivityDetailsView: UIView {
      self.activityImageView.translatesAutoresizingMaskIntoConstraints = false
         self.activityImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
         self.activityImageView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor).isActive = true
-        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.45).isActive = true
+        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.4).isActive = true
         self.activityImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         self.activityImageView.backgroundColor = UIColor.clear
         self.activityImageView.contentMode = .scaleAspectFill
@@ -95,7 +95,7 @@ class ActivityDetailsView: UIView {
         
         self.contentView.addSubview(activityOverlay)
         activityOverlay.backgroundColor = UIColor.white
-        activityOverlay.layer.borderWidth = 1.3
+        activityOverlay.layer.borderWidth = 1
         activityOverlay.layer.borderColor = UIColor.lightGray.cgColor
         activityOverlay.translatesAutoresizingMaskIntoConstraints = false
         activityOverlay.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true

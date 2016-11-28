@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,12 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         UIApplication.shared.statusBarStyle = .lightContent
-        //Navigation Controller
-//        let viewController = ActivitiesViewController(nibName: nil, bundle: nil)
-//        let navigationController = UINavigationController(rootViewController: viewController)
-//        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        self.window?.rootViewController = navigationController
-//        self.window?.makeKeyAndVisible()
+         IQKeyboardManager.sharedManager().enable = true
     
         return true
     }

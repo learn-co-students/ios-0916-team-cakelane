@@ -41,6 +41,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
+  
     
     // Mark: - create an activity on firebase using textfield's information
     
@@ -166,7 +167,6 @@ extension AddActivityController: UIImagePickerControllerDelegate, UINavigationCo
     func dismissKeyboardView() {
         view.endEditing(true)
     }
-    
     
 }
 

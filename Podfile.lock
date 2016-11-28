@@ -31,12 +31,14 @@ PODS:
   - GoogleToolboxForMac/NSData+zlib (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
   - GTMSessionFetcher/Core (1.1.7)
+  - IQKeyboardManagerSwift (4.0.7)
   - SnapKit (3.0.2)
 
 DEPENDENCIES:
   - Alamofire
   - Firebase/Database
   - Firebase/Storage
+  - IQKeyboardManagerSwift
   - SnapKit
 
 SPEC CHECKSUMS:
@@ -51,8 +53,9 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
+  IQKeyboardManagerSwift: 58bbcf46b5cf9fd4ed625d28a60cb2fbae4ab0f4
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
 
-PODFILE CHECKSUM: 4f55ea7795e2445952e6bb3e78979bf0db85317b
+PODFILE CHECKSUM: bde897402be1e187bfb83fff1004f1047b355f55
 
 COCOAPODS: 1.1.1

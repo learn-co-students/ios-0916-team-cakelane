@@ -11,6 +11,9 @@ pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'SnapKit'
 pod 'Alamofire'
+pod 'IQKeyboardManagerSwift'
+
+
 
 end
 
