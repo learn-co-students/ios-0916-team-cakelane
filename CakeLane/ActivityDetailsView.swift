@@ -158,7 +158,7 @@ class ActivityDetailsView: UIView {
         profileImage.backgroundColor = UIColor.green
         profileImage.layer.masksToBounds = true
         profileImage.layer.borderColor = UIColor.black.cgColor
-        profileImage.layer.cornerRadius = 18
+        profileImage.layer.cornerRadius = 15
         profileImage.clipsToBounds = true
         profileImage.translatesAutoresizingMaskIntoConstraints = false
         profileImage.topAnchor.constraint(equalTo: self.activityOverlay.topAnchor, constant: 1.5).isActive = true

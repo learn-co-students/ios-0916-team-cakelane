@@ -32,7 +32,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         navigationItem.title = "Best App"
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.isTranslucent = false
         
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.05*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
         
@@ -144,18 +144,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return sortedArray
     }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard segue.identifier == "showDetails" else { return }
-        
-        let selectedActivity = sender as! Activity
-        
-        let destVC = segue.destination as! ActivityDetailsViewController
-        
-        destVC.selectedActivity = selectedActivity
-        
-    }
     
     func dismissView() {
         

@@ -12,35 +12,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Activity Details View Controller-->
-        <scene sceneID="w0L-ak-tqw">
-            <objects>
-                <viewController id="FUa-jV-pOJ" customClass="ActivityDetailsViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ppe-JR-99f"/>
-                        <viewControllerLayoutGuide type="bottom" id="ofB-Zy-I8P"/>
-                    </layoutGuides>
-                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="hoI-Ia-nc1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7kI-Dl-dAp" customClass="ActivityDetailsView" customModule="CakeLane" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.23426724137931035" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="UuN-WA-0X3"/>
-                    <connections>
-                        <outlet property="activityView" destination="7kI-Dl-dAp" id="Cie-ya-J0b"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="I9V-La-6eE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2080.8000000000002" y="990.85457271364328"/>
-        </scene>
         <!--Activities View Controller-->
         <scene sceneID="Kyh-Es-c9f">
             <objects>
@@ -62,9 +33,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="FUa-jV-pOJ" kind="presentation" identifier="showDetails" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="eIm-Ra-EGu"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
