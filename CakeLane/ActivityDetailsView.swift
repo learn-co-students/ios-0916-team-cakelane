@@ -19,11 +19,14 @@ class ActivityDetailsView: UIView {
     var firstProfileImage = UIImageView()
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
+    var locationTitlelabel = UILabel()
+    var locationLabel = UILabel()
     var selectedActivity: Activity! {
         
         didSet {
-          // activityImageView.image = selectedActivity.imageview
-           nameLabel.text = selectedActivity.name
+        //  activityImageView.image = selectedActivity.imageview
+          nameLabel.text = selectedActivity.name
+         locationLabel.text = selectedActivity.location
             
         }
         
@@ -46,11 +49,12 @@ class ActivityDetailsView: UIView {
        contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(contentView)
         contentView.constrainEdges(to: self)
-        contentView.backgroundColor = UIColor.white
+        contentView.backgroundColor = UIColor.black
         setupImageView()
         setupCloseButton()
-        setupLabel()
         setupActivityOverLay()
+        setupLabel()
+
     }
     
     func setupImageView() {
@@ -63,6 +67,7 @@ class ActivityDetailsView: UIView {
         self.activityImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         self.activityImageView.backgroundColor = UIColor.clear
         self.activityImageView.contentMode = .scaleAspectFill
+        self.activityImageView.clipsToBounds = true
         self.activityImageView.image = UIImage(named: "snow")
     }
     
@@ -75,7 +80,7 @@ class ActivityDetailsView: UIView {
         self.closeButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
         self.closeButton.heightAnchor.constraint(equalTo: self.closeButton.widthAnchor).isActive = true
         self.closeButton.setTitle("X", for: .normal)
-        self.closeButton.setTitleColor(UIColor.gray, for: .normal)
+        self.closeButton.setTitleColor(UIColor.white, for: .normal)
         self.closeButton.backgroundColor = UIColor.clear
         
            }
@@ -85,9 +90,33 @@ class ActivityDetailsView: UIView {
         self.activityImageView.addSubview(nameLabel)
         nameLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 26)
         nameLabel.textColor = UIColor.white
-        self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
         self.nameLabel.bottomAnchor.constraint(equalTo: self.activityImageView.bottomAnchor, constant: -20).isActive = true
-        self.nameLabel.leftAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        
+        self.contentView.addSubview(locationTitlelabel)
+         locationTitlelabel.text = "Location"
+        locationTitlelabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        locationTitlelabel.textColor = UIColor.orange
+        locationTitlelabel.translatesAutoresizingMaskIntoConstraints = false
+        locationTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        locationTitlelabel.topAnchor.constraint(equalTo: self.activityOverlay.bottomAnchor, constant: 10).isActive = true
+       
+        
+        self.contentView.addSubview(locationLabel)
+        locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        locationLabel.textColor = UIColor.black
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        locationLabel.topAnchor.constraint(equalTo: self.locationTitlelabel.bottomAnchor).isActive = true
+        locationLabel.backgroundColor = UIColor.white
+        locationLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
+        locationLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        locationLabel.layer.cornerRadius = 10
+        locationLabel.layer.borderWidth = 1
+        locationLabel.clipsToBounds = true
+        
+
      }
     
     
@@ -133,6 +162,13 @@ class ActivityDetailsView: UIView {
         profileImage.topAnchor.constraint(equalTo: self.activityOverlay.topAnchor, constant: 1.5).isActive = true
         profileImage.widthAnchor.constraint(equalTo: self.activityOverlay.widthAnchor, multiplier: 1/12).isActive = true
         profileImage.heightAnchor.constraint(equalTo: self.activityOverlay.heightAnchor, multiplier: 1/1.1).isActive = true
+    }
+    
+    func customizeLabel(label: UILabel) {
+        label.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
     }
     
 }

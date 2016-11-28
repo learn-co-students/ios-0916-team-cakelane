@@ -98,9 +98,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCell", for: indexPath) as! ActivitiesCollectionViewCell
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
+            self.activities[indexPath.row].imageview = cell.activityImageView.image
             
+
         }
-        
         return cell
      }
     
@@ -132,8 +133,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetails" {
             let dest = segue.destination as! ActivityDetailsViewController
+           // let indexPath = self.activitiesCollectionView.indexPathsForSelectedItems?[0]
             if let index = self.activitiesCollectionView.indexPathsForSelectedItems?[0].item {
             dest.selectedActivity = self.activities[index]
+             //let  selectedCell = activitiesCollectionView.cellForItem(at:indexPath!) as! ActivitiesCollectionViewCell
+              //  dest.selectedActivity.imageview =  selectedCell.activityImageView.image
             }
         }
     }
