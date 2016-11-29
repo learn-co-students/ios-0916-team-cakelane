@@ -89,7 +89,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
             }
             
         }
-        
+        //TODO: NEED TO REPLACE WITH REAL DATA
+        SlackAPIClient.postSlackNotification()
         
         dismiss(animated: true, completion: nil)
         

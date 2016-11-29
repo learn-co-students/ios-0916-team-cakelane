@@ -19,7 +19,7 @@ class SlackAPIClient {
 
         let urlString = "https://slack.com/api/users.info?user=\(userID)&token=\(token)"
         guard let url = URL(string: urlString) else { return }
-        print(urlString)
+        print(url)
         Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { return }
             let completeJSON = JSON as! [String : Any]
@@ -27,6 +27,40 @@ class SlackAPIClient {
             completion(completeJSON)
         }
 
+    }
+    
+    class func postSlackNotification() {
+        // Post Slack Notification to webhook URL
+        let parameters: Parameters = [
+            "attachments": [
+                    "fallback": "*New Activity:* APP POST TEST _by Bejan_.",
+                    "color": "#b942f4",
+                    "pretext": "*New Activity:* APP POST TEST _by Bejan_.",
+                    "author_name": "Bejan Fozdar",
+                    "author_link": "http://github.com/ixyzt",
+                    "author_icon": "https://secure.gravatar.com/avatar/6fff6c447ce00e3080ffe5bf969811db.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2F3654%2Fimg%2Favatars%2Fava_0023-24.png",
+                    "title": "Gamer Night",
+                    "title_link": "https://docs.google.com/document/d/1iGqv8zaQHcxWUmQkLAntNRLTy5czsLPWHnkbhrPK3ig/edit?usp=sharing",
+                    "text": "THIS IS A TEST!",
+                    "image_url": "http://www.commondreams.org/sites/default/files/imce-images/screen_shot_2012-01-24_at_3.48.15_pm.png",
+                    "thumb_url": "http://nineplanets.org/images/themoon.jpg",
+                    "footer": "posted by Teem!",
+                    "footer_icon": "https://mlblogsmlbastian.files.wordpress.com/2010/07/tlogo.gif",
+                    "ts": 1480444579,
+                    "mrkdwn_in": ["fallback","text", "pretext"]
+            ]
+        ]
+        
+        let webhookURL = "https://hooks.slack.com/services/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"
+        guard let url = URL(string: webhookURL) else { return }
+        // print(url)
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        .response { (response) in
+            print(response.request)  // original URL request
+            print(response.response) // URL response
+            print(response.data)     // server data
+        }
+        
     }
     
     
