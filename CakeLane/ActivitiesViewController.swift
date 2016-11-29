@@ -22,7 +22,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var dropDownViewIsDisplayed: Bool = false
 
     override func viewDidLoad() {
-
+        
         super.viewDidLoad()
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)

@@ -14,7 +14,6 @@
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
 		A2E0019A1DE9E9A800C24F49 /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */; };
 		A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */; };
-		A2ECAA7B1DDD17A9000E3CC6 /* ActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */; };
 		A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */; };
 		A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */; };
 		A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */; };
@@ -42,11 +41,8 @@
 		1BDF62471DDD06C500C3D12E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CakeLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
-
-		A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityDetailsView.swift; path = CakeLane/ActivityDetailsView.swift; sourceTree = "<group>"; };
-		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailsView.xib; sourceTree = "<group>"; };
-		A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTableViewController.swift; sourceTree = "<group>"; };
-
+		A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsView.swift; sourceTree = "<group>"; };
+		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityDetailsView.xib; path = ../ActivityDetailsView.xib; sourceTree = "<group>"; };
 		A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityController.swift; sourceTree = "<group>"; };
@@ -80,8 +76,6 @@
 		1BDF622C1DDD06C400C3D12E = {
 			isa = PBXGroup;
 			children = (
-				A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */,
-				A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */,
 				1BDF62371DDD06C500C3D12E /* CakeLane */,
 				1BDF62361DDD06C500C3D12E /* Products */,
 				B7D865F5E9CF141A83DDE890 /* Pods */,
@@ -138,11 +132,9 @@
 		E50D139A1DDF63CB00A3C41C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E53B16ED1DEE09E1009C84BC /* Activities */,
 				E50D139B1DDF63F800A3C41C /* AppController.swift */,
 				E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */,
-				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
-				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
-				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
 				E53B16C81DEC5457009C84BC /* UserProfileViewController.swift */,
 			);
 			name = Controllers;
@@ -164,6 +156,18 @@
 				1BDF623C1DDD06C500C3D12E /* Main.storyboard */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		E53B16ED1DEE09E1009C84BC /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */,
+				A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */,
+				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
+				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
+				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
+			);
+			name = Activities;
 			sourceTree = "<group>";
 		};
 		E7D76156BC8025C34B746C8D /* Frameworks */ = {
