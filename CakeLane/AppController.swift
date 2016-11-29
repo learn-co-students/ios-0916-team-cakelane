@@ -57,9 +57,9 @@ class AppController: UIViewController {
         case .loginVC:
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! LoginViewController
         case .feedVC:
-            let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivitiesViewController
-            let navVC = UINavigationController(rootViewController: vc)
-            return navVC
+            let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
+//            let navVC = UINavigationController(rootViewController: vc)
+            return vc
         default:
             fatalError("ERROR: Unable to find controller with storyboard id: \(id)")
         }

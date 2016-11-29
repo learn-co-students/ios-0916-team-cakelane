@@ -26,6 +26,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="WNQ-hw-gtg">
+                        <barButtonItem key="leftBarButtonItem" title="Filter" id="AxB-uL-Kv7">
+                            <connections>
+                                <action selector="filterWhenAction:" destination="zGe-9S-kX3" id="ufu-7d-piT"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="enf-tk-EVW">
                             <connections>
                                 <action selector="createActivitySegue:" destination="zGe-9S-kX3" id="In7-qT-ZgR"/>
@@ -33,6 +38,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="filterWhenOutlet" destination="AxB-uL-Kv7" id="EtY-BS-LCo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -168,7 +176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GNl-Uy-0qg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-314" y="454"/>
+            <point key="canvasLocation" x="-697" y="664"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="7Fw-PL-kW3">
@@ -228,12 +236,30 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J5W-MM-Eye" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1132" y="955"/>
+            <point key="canvasLocation" x="206" y="1212"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="w64-FI-cle">
+            <objects>
+                <tabBarController storyboardIdentifier="tabBarController" id="PMN-fE-rb8" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="VAA-kX-QUz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="1hp-iN-GZG" kind="relationship" relationship="viewControllers" id="eNQ-ay-gbu"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V27-37-5dS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="206" y="483"/>
+        </scene>
+        <!--Activities-->
         <scene sceneID="KwY-ge-OZW">
             <objects>
                 <navigationController storyboardIdentifier="feed-navigation-view-controller" automaticallyAdjustsScrollViewInsets="NO" id="1hp-iN-GZG" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Activities" image="ic_event" selectedImage="ic_event" id="j0V-JB-PjS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hcl-w3-8bT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -241,7 +267,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="zGe-9S-kX3" kind="relationship" relationship="rootViewController" id="mAj-dG-WWb"/>
+                        <segue destination="zGe-9S-kX3" kind="relationship" relationship="rootViewController" id="Rvi-gJ-CdY"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hlk-PM-0yQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -251,5 +277,6 @@
     </scenes>
     <resources>
         <image name="addphoto-2" width="296" height="296"/>
+        <image name="ic_event" width="24" height="24"/>
     </resources>
 </document>

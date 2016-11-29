@@ -22,7 +22,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     var firstProfileImage = UIImageView()
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -134,12 +134,25 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(activityOverlay.snp.top).offset(8)
 
         }
+        
+        activityOverlay.addSubview(transparentButton)
+        self.bringSubview(toFront: transparentButton)
+        transparentButton.backgroundColor = UIColor.blue
+        transparentButton.snp.makeConstraints { (make) in
+            make.centerX.equalTo(activityOverlay.snp.centerX)
+            make.centerY.equalTo(activityOverlay.snp.centerY)
+            make.height.equalTo(activityOverlay.snp.height)
+            make.width.equalTo(activityOverlay.snp.width)
+        }
 
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
 
 
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
