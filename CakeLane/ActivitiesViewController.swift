@@ -25,7 +25,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         super.viewDidLoad()
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -33,7 +33,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = false
-
+        
 
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.03*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.85)
 
@@ -116,14 +116,18 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.detailView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
         self.view.addSubview(blurEffectView)
         self.view.addSubview(self.detailView)
+        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
+        if self.detailView.selectedActivity.owner == slackID {
+            self.detailView.editButton.isHidden = false
+        }else{
+            self.detailView.editButton.isHidden = true
+        }
         self.detailView.alpha = 0
-        self.detailView.layer.cornerRadius = 10
-        self.detailView.clipsToBounds = true
-        UIView.transition(with: self.activitiesCollectionView, duration: 0.4, options: .transitionCrossDissolve, animations:{
-            self.detailView.alpha = 1.0
-        }) { _ in }
-
-
+        self.detailView.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        UIView.animate(withDuration: 0.5        , animations: {
+            self.detailView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            self.detailView.alpha = 1
+        });
     }
 
 

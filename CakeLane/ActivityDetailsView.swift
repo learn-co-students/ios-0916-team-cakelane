@@ -13,6 +13,7 @@ class ActivityDetailsView: UIView {
     @IBOutlet var contentView: UIView!
     var activityImageView: UIImageView!
     var closeButton : UIButton!
+    var editButton: UIButton!
     var nameLabel = UILabel()
     var activityOverlay = UIView()
     var numberOfAttendeesLabel = UILabel()
@@ -57,9 +58,10 @@ class ActivityDetailsView: UIView {
         self.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.constrainEdges(to: self)
-        contentView.backgroundColor = UIColor.black
+        contentView.backgroundColor = UIColor(red: 25/255, green: 15/255, blue: 8/255, alpha: 0.5)
         setupImageView()
         setupCloseButton()
+        setupEditButton()
         setupActivityOverLay()
         setupLabel()
         
@@ -93,6 +95,20 @@ class ActivityDetailsView: UIView {
         self.closeButton.setTitleColor(UIColor.white, for: .normal)
         self.closeButton.backgroundColor = UIColor.clear
         
+    }
+    
+    func setupEditButton() {
+        
+        self.editButton = UIButton()
+        self.activityImageView.addSubview(editButton)
+        self.editButton.translatesAutoresizingMaskIntoConstraints = false
+        self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
+        self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: -10).isActive = true
+        self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.06, constant: 0.0).isActive = true
+        self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
+        let image = UIImage(named: "Edit2")?.tint(color: .orange)
+        self.editButton.setImage(image, for: .normal)
+
     }
     
     func setupLabel() {
@@ -233,5 +249,27 @@ extension UIView {
     }
     
     
+    
+}
+
+// extension to change the color of image
+extension UIImage {
+    
+    func tint(color: UIColor) -> UIImage? {
+        
+        let drawRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else {return nil}
+        context.translateBy(x: 0, y: size.height)
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.clip(to: drawRect, mask: self.cgImage!)
+        color.setFill()
+        UIRectFill(drawRect)
+        draw(in: drawRect, blendMode: .overlay, alpha: 1.0)
+        let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return tintedImage
+        
+    }
     
 }
