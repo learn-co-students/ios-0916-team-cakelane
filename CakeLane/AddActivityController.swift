@@ -11,7 +11,7 @@ import Firebase
 
 
 
-class AddActivityController: UIViewController, UITextFieldDelegate {
+class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     var databaseReference = FIRDatabase.database().reference()
     
@@ -25,7 +25,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var activityLocation: UITextField!
     
-    @IBOutlet weak var activityDescription: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
     
     @IBOutlet weak var activityImage: UIImageView!
     
@@ -33,7 +33,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        self.hideKeyboardWhenTappedAround()
+        descriptionTextView.delegate = self
+        descriptionTextView.text = "Description"
+        descriptionTextView.textColor = UIColor.lightGray
+        descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
     }
     
@@ -41,7 +44,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-  
+    
     
     // Mark: - create an activity on firebase using textfield's information
     
@@ -51,13 +54,14 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
         let unwrappedName = self.activityName.text ?? " "
         let owner = self.activityOwner.text ?? " "
         let location = self.activityLocation.text ?? " "
-        let description = self.activityDescription.text ?? " "
+        let description = self.descriptionTextView.text ?? " "
         var date = ""
         if self.activityDate.text == "" {
             date = String(describing: Date())
         }else {
             date = self.activityDate.text ?? ""
         }
+        
         // upload image to the storage on Firebase
         let imageName = NSUUID().uuidString
         let storageRef = FIRStorage.storage().reference().child("activityImages").child("\(imageName).png")
@@ -71,18 +75,21 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
                         return
                     }
                     
-                    if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
-                      guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}  
-                        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
-                        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-                        let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
-                        let key = addedActivity.key
-                        
-                        addedActivity.setValue(newActivity.toAnyObject())
-                        // add activity with its ID to the user
-                        let newactivity = [key:date]
-                        
-                        self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+       if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
+        
+          guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
+        
+        // Create an activity on Firebase
+        
+        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
+        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
+        let key = addedActivity.key
+        addedActivity.setValue(newActivity.toAnyObject())
+        
+        // add activity with its ID to the user
+        let newactivity = [key:date]
+    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
                     }
                 })
                 
@@ -100,19 +107,15 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     @IBAction func dateTextfield(_ sender: UITextField) {
         
         let datePickerView:UIDatePicker = UIDatePicker()
-        
         sender.inputView = datePickerView
-        
         datePickerView.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
     }
     
     func datePickerValueChanged(sender: UIDatePicker) {
         
         let dateFormatter = DateFormatter()
-        
         dateFormatter.dateStyle = DateFormatter.Style.long
         dateFormatter.timeStyle = .long
-        
         self.activityDate.text = dateFormatter.string(from: sender.date)
         
     }
@@ -126,10 +129,27 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Add activity image
     func addImage() {
+        
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
-  
+        
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        if descriptionTextView.textColor == UIColor.lightGray {
+            descriptionTextView.text = nil
+            descriptionTextView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        if descriptionTextView.text.isEmpty {
+            descriptionTextView.text = "Description"
+            descriptionTextView.textColor = UIColor.lightGray
+        }
     }
     
     
@@ -158,16 +178,6 @@ extension AddActivityController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
-    }
-    
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboardView))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    func dismissKeyboardView() {
-        view.endEditing(true)
     }
     
 }

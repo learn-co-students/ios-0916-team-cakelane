@@ -54,8 +54,8 @@ class ActivityDetailsView: UIView {
     private func commonInit() {
         
         Bundle.main.loadNibNamed("ActivityDetailsView", owner: self, options: nil)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.constrainEdges(to: self)
         contentView.backgroundColor = UIColor.black
         setupImageView()
