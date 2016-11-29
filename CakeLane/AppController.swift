@@ -84,14 +84,6 @@ class AppController: UIViewController {
             // MARK: Basic Slack API call ~ used to populate user profile (called once during signup)
             SlackAPIClient.getUserInfo { userInfo in
                 
-                // MARK: Debug response
-//                print("SLACK OAUTH JSON+++++++++++++++++++++++++++++++++")
-//                print(UserDefaults.standard.object(forKey: "SlackToken"))
-//                print(UserDefaults.standard.object(forKey: "SlackUser"))
-//                print(userInfo)
-//                print("SLACK OAUTH JSON+++++++++++++++++++++++++++++++++")
-                
-                // process Slack API response
                 let userData = userInfo["user"] as! [String: Any]
                 
                 DispatchQueue.main.async {
@@ -109,12 +101,6 @@ class AppController: UIViewController {
                     defaults.set(userProfile.image512, forKey: "image512")
                     defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
                     defaults.synchronize()
-                    
-//                    print("**********USER_PROFILE************")
-//                    print(userProfile)
-//                    print("**********USER_PROFILE************")
-                    
-                    // TODO: write user profile info to Firebase
                     let reference = FIRDatabase.database().reference()
                     reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
                 }

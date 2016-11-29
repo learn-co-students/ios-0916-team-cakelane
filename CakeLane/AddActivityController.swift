@@ -72,16 +72,17 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
                     }
                     
                     if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
-                        
-                        let newActivity = Activity(owner: owner, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
-                        
-                        let addedActivity = self.databaseReference.child("activities").childByAutoId()
+                      guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}  
+                        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
+                        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+                        let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
                         let key = addedActivity.key
                         
                         addedActivity.setValue(newActivity.toAnyObject())
                         // add activity with its ID to the user
                         let newactivity = [key:date]
-                        self.databaseReference.child("users").child("slackUserID123434").child("activities").child("activitiesCreated").updateChildValues(newactivity)
+                        
+                        self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
                     }
                 })
                 

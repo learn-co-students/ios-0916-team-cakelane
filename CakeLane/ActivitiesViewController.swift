@@ -16,7 +16,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var activities = [Activity]()
     var blurEffectView: UIVisualEffectView!
     var detailView: ActivityDetailsView!
-    let activitiesRef = FIRDatabase.database().reference(withPath: "activities")
+    let ref = FIRDatabase.database().reference()
 
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
@@ -24,7 +24,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
 
         super.viewDidLoad()
-
+        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
@@ -41,25 +41,20 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         setUpActivityCollectionCells()
         createLayout()
-
-        self.activitiesRef.observe(.value, with: { (snapshot) in
+        
+         let activitiesRef = ref.child(teamID).child("activities")
+          activitiesRef.observe(.value, with: { (snapshot) in
 
             var newActivites = [Activity]()
 
             for activity in snapshot.children {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
 
-                // MARK: make sure incoming acitivity (firebase) has all of the desired properties (version issue)
-//                print("********************")
-//                dump(item)
-//                print("********************")
                 newActivites.append(item)
-
-
             }
-            self.activities = self.sortedActivities(newActivites)
+            
             OperationQueue.main.addOperation {
-
+               self.activities = self.sortedActivities(newActivites)
                 self.activitiesCollectionView.reloadData()
             }
 
