@@ -29,7 +29,7 @@ class UserProfileViewController: UIViewController {
         guard let firstName = defaults.string(forKey: "firstName") else { return }
         guard let lastName = defaults.string(forKey: "lastName") else { return }
         guard let email = defaults.string(forKey: "email") else { return }
-        // TODO: check if user is admin ~ present different profile view
+        // TODO: check if user is admin ~ present different profile view options
         guard let isAdmin = defaults.string(forKey: "isAdmin") else { return }
         guard let image72url = defaults.string(forKey: "image72") else { return }
         guard let image512url = defaults.string(forKey: "image512") else { return }
