@@ -35,7 +35,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.isTranslucent = false
 
 
-        let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.05*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
+        let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.03*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.85)
 
         self.detailView = ActivityDetailsView(frame: frame)
 

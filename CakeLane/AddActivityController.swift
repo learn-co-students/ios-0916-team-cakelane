@@ -111,6 +111,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.long
+        dateFormatter.timeStyle = .long
         
         self.activityDate.text = dateFormatter.string(from: sender.date)
         

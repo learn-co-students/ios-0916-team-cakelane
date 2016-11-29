@@ -21,14 +21,19 @@ class ActivityDetailsView: UIView {
     var thirdProfileImage = UIImageView()
     var locationTitlelabel = UILabel()
     var locationLabel = UILabel()
+    var dateTitlelabel = UILabel()
+    var dateLabel = UILabel()
+    var descriptionTitlelabel = UILabel()
+    var descriptionLabel = UILabel()
     var selectedActivity: Activity! {
         
         didSet {
         //  activityImageView.image = selectedActivity.imageview
           nameLabel.text = selectedActivity.name
-         locationLabel.text = selectedActivity.location
-         
-            
+          locationLabel.text = "  \(selectedActivity.location)"
+          dateLabel.text = "  \(selectedActivity.date)"
+          dateLabel.text = "  \(selectedActivity.date)"
+          descriptionLabel.text = "  \(selectedActivity.description)"
         }
         
     
@@ -65,7 +70,7 @@ class ActivityDetailsView: UIView {
      self.activityImageView.translatesAutoresizingMaskIntoConstraints = false
         self.activityImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
         self.activityImageView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor).isActive = true
-        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.4).isActive = true
+        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.36).isActive = true
         self.activityImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         self.activityImageView.backgroundColor = UIColor.clear
         self.activityImageView.contentMode = .scaleAspectFill
@@ -90,7 +95,7 @@ class ActivityDetailsView: UIView {
     func setupLabel() {
         
         self.activityImageView.addSubview(nameLabel)
-        nameLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 26)
+        nameLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
         nameLabel.textColor = UIColor.white
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
@@ -106,7 +111,7 @@ class ActivityDetailsView: UIView {
        
         
         self.contentView.addSubview(locationLabel)
-        locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         locationLabel.textColor = UIColor.black
         locationLabel.translatesAutoresizingMaskIntoConstraints = false
         locationLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
@@ -117,6 +122,50 @@ class ActivityDetailsView: UIView {
         locationLabel.layer.cornerRadius = 10
         locationLabel.layer.borderWidth = 1
         locationLabel.clipsToBounds = true
+        
+        self.contentView.addSubview(dateTitlelabel)
+        dateTitlelabel.text = "Date"
+        dateTitlelabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        dateTitlelabel.textColor = UIColor.orange
+        dateTitlelabel.translatesAutoresizingMaskIntoConstraints = false
+        dateTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        dateTitlelabel.topAnchor.constraint(equalTo: self.locationLabel.bottomAnchor, constant: 10).isActive = true
+        
+        
+        self.contentView.addSubview(dateLabel)
+        dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
+        dateLabel.textColor = UIColor.black
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: self.dateTitlelabel.bottomAnchor).isActive = true
+        dateLabel.backgroundColor = UIColor.white
+        dateLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
+        dateLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        dateLabel.layer.cornerRadius = 10
+        dateLabel.layer.borderWidth = 1
+        dateLabel.clipsToBounds = true
+        
+        self.contentView.addSubview(descriptionTitlelabel)
+        descriptionTitlelabel.text = "Description"
+        descriptionTitlelabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        descriptionTitlelabel.textColor = UIColor.orange
+        descriptionTitlelabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 10).isActive = true
+        
+        
+        self.contentView.addSubview(descriptionLabel)
+        descriptionLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
+        descriptionLabel.textColor = UIColor.black
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        descriptionLabel.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor).isActive = true
+        descriptionLabel.backgroundColor = UIColor.white
+        descriptionLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
+        descriptionLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        descriptionLabel.layer.cornerRadius = 10
+        descriptionLabel.layer.borderWidth = 1
+        descriptionLabel.clipsToBounds = true
         
 
      }
@@ -132,7 +181,7 @@ class ActivityDetailsView: UIView {
         activityOverlay.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         activityOverlay.topAnchor.constraint(equalTo: activityImageView.bottomAnchor).isActive = true
         activityOverlay.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        activityOverlay.heightAnchor.constraint(equalTo: self.activityImageView.heightAnchor, multiplier: 0.12).isActive = true
+        activityOverlay.heightAnchor.constraint(equalTo: self.activityImageView.heightAnchor, multiplier: 0.14).isActive = true
         
         activityOverlay.addSubview(numberOfAttendeesLabel)
         numberOfAttendeesLabel.text = "10 Attending"
