@@ -42,8 +42,8 @@ class AppController: UIViewController {
     private func addNotificationObservers() {
         // close login view controller & switch to activities once user has obtained an authorization token
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeLoginVC, object: nil)
-        // TODO: close activities if user has logged out
-        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeActivitiesTVC, object: nil)
+        // close activities if user has logged out
+        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeProfileVC, object: nil)
         
     }
     
@@ -122,7 +122,7 @@ class AppController: UIViewController {
             
             // MARK: Switch from Login Flow to Main Flow (Activity Feed)
             switchToViewController(withID: .feedVC)
-        case Notification.Name.closeActivitiesTVC:
+        case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
         default:
             fatalError("ERROR: Unable to match notification name")

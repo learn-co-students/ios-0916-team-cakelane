@@ -11,7 +11,7 @@ import Foundation
 extension Notification.Name {
     static let closeSafariVC = Notification.Name("close-safari-view-controller")
     static let closeLoginVC = Notification.Name("close-login-view-controller")
-    static let closeActivitiesTVC = Notification.Name("close-activities-view-controller")
+    static let closeProfileVC = Notification.Name("close-profile-view-controller")
 }
 
 

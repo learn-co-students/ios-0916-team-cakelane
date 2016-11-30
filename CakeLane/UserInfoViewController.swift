@@ -165,11 +165,17 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { [unowned self, ac] (action: UIAlertAction!) in
             // perform logout
+            // clear user defaults
+            if let bundle = Bundle.main.bundleIdentifier {
+                UserDefaults.standard.removePersistentDomain(forName: bundle)
+            }
+            // post notification -> have app controller take user to login view
+            NotificationCenter.default.post(name: .closeProfileVC, object: self)
+            
+            // DELETE ACCOUNT FROM FIREBASE
             
             // TODO: remove Firebase images
-            
             // TODO: remove Firebase user
-            
             // TODO: remove user's activities (potentially change owner to random person -OR- prompt user to choose new activity owner)
             
         }
