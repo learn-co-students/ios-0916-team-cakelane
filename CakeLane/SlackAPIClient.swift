@@ -32,6 +32,8 @@ class SlackAPIClient {
     class func postSlackNotification() {
         // Post Slack Notification to webhook URL
         
+        
+        
         let attachments: [[String:Any]] = [[
         "fallback": "*New Activity:* APP POST TEST IS WORKING!! _by Bejan_.",
         "color": "#b942f4",
@@ -43,15 +45,14 @@ class SlackAPIClient {
         "title_link": "https://docs.google.com/document/d/1iGqv8zaQHcxWUmQkLAntNRLTy5czsLPWHnkbhrPK3ig/edit?usp=sharing",
         "text": "THIS IS A TEST!",
         "image_url": "http://www.commondreams.org/sites/default/files/imce-images/screen_shot_2012-01-24_at_3.48.15_pm.png",
-        "thumb_url": "http://nineplanets.org/images/themoon.jpg",
+        "thumb_url": "http://static4.redcart.pl/templates/images/thumb/7546/75/75/en/0/templates/images/products/7546/100bfb31d29178fd8aab980d11db5682.jpg",
         "footer": "posted by Teem!",
         "footer_icon": "https://mlblogsmlbastian.files.wordpress.com/2010/07/tlogo.gif",
-        "ts": 1480535140,
+        "ts": Int(Date().timeIntervalSince1970),
         "mrkdwn_in": ["fallback","text", "pretext"]
         ]]
         
         let parameters: [String:Any] = [
-            "text":"Another Test for Attachments",
             "attachments": attachments
         ]
         
