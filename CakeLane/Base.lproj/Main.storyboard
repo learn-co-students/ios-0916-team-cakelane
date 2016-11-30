@@ -57,25 +57,18 @@
                                 <rect key="frame" x="37" y="28" width="300" height="251"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jUM-lB-liL">
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="jUM-lB-liL">
                                 <rect key="frame" x="38" y="319" width="300" height="267"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-YP-MVE">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="40.5"/>
-                                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Owner" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0M-Vc-0yt">
-                                        <rect key="frame" x="0.0" y="56.5" width="300" height="40.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ygd-60-I9W">
-                                        <rect key="frame" x="0.0" y="113" width="300" height="41"/>
+                                        <rect key="frame" x="0.0" y="69" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -85,14 +78,14 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hmB-89-M0e">
-                                        <rect key="frame" x="0.0" y="170" width="300" height="40.5"/>
+                                        <rect key="frame" x="0.0" y="138" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TMj-oL-IlS">
-                                        <rect key="frame" x="0.0" y="226.5" width="300" height="40.5"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TMj-oL-IlS">
+                                        <rect key="frame" x="0.0" y="207" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -143,7 +136,6 @@
                         <outlet property="activityImage" destination="eNB-Kh-et4" id="SIy-Ny-8Qy"/>
                         <outlet property="activityLocation" destination="hmB-89-M0e" id="tJk-aD-8Jt"/>
                         <outlet property="activityName" destination="jOe-YP-MVE" id="Zex-ol-MLI"/>
-                        <outlet property="activityOwner" destination="g0M-Vc-0yt" id="Hjc-ZM-HgR"/>
                         <outlet property="descriptionTextView" destination="TMj-oL-IlS" id="zuX-Ap-72y"/>
                     </connections>
                 </viewController>

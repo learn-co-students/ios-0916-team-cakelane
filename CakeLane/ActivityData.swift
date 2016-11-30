@@ -13,7 +13,8 @@ import UIKit
 // MARK: - Create Model Data
 
 struct Activity {
-
+    
+    var id: String?
     var name: String
     var owner: String
     var date: String
@@ -49,6 +50,7 @@ struct Activity {
         location = snapshotValue["location"] as? String ?? "No location"
         description = snapshotValue["description"] as? String ?? "No description"
         reference = snapshot.ref
+        id = snapshot.key
     }
 
     // Mark: - create a dictionary

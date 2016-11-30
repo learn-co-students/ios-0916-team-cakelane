@@ -11,19 +11,19 @@ import SnapKit
 import Firebase
 
 class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
+    
     var activitiesCollectionView: UICollectionView!
     var activities = [Activity]()
     var blurEffectView: UIVisualEffectView!
     var detailView: ActivityDetailsView!
     let ref = FIRDatabase.database().reference()
     var selectedActivity: Activity?
-
+    
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
-
+    
     override func viewDidLoad() {
-
+        
         super.viewDidLoad()
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
@@ -35,38 +35,38 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = false
         
-
+        
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.03*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.85)
-
+        
         self.detailView = ActivityDetailsView(frame: frame)
         
-
-
+        
+        
         setUpActivityCollectionCells()
         createLayout()
         
-         let activitiesRef = ref.child(teamID).child("activities")
-          activitiesRef.observe(.value, with: { (snapshot) in
-
+        let activitiesRef = ref.child(teamID).child("activities")
+        activitiesRef.observe(.value, with: { (snapshot) in
+            
             var newActivites = [Activity]()
-
+            
             for activity in snapshot.children {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
-
+        
                 newActivites.append(item)
             }
             
             OperationQueue.main.addOperation {
-               self.activities = self.sortedActivities(newActivites)
+                self.activities = self.sortedActivities(newActivites)
                 self.activitiesCollectionView.reloadData()
             }
-
+            
         })
-
+        
     }
-
+    
     func createLayout() {
-
+        
         view.backgroundColor = UIColor.black
         view.addSubview(activitiesCollectionView)
         activitiesCollectionView.backgroundColor = UIColor.white
@@ -76,16 +76,16 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
         }
-
+        
     }
-
-
+    
+    
     func setUpActivityCollectionCells() {
-
+        
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
-
+        
         //setup Layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.vertical
@@ -95,49 +95,61 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         activitiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         activitiesCollectionView.dataSource = self
         activitiesCollectionView.delegate = self
-
+        
         activitiesCollectionView.register(ActivitiesCollectionViewCell.self, forCellWithReuseIdentifier: "activityCell")
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return activities.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCell", for: indexPath) as! ActivitiesCollectionViewCell
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
             self.activities[indexPath.row].imageview = cell.activityImageView.image
-
+            
         }
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         selectedActivity = self.activities[indexPath.row]
-        self.detailView.selectedActivity = self.activities[indexPath.row]
-        self.detailView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
-        self.view.addSubview(blurEffectView)
+        
+        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+
+        let activitiesRef = ref.child(teamID).child("activities").child((selectedActivity?.id)!)
+        
+        activitiesRef.observe(.value, with: { (snapshot) in
+             self.detailView.selectedActivity = Activity(snapshot: snapshot )
+        
+
+        //self.detailView.selectedActivity = self.activities[indexPath.row]
+        self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
+        self.view.addSubview(self.blurEffectView)
         self.view.addSubview(self.detailView)
         guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
         if self.detailView.selectedActivity.owner == slackID {
             self.detailView.editButton.isHidden = false
-            self.detailView.editButton.addTarget(self, action: #selector(editSelectedActivity), for: .allTouchEvents)
+            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
             
         }else{
             self.detailView.editButton.isHidden = true
         }
+                })
         self.detailView.alpha = 0
         self.detailView.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         UIView.animate(withDuration: 0.5        , animations: {
             self.detailView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             self.detailView.alpha = 1
         });
+
     }
-
-
-
+    
+    
+    
     // MARK: _ Sort the activities based on time
     func sortedActivities(_ array: [Activity]) -> [Activity] {
         let sortedArray = array.sorted { (a, b) -> Bool in
@@ -155,19 +167,19 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
         return sortedArray
     }
-
-
+    
+    
     func dismissView() {
-
+        
         UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
             self.blurEffectView.removeFromSuperview()
             self.detailView.removeFromSuperview()
             self.activitiesCollectionView.alpha = 1
         }) { _ in }
     }
-
+    
     func editSelectedActivity() {
-       performSegue(withIdentifier: "editActivity", sender: self)
+        performSegue(withIdentifier: "editActivity", sender: self)
         
     }
     

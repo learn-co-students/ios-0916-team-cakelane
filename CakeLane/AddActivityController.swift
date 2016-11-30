@@ -18,10 +18,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     let imagePicker = UIImagePickerController()
     
     var selectedActivity: Activity?
+    var isEdit: Bool = false
     
     @IBOutlet weak var activityName: UITextField!
     
-    @IBOutlet weak var activityOwner: UITextField!
     
     @IBOutlet weak var activityDate: UITextField!
     
@@ -59,7 +59,6 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         // create an activity
         let unwrappedName = self.activityName.text ?? " "
-        let owner = self.activityOwner.text ?? " "
         let location = self.activityLocation.text ?? " "
         let description = self.descriptionTextView.text ?? " "
         var date = ""
@@ -90,6 +89,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        if self.isEdit {
+        self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
+            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
+        }else{
         let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
         let key = addedActivity.key
         addedActivity.setValue(newActivity.toAnyObject())
@@ -97,14 +100,14 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         // add activity with its ID to the user
         let newactivity = [key:date]
     self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+        }
                     }
                 })
                 
             }
-            
+        
         }
-        
-        
+    
         dismiss(animated: true, completion: nil)
         
     }
@@ -160,7 +163,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     
     func fillTextFields(with selectedActivity: Activity) {
-       // guard let owner = UserDefaults.standard.string(forKey: "name") else {return}
+       
         self.activityName.text = selectedActivity.name
 
         self.activityDate.text = selectedActivity.date
@@ -170,8 +173,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.activityImage.image = selectedActivity.imageview
         self.descriptionTextView.textColor = UIColor.black
         self.descriptionTextView.text = selectedActivity.description
-         guard let owner = UserDefaults.standard.string(forKey: "firstName") else {return}
-           self.activityOwner.text = owner
+        self.isEdit = true
     }
     
     
