@@ -24,6 +24,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        SlackAPIClient.postSlackNotification()
+        
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
