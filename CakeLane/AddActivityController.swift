@@ -17,6 +17,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     let imagePicker = UIImagePickerController()
     
+    var selectedActivity: Activity?
+    
     @IBOutlet weak var activityName: UITextField!
     
     @IBOutlet weak var activityOwner: UITextField!

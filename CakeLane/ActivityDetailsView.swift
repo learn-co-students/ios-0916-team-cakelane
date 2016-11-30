@@ -100,12 +100,13 @@ class ActivityDetailsView: UIView {
     func setupEditButton() {
         
         self.editButton = UIButton()
-        self.activityImageView.addSubview(editButton)
+        self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
         self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
         self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: -10).isActive = true
         self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.06, constant: 0.0).isActive = true
         self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
+       // self.editButton.setTitle("edit", for: .normal)
         let image = UIImage(named: "Edit2")?.tint(color: .orange)
         self.editButton.setImage(image, for: .normal)
 

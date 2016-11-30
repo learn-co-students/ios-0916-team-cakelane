@@ -17,6 +17,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var blurEffectView: UIVisualEffectView!
     var detailView: ActivityDetailsView!
     let ref = FIRDatabase.database().reference()
+    var selectedActivity: Activity?
 
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
@@ -38,6 +39,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.03*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.85)
 
         self.detailView = ActivityDetailsView(frame: frame)
+        self.detailView.editButton.addTarget(self, action: #selector(editSelectedActivity), for: .allTouchEvents)
+
 
         setUpActivityCollectionCells()
         createLayout()
@@ -112,6 +115,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedActivity = self.activities[indexPath.row]
         self.detailView.selectedActivity = self.activities[indexPath.row]
         self.detailView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
         self.view.addSubview(blurEffectView)
@@ -119,6 +123,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
         if self.detailView.selectedActivity.owner == slackID {
             self.detailView.editButton.isHidden = false
+            
         }else{
             self.detailView.editButton.isHidden = true
         }
@@ -158,8 +163,22 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             self.detailView.removeFromSuperview()
             self.activitiesCollectionView.alpha = 1
         }) { _ in }
-
-
     }
 
+    func editSelectedActivity() {
+       performSegue(withIdentifier: "addActivity", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("%%%%%%%%%%")
+
+        if segue.identifier == "addActivity" {
+            print("%%%%%%%%%%")
+
+            let dest = segue.destination as! AddActivityController
+            dest.selectedActivity = self.selectedActivity
+        }
+    }
+    
 }
