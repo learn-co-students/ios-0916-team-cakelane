@@ -86,7 +86,14 @@ class AppController: UIViewController {
                 
                 let userData = userInfo["user"] as! [String: Any]
                 
+                print("***************++++++++**********\n\n")
+                print(userData)
+                print("***************++++++++**********\n\n")
+                print(userData["is_primary_owner"])
+                print("***************++++++++**********\n\n")
+                
                 DispatchQueue.main.async {
+                    
                     // instantiate user profile
                     let userProfile = User(dictionary: userData)
                     let defaults = UserDefaults.standard
@@ -96,11 +103,17 @@ class AppController: UIViewController {
                     defaults.set(userProfile.firstName, forKey: "firstName")
                     defaults.set(userProfile.lastName, forKey: "lastName")
                     defaults.set(userProfile.email, forKey: "email")
-                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
                     defaults.set(userProfile.image72, forKey: "image72")
                     defaults.set(userProfile.image512, forKey: "image512")
                     defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
+                    
+                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
+                    defaults.set(userProfile.isOwner, forKey: "isOwner")
+                    defaults.set(userProfile.isPrimaryOwner, forKey: "isPrimaryOwner")
+                    
                     defaults.synchronize()
+                    
+                    // sync to Firebase
                     let reference = FIRDatabase.database().reference()
                     reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
                 }

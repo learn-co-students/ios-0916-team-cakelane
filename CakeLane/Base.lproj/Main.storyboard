@@ -368,11 +368,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vhQ-iu-XQt">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="nqW-iB-GKu">
-                            <connections>
-                                <action selector="logoutButton:" destination="wWW-8o-xfa" id="4Lm-SM-Ie1"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="vt5-Bu-cLE">
                             <connections>
                                 <action selector="settingsButtonTapped:" destination="wWW-8o-xfa" id="h9b-bp-Iz8"/>
