@@ -46,6 +46,11 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         super.didReceiveMemoryWarning()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if self.selectedActivity != nil {
+            fillTextFields(with: selectedActivity!)
+        }
+    }
     
     
     // Mark: - create an activity on firebase using textfield's information
@@ -152,6 +157,21 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
             descriptionTextView.text = "Description"
             descriptionTextView.textColor = UIColor.lightGray
         }
+    }
+    
+    func fillTextFields(with selectedActivity: Activity) {
+       // guard let owner = UserDefaults.standard.string(forKey: "name") else {return}
+        self.activityName.text = selectedActivity.name
+
+        self.activityDate.text = selectedActivity.date
+
+        self.activityLocation.text = selectedActivity.location
+     
+        self.activityImage.image = selectedActivity.imageview
+        self.descriptionTextView.textColor = UIColor.black
+        self.descriptionTextView.text = selectedActivity.description
+         guard let owner = UserDefaults.standard.string(forKey: "firstName") else {return}
+           self.activityOwner.text = owner
     }
     
     

@@ -33,6 +33,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="syk-oJ-9ee"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -251,4 +254,7 @@
     <resources>
         <image name="addphoto-2" width="296" height="296"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="syk-oJ-9ee"/>
+    </inferredMetricsTieBreakers>
 </document>
