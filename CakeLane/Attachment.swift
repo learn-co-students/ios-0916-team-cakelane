@@ -25,6 +25,7 @@ struct Attachment {
     let footer: String?
     let footerIcon: String?
     let ts: Int?
+    let mrkdwnIn: [String]?
     
     internal init(attachment: [String: Any]?) {
         fallback = attachment?["fallback"] as? String
@@ -41,6 +42,7 @@ struct Attachment {
         footer = attachment?["footer"] as? String
         footerIcon = attachment?["footer_icon"] as? String
         ts = attachment?["ts"] as? Int
+        mrkdwnIn = attachment?["ts"] as? [String]
     }
     
     init(title:String, colorHex: String? = nil, pretext: String, authorName: String, authorLink: String? = nil, authorIcon: String, titleLink: String? = nil, text: String? = nil, imageURL: String? = nil, thumbURL: String? = nil) {
@@ -58,6 +60,7 @@ struct Attachment {
         self.footer = "posted by Teem!"
         self.footerIcon = "https://mlblogsmlbastian.files.wordpress.com/2010/07/tlogo.gif"
         self.ts = Int(Date().timeIntervalSince1970)
+        self.mrkdwnIn = ["fallback","text", "pretext"]
     }
     
     internal var dictionary: [String: Any] {
@@ -76,6 +79,7 @@ struct Attachment {
         attachment["footer"] = footer
         attachment["footer_icon"] = footerIcon
         attachment["ts"] = ts
+        attachment["mrkdwn_in"] = mrkdwnIn
         return attachment
     }
 }
