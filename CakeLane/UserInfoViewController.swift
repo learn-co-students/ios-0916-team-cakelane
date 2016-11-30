@@ -29,13 +29,23 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         
         populateUserInfo()
         
+        // set color scheme
+        navigationItem.title = "Best App"
+        UIApplication.shared.statusBarStyle = .lightContent
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.tabBarController?.tabBar.barTintColor = UIColor.black
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
+        
         // access user defaults
         let defaults = UserDefaults.standard
 
-        // MARK: Handle Logout Button
+        // handle Logout Button
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(promptForConfirmation))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
         
-        // MARK: check if user is admin ~ present different profile view options
+        // check if user is admin ~ present different profile view options
         guard let isPrimaryOwner = defaults.string(forKey: "isPrimaryOwner") else { return }
         
         // show admin settings button
@@ -46,7 +56,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
             settingsButton.isEnabled = false
         }
         
-        // MARK: handling profile image
+        // handling profile image
         
         // retrieve slack profile image url string from user defaults
         guard let image512UrlString = defaults.string(forKey: "image512") else { return }
@@ -159,7 +169,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         userLabels.append("Time Zone Label")
     }
     
-    // TODO: show alert, confirm user intention to nuke his profile
+    // MARK: show alert, confirm user intention to nuke his profile
     func promptForConfirmation() {
         let ac = UIAlertController(title: "Logout", message: "Are you sure you wish to logout?", preferredStyle: .alert)
         

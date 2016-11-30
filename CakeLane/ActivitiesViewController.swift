@@ -24,6 +24,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewDidLoad()
+    }
 
     override func viewDidLoad() {
         
@@ -42,7 +45,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.tabBarController?.tabBar.barTintColor = UIColor.black
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
-
 
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.05*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
 

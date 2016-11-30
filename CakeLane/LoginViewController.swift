@@ -10,15 +10,17 @@ import UIKit
 import SafariServices
 
 class LoginViewController: UIViewController {
-
-    // TODO: DELETE token & id labels -> make legit signup/login window
-    @IBOutlet weak var accessToken: UILabel!
-    @IBOutlet weak var teamID: UILabel!
+    
+    @IBOutlet weak var signInButton: UIButton!
     var safariViewController: SFSafariViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        UIApplication.shared.statusBarStyle = .lightContent
+        self.view.backgroundColor = UIColor.black
+        self.signInButton.setTitleColor(UIColor.orange, for: .normal)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(redirectFromSlack(_:)), name: .closeSafariVC, object: nil)
     }
 
