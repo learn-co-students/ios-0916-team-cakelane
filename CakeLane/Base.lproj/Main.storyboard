@@ -275,10 +275,10 @@
             </objects>
             <point key="canvasLocation" x="1132" y="84.107946026986511"/>
         </scene>
-        <!--User Profile View Controller-->
+        <!--User Info View Controller-->
         <scene sceneID="lOr-fk-8la">
             <objects>
-                <viewController storyboardIdentifier="user-profile-view-controller" id="wWW-8o-xfa" customClass="UserProfileViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="user-profile-view-controller" id="wWW-8o-xfa" customClass="UserInfoViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1zr-2j-IH7"/>
                         <viewControllerLayoutGuide type="bottom" id="d4R-bz-sjL"/>

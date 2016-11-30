@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class UserInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // UI elements
     @IBOutlet weak var blurredProfileImage: UIImageView!
@@ -17,26 +17,29 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     // settings available to Team Owner/Admin ~ hide/show depending on user permissions
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     
+    var userInfo = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        // access user defaults
-//        let defaults = UserDefaults.standard
-//        guard let slackID = defaults.string(forKey: "slackID") else { return }
-//        guard let teamID = defaults.string(forKey: "teamID") else { return }
-//        guard let username = defaults.string(forKey: "username") else { return }
-//        guard let firstName = defaults.string(forKey: "firstName") else { return }
-//        guard let lastName = defaults.string(forKey: "lastName") else { return }
-//        guard let email = defaults.string(forKey: "email") else { return }
-//        // TODO: check if user is admin ~ present different profile view options
-//        guard let isAdmin = defaults.string(forKey: "isAdmin") else { return }
-//        guard let image72url = defaults.string(forKey: "image72") else { return }
-//        guard let image512url = defaults.string(forKey: "image512") else { return }
-//        guard let timeZoneLabel = defaults.string(forKey: "timeZoneLabel") else { return }
-//        
+        // access user defaults
+        let defaults = UserDefaults.standard
+        guard let slackID = defaults.string(forKey: "slackID") else { return }
+        guard let teamID = defaults.string(forKey: "teamID") else { return }
+        guard let username = defaults.string(forKey: "username") else { return }
+        guard let firstName = defaults.string(forKey: "firstName") else { return }
+        guard let lastName = defaults.string(forKey: "lastName") else { return }
+        guard let email = defaults.string(forKey: "email") else { return }
+        // TODO: check if user is admin ~ present different profile view options
+        guard let isAdmin = defaults.string(forKey: "isAdmin") else { return }
+        guard let image72UrlString = defaults.string(forKey: "image72") else { return }
+        guard let image512UrlString = defaults.string(forKey: "image512") else { return }
+        guard let timeZoneLabel = defaults.string(forKey: "timeZoneLabel") else { return }
+        
+        populateUserInfo()
+        
         // set user profile image
-        let imageUrl = "https://avatars.slack-edge.com/2016-11-28/109996596596_4669dd0e68809ed10107_512.jpg"
-        if let url = URL(string: imageUrl) {
+        if let url = URL(string: image512UrlString) {
             downloadImage(url: url)
         }
         
@@ -55,7 +58,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return userInfo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -127,5 +130,32 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
+    // MARK: Helper Methods
+    
+    func populateUserInfo() {
+        let defaults = UserDefaults.standard
+        guard let slackID = defaults.string(forKey: "slackID") else { return }
+        guard let teamID = defaults.string(forKey: "teamID") else { return }
+        guard let username = defaults.string(forKey: "username") else { return }
+        guard let firstName = defaults.string(forKey: "firstName") else { return }
+        guard let lastName = defaults.string(forKey: "lastName") else { return }
+        guard let email = defaults.string(forKey: "email") else { return }
+        // TODO: check if user is admin ~ present different profile view options
+        guard let isAdmin = defaults.string(forKey: "isAdmin") else { return }
+        guard let image72UrlString = defaults.string(forKey: "image72") else { return }
+        guard let image512UrlString = defaults.string(forKey: "image512") else { return }
+        guard let timeZoneLabel = defaults.string(forKey: "timeZoneLabel") else { return }
+        
+        userInfo.append(slackID)
+        userInfo.append(teamID)
+        userInfo.append(username)
+        userInfo.append(firstName)
+        userInfo.append(lastName)
+        userInfo.append(email)
+        userInfo.append(isAdmin)
+        userInfo.append(image72UrlString)
+        userInfo.append(image512UrlString)
+        userInfo.append(timeZoneLabel)
+    }
     
 }
