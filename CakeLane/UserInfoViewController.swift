@@ -18,7 +18,10 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var userInfoTableView: UITableView!
     // settings available to Team Owner/Admin ~ hide/show depending on user permissions
     @IBOutlet weak var settingsButton: UIBarButtonItem!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var bioLabel: UILabel!
     
+    var userLabels = [String]()
     var userInfo = [String]()
     
     override func viewDidLoad() {
@@ -54,11 +57,15 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         
         // make user profile image circular
         profileImage.layer.cornerRadius = profileImage.bounds.width / 2
-        
+        profileImage.layer.borderColor = UIColor.black.cgColor
+        profileImage.layer.borderWidth = 2
         profileImage.layer.masksToBounds = true
         
         userInfoTableView.delegate = self
         userInfoTableView.dataSource = self
+        
+        // set user's full name
+        fullNameLabel.text = "\(userInfo[1]) \(userInfo[2])"
     }
     
     // MARK: Table View Methods
@@ -75,9 +82,8 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         // load user defaults data into cells
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell") as! UserInfoCell
         
-        
-        
-        
+        cell.keyLabel.text = userLabels[indexPath.row]
+        cell.valueLabel.text = userInfo[indexPath.row]
         
         return cell
     }
@@ -134,40 +140,30 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     
     func populateUserInfo() {
         let defaults = UserDefaults.standard
-        guard let slackID = defaults.string(forKey: "slackID") else { return }
-        guard let teamID = defaults.string(forKey: "teamID") else { return }
         guard let username = defaults.string(forKey: "username") else { return }
         guard let firstName = defaults.string(forKey: "firstName") else { return }
         guard let lastName = defaults.string(forKey: "lastName") else { return }
         guard let email = defaults.string(forKey: "email") else { return }
-        guard let image72UrlString = defaults.string(forKey: "image72") else { return }
-        guard let image512UrlString = defaults.string(forKey: "image512") else { return }
         guard let timeZoneLabel = defaults.string(forKey: "timeZoneLabel") else { return }
-        
-        guard let isAdmin = defaults.string(forKey: "isAdmin") else { return }
-        guard let isOwner = defaults.string(forKey: "isOwner") else { return }
-        guard let isPrimaryOwner = defaults.string(forKey: "isPrimaryOwner") else { return }
-        
-        userInfo.append(slackID)
-        userInfo.append(teamID)
+
         userInfo.append(username)
         userInfo.append(firstName)
         userInfo.append(lastName)
         userInfo.append(email)
-        userInfo.append(image72UrlString)
-        userInfo.append(image512UrlString)
         userInfo.append(timeZoneLabel)
         
-        userInfo.append(isAdmin)
-        userInfo.append(isOwner)
-        userInfo.append(isPrimaryOwner)
+        userLabels.append("Slack Handle")
+        userLabels.append("First Name")
+        userLabels.append("Last Name")
+        userLabels.append("Email")
+        userLabels.append("Time Zone Label")
     }
     
     // TODO: show alert, confirm user intention to nuke his profile
     func promptForConfirmation() {
         let ac = UIAlertController(title: "Logout", message: "Are you sure you wish to logout?", preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [unowned self, ac] (action: UIAlertAction!) in
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { [unowned self, ac] (action: UIAlertAction!) in
             // perform logout
             
             // TODO: remove Firebase images
@@ -178,7 +174,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
             
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { [unowned self, ac] (action: UIAlertAction!) in
-            // do nothing
+            // do nothing (for now)
         }
         
         ac.addAction(confirmAction)

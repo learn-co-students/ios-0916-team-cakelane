@@ -331,17 +331,43 @@
                                     <constraint firstAttribute="width" secondItem="f2y-Nc-58S" secondAttribute="height" multiplier="1:1" id="Gdm-oT-Qsx"/>
                                 </constraints>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="10" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uht-Mn-SBa">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uht-Mn-SBa">
                                 <rect key="frame" x="0.0" y="326" width="414" height="361"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userInfoCell" rowHeight="22" id="Dpi-tM-KtQ" customClass="UserInfoCell" customModule="CakeLane" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="22"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userInfoCell" rowHeight="45" id="Dpi-tM-KtQ" customClass="UserInfoCell" customModule="CakeLane" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dpi-tM-KtQ" id="Zkw-5o-Mgd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="21.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zp-mI-Up5">
+                                                    <rect key="frame" x="8" y="0.0" width="204" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cD-Vj-qRs">
+                                                    <rect key="frame" x="254" y="0.0" width="152" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="6cD-Vj-qRs" secondAttribute="trailing" constant="10" id="Nvc-GX-ZzZ"/>
+                                            <constraint firstItem="0Zp-mI-Up5" firstAttribute="height" secondItem="Dpi-tM-KtQ" secondAttribute="height" id="VRH-00-xEc"/>
+                                            <constraint firstItem="0Zp-mI-Up5" firstAttribute="centerY" secondItem="Dpi-tM-KtQ" secondAttribute="centerY" id="c9R-32-Wgs"/>
+                                            <constraint firstItem="6cD-Vj-qRs" firstAttribute="height" secondItem="Dpi-tM-KtQ" secondAttribute="height" id="kuz-ha-jUP"/>
+                                            <constraint firstItem="0Zp-mI-Up5" firstAttribute="leading" secondItem="Dpi-tM-KtQ" secondAttribute="leading" constant="10" id="leK-Iz-F5s"/>
+                                            <constraint firstItem="6cD-Vj-qRs" firstAttribute="centerY" secondItem="Dpi-tM-KtQ" secondAttribute="centerY" id="rhH-Ou-xIM"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="keyLabel" destination="0Zp-mI-Up5" id="Bdx-6C-mbF"/>
+                                            <outlet property="valueLabel" destination="6cD-Vj-qRs" id="z2O-e0-UFA"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -375,7 +401,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bioLabel" destination="NEx-kb-1Ur" id="ETC-08-fcc"/>
                         <outlet property="blurredProfileImage" destination="Ak6-89-IDH" id="ZN6-Hy-dJG"/>
+                        <outlet property="fullNameLabel" destination="FIh-zt-JhS" id="JjS-HK-fEE"/>
                         <outlet property="profileImage" destination="f2y-Nc-58S" id="yiM-Od-wZI"/>
                         <outlet property="settingsButton" destination="vt5-Bu-cLE" id="YYa-XW-WhD"/>
                         <outlet property="userInfoTableView" destination="uht-Mn-SBa" id="6j3-I1-59k"/>
