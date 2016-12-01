@@ -12,7 +12,7 @@ pod 'Firebase/Storage'
 pod 'SnapKit'
 pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
-
+pod 'DropDown'
 
 end
 

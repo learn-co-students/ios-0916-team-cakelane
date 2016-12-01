@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5E034E9F17E0CA5F860220EC31B3AD5381BFE480",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5E034E9F17E0CA5F860220EC31B3AD5381BFE480" : 9223372036854775807,
+    "6575E401F0E075B1FD6E179DAD8CCDF3853A7A8E" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E26382A0-49D0-4A51-918C-231A6B2E4D78",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5E034E9F17E0CA5F860220EC31B3AD5381BFE480" : "ios-0916-team-cakelane\/",
+    "6575E401F0E075B1FD6E179DAD8CCDF3853A7A8E" : "ios-0916-team-cakelane\/DropDown\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CakeLane",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CakeLane.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:learn-co-students\/ios-0916-team-cakelane.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5E034E9F17E0CA5F860220EC31B3AD5381BFE480"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:AssistoLab\/DropDown.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6575E401F0E075B1FD6E179DAD8CCDF3853A7A8E"
+    }
+  ]
+}

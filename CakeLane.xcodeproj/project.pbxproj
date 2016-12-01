@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1BDF623E1DDD06C500C3D12E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF623C1DDD06C500C3D12E /* Main.storyboard */; };
 		1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BDF623F1DDD06C500C3D12E /* CakeLane.xcdatamodeld */; };
 		1BDF62431DDD06C500C3D12E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62421DDD06C500C3D12E /* Assets.xcassets */; };
 		1BDF62461DDD06C500C3D12E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62441DDD06C500C3D12E /* LaunchScreen.storyboard */; };
+		7292DB721DEF2A09009BE840 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */; };
+		7292DB741DEF8A02009BE840 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB731DEF8A02009BE840 /* UserInfoCell.swift */; };
+		72972BAB1DEDD27500D3FA60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72972BA91DEDD27500D3FA60 /* Main.storyboard */; };
+		72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */; };
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
-		A2E0019A1DE9E9A800C24F49 /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */; };
 		A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */; };
 		A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */; };
 		A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */; };
@@ -25,7 +27,8 @@
 		A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */; };
 		E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139B1DDF63F800A3C41C /* AppController.swift */; };
 		E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139E1DDF651F00A3C41C /* Constants.swift */; };
-		E53B16C91DEC5457009C84BC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16C81DEC5457009C84BC /* UserProfileViewController.swift */; };
+		E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */; };
+		E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */; };
 		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
 		E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */; };
 		EE688E4B4700EA0CCBD857F7 /* Pods_CakeLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */; };
@@ -34,14 +37,18 @@
 /* Begin PBXFileReference section */
 		0C96C09B4E1E1A8B4590C0E2 /* Pods-CakeLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CakeLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-CakeLane/Pods-CakeLane.release.xcconfig"; sourceTree = "<group>"; };
 		1BDF62351DDD06C500C3D12E /* CakeLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CakeLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1BDF623D1DDD06C500C3D12E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1BDF62401DDD06C500C3D12E /* CakeLane.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CakeLane.xcdatamodel; sourceTree = "<group>"; };
 		1BDF62421DDD06C500C3D12E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BDF62451DDD06C500C3D12E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BDF62471DDD06C500C3D12E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CakeLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		7292DB731DEF8A02009BE840 /* UserInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
+		72972BAA1DEDD27500D3FA60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
 		A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityDetailsView.swift; path = CakeLane/ActivityDetailsView.swift; sourceTree = "<group>"; };
+
 		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailsView.xib; sourceTree = "<group>"; };
 		A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,7 +62,8 @@
 		C41D7E374498749BF12BE214 /* Pods-CakeLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CakeLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CakeLane/Pods-CakeLane.debug.xcconfig"; sourceTree = "<group>"; };
 		E50D139B1DDF63F800A3C41C /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		E50D139E1DDF651F00A3C41C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E53B16C81DEC5457009C84BC /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsView.swift; sourceTree = "<group>"; };
 		E5D504021DE353A2008452FB /* CakeLane.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CakeLane.entitlements; sourceTree = "<group>"; };
 		E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -76,8 +84,6 @@
 		1BDF622C1DDD06C400C3D12E = {
 			isa = PBXGroup;
 			children = (
-				A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */,
-				A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */,
 				1BDF62371DDD06C500C3D12E /* CakeLane */,
 				1BDF62361DDD06C500C3D12E /* Products */,
 				B7D865F5E9CF141A83DDE890 /* Pods */,
@@ -136,10 +142,8 @@
 			children = (
 				E50D139B1DDF63F800A3C41C /* AppController.swift */,
 				E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */,
-				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
-				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
-				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
-				E53B16C81DEC5457009C84BC /* UserProfileViewController.swift */,
+				E53B16ED1DEE09E1009C84BC /* Activities */,
+				E53B16F81DEF2841009C84BC /* User */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -157,9 +161,32 @@
 		E53B16CC1DECCC55009C84BC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1BDF623C1DDD06C500C3D12E /* Main.storyboard */,
+				72972BA91DEDD27500D3FA60 /* Main.storyboard */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		E53B16ED1DEE09E1009C84BC /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */,
+				A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */,
+				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
+				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
+				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
+			);
+			name = Activities;
+			sourceTree = "<group>";
+		};
+		E53B16F81DEF2841009C84BC /* User */ = {
+			isa = PBXGroup;
+			children = (
+				7292DB731DEF8A02009BE840 /* UserInfoCell.swift */,
+				E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */,
+				7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */,
+				72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */,
+			);
+			name = User;
 			sourceTree = "<group>";
 		};
 		E7D76156BC8025C34B746C8D /* Frameworks */ = {
@@ -205,7 +232,9 @@
 				TargetAttributes = {
 					1BDF62341DDD06C400C3D12E = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = LQ8JCXM85J;
+
+						DevelopmentTeam = S88CGU6C8H;
+
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -239,10 +268,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BDF62461DDD06C500C3D12E /* LaunchScreen.storyboard in Resources */,
+				72972BAB1DEDD27500D3FA60 /* Main.storyboard in Resources */,
 				A2ECAA841DDD19F4000E3CC6 /* GoogleService-Info.plist in Resources */,
 				A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */,
 				1BDF62431DDD06C500C3D12E /* Assets.xcassets in Resources */,
-				1BDF623E1DDD06C500C3D12E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,41 +331,44 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */,
-				E53B16C91DEC5457009C84BC /* UserProfileViewController.swift in Sources */,
 				A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */,
 				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
 				A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */,
 				E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */,
 				E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */,
-				A2E0019A1DE9E9A800C24F49 /* ActivityDetailsView.swift in Sources */,
+				E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */,
 				A2F4B8D41DE4D46F00933A94 /* DataStore.swift in Sources */,
 				1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */,
 				A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */,
 				A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */,
 				75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */,
+				E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */,
 				A2F4B8D21DE39E5300933A94 /* Secrets.swift in Sources */,
+				7292DB741DEF8A02009BE840 /* UserInfoCell.swift in Sources */,
+				72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */,
 				E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */,
+				7292DB721DEF2A09009BE840 /* UserTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1BDF623C1DDD06C500C3D12E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1BDF623D1DDD06C500C3D12E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1BDF62441DDD06C500C3D12E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				1BDF62451DDD06C500C3D12E /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		72972BA91DEDD27500D3FA60 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				72972BAA1DEDD27500D3FA60 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -445,7 +477,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = LQ8JCXM85J;
+
+				DEVELOPMENT_TEAM = S88CGU6C8H;
+
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -463,7 +497,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = LQ8JCXM85J;
+
+				DEVELOPMENT_TEAM = S88CGU6C8H;
+
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;

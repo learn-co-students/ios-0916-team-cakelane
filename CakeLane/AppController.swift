@@ -42,8 +42,8 @@ class AppController: UIViewController {
     private func addNotificationObservers() {
         // close login view controller & switch to activities once user has obtained an authorization token
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeLoginVC, object: nil)
-        // TODO: close activities if user has logged out
-        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeActivitiesTVC, object: nil)
+        // close activities if user has logged out
+        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeProfileVC, object: nil)
         
     }
     
@@ -57,9 +57,9 @@ class AppController: UIViewController {
         case .loginVC:
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! LoginViewController
         case .feedVC:
-            let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivitiesViewController
-            let navVC = UINavigationController(rootViewController: vc)
-            return navVC
+            let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
+//            let navVC = UINavigationController(rootViewController: vc)
+            return vc
         default:
             fatalError("ERROR: Unable to find controller with storyboard id: \(id)")
         }
@@ -86,7 +86,14 @@ class AppController: UIViewController {
                 
                 let userData = userInfo["user"] as! [String: Any]
                 
+                print("***************++++++++**********\n\n")
+                print(userData)
+                print("***************++++++++**********\n\n")
+                print(userData["is_primary_owner"])
+                print("***************++++++++**********\n\n")
+                
                 DispatchQueue.main.async {
+                    
                     // instantiate user profile
                     let userProfile = User(dictionary: userData)
                     let defaults = UserDefaults.standard
@@ -96,11 +103,17 @@ class AppController: UIViewController {
                     defaults.set(userProfile.firstName, forKey: "firstName")
                     defaults.set(userProfile.lastName, forKey: "lastName")
                     defaults.set(userProfile.email, forKey: "email")
-                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
                     defaults.set(userProfile.image72, forKey: "image72")
                     defaults.set(userProfile.image512, forKey: "image512")
                     defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
+                    
+                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
+                    defaults.set(userProfile.isOwner, forKey: "isOwner")
+                    defaults.set(userProfile.isPrimaryOwner, forKey: "isPrimaryOwner")
+                    
                     defaults.synchronize()
+                    
+                    // sync to Firebase
                     let reference = FIRDatabase.database().reference()
                     reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
                 }
@@ -109,7 +122,7 @@ class AppController: UIViewController {
             
             // MARK: Switch from Login Flow to Main Flow (Activity Feed)
             switchToViewController(withID: .feedVC)
-        case Notification.Name.closeActivitiesTVC:
+        case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
         default:
             fatalError("ERROR: Unable to match notification name")

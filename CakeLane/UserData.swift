@@ -20,10 +20,13 @@ struct User {
     var firstName: String
     var lastName: String
     var email: String
-    var isAdmin: Bool
     var image72: String
     var image512: String
     var timeZoneLabel: String
+    
+    var isAdmin: Bool
+    var isOwner: Bool
+    var isPrimaryOwner: Bool
     
     // TODO: Integrate activities using Firebase
     var activitiesCreated = [[String:String]]()
@@ -39,10 +42,13 @@ struct User {
         let firstName = profile["first_name"] as? String ?? ""
         let lastName = profile["last_name"] as? String ?? ""
         let email = profile["email"] as? String ?? ""
-        let isAdmin = dictionary["is_admin"] as? Bool ?? false
         let image72 = profile["image_72"] as? String ?? ""
         let image512 = profile["image_512"] as? String ?? ""
         let timeZoneLabel = dictionary["tz_label"] as? String ?? ""
+        
+        let isAdmin = dictionary["is_admin"] as! Bool
+        let isOwner = dictionary["is_owner"] as! Bool
+        let isPrimaryOwner = dictionary["is_primary_owner"] as! Bool
         
         self.slackID = slackID
         self.teamID = teamID
@@ -50,10 +56,13 @@ struct User {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
-        self.isAdmin = isAdmin
         self.image72 = image72
         self.image512 = image512
         self.timeZoneLabel = timeZoneLabel
+        
+        self.isAdmin = isAdmin
+        self.isOwner = isOwner
+        self.isPrimaryOwner = isPrimaryOwner
         
         self.reference = nil
     }
