@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
@@ -39,6 +40,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="syk-oJ-9ee"/>
                         <outlet property="filterWhenOutlet" destination="AxB-uL-Kv7" id="EtY-BS-LCo"/>
                     </connections>
                 </viewController>
@@ -61,12 +63,20 @@
                             <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addphoto-2" translatesAutoresizingMaskIntoConstraints="NO" id="eNB-Kh-et4">
                                 <rect key="frame" x="41.333333333333343" y="52" width="331.33333333333337" height="272"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderwidth">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
-                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jUM-lB-liL">
-                                <rect key="frame" x="41.333333333333343" y="339.33333333333337" width="331.33333333333337" height="294.33333333333337"/>
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="jUM-lB-liL">
+                                <rect key="frame" x="38" y="319" width="300" height="267"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-YP-MVE">
-                                        <rect key="frame" x="0.0" y="0.0" width="331.33333333333337" height="46"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -80,7 +90,8 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ygd-60-I9W">
-                                        <rect key="frame" x="0.0" y="124" width="331.33333333333337" height="46.333333333333371"/>
+                                        <rect key="frame" x="0.0" y="69" width="300" height="60"/>
+
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -90,19 +101,19 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hmB-89-M0e">
-                                        <rect key="frame" x="0.0" y="186.33333333333331" width="331.33333333333337" height="46"/>
+                                        <rect key="frame" x="0.0" y="138" width="300" height="60"/>
+
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="100" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gtl-lE-EGg">
-                                        <rect key="frame" x="0.0" y="248.33333333333331" width="331.33333333333337" height="46"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TMj-oL-IlS">
+                                        <rect key="frame" x="0.0" y="207" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhL-sG-hY4">
@@ -146,11 +157,10 @@
                     </view>
                     <connections>
                         <outlet property="activityDate" destination="Ygd-60-I9W" id="2o3-2k-ESD"/>
-                        <outlet property="activityDescription" destination="gtl-lE-EGg" id="gB1-uO-Ftw"/>
                         <outlet property="activityImage" destination="eNB-Kh-et4" id="SIy-Ny-8Qy"/>
                         <outlet property="activityLocation" destination="hmB-89-M0e" id="tJk-aD-8Jt"/>
                         <outlet property="activityName" destination="jOe-YP-MVE" id="Zex-ol-MLI"/>
-                        <outlet property="activityOwner" destination="g0M-Vc-0yt" id="Hjc-ZM-HgR"/>
+                        <outlet property="descriptionTextView" destination="TMj-oL-IlS" id="zuX-Ap-72y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uut-Tb-Jvk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -423,4 +433,7 @@
         <image name="ic_event" width="24" height="24"/>
         <image name="ic_face" width="24" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="syk-oJ-9ee"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -10,9 +10,9 @@ import UIKit
 import Firebase
 
 protocol ActivitiesDelegate: class {
-    
+
     func attendeeTapped(sender: ActivitiesCollectionViewCell)
-    
+
 }
 
 class ActivitiesCollectionViewCell: UICollectionViewCell {
@@ -28,15 +28,15 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     var firstProfileImage = UIImageView()
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
-    
+
     var delegate: ActivitiesDelegate?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
 
         contentView.addSubview(activityImageView)
-        activityImageView.backgroundColor = UIColor.blue
+        activityImageView.backgroundColor = UIColor(red: 25/255, green: 15/255, blue: 8/255, alpha: 1)
         activityImageView.layer.borderWidth = 1
         activityImageView.layer.borderColor = UIColor.darkGray.cgColor
         activityImageView.layer.masksToBounds = true
@@ -142,7 +142,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(activityOverlay.snp.top).offset(8)
 
         }
-        
+
         contentView.addSubview(transparentButton)
         contentView.isUserInteractionEnabled = true
         transparentButton.backgroundColor = UIColor.clear
@@ -152,8 +152,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(activityOverlay.snp.height)
             make.width.equalTo(activityOverlay.snp.width)
         }
-        
-        
+
+
         transparentButton.isUserInteractionEnabled = true
         transparentButton.isEnabled = true
         transparentButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -163,16 +163,15 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    ////////////////////////////////////////////////////////////
+
     func buttonAction(sender: UIButton) {
-        
-        
+
+
         delegate?.attendeeTapped(sender: self)
-        
+
 
     }
-    
+
 
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
@@ -194,22 +193,16 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
-        self.activityImageView.image = UIImage(named: "snow")
+        if activity.image == " " {
+            self.activityImageView.image = UIImage(named: "smallerAppLogo")
+        }
 
 
-        // MARK: download activity image from firebase
-//        self.downloadImage(at: activity.image) { (success, image) in
-//            DispatchQueue.main.async {
-//                self.activityImageView.image = image
-//                self.setNeedsLayout()
-//            }
-//        }
+
 
 
     }
-    
-    
+
+
 
 }
-
-

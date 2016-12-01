@@ -239,7 +239,7 @@
 				TargetAttributes = {
 					1BDF62341DDD06C400C3D12E = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = S88CGU6C8H;
+						DevelopmentTeam = LQ8JCXM85J;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -484,7 +484,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = S88CGU6C8H;
+				DEVELOPMENT_TEAM = LQ8JCXM85J;
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -502,7 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = S88CGU6C8H;
+				DEVELOPMENT_TEAM = LQ8JCXM85J;
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
