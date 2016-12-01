@@ -87,13 +87,13 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                             self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
                         } else {
                             
-                            let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
+                let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
                             let key = addedActivity.key
-                            let newAttendingUser = [String(describing: self.selectedActivity?.attendees.count):slackID]
+                            let newAttendingUser = [String(describing: newActivity.attendees.count):slackID]
+                            
+                            
+                                addedActivity.setValue(newActivity.toAnyObject())
                             self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
-                            
-                            
-                            addedActivity.setValue(newActivity.toAnyObject())
                             
                             // add activity with its ID to the user
                             let newactivity = [key:date]
