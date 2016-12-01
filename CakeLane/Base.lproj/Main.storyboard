@@ -109,7 +109,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhL-sG-hY4">
                                 <rect key="frame" x="316" y="675" width="56" height="34"/>
                                 <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="cancelButton:" destination="yI5-9V-7wn" eventType="touchUpInside" id="fsf-t5-DLn"/>
@@ -117,19 +117,20 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCz-Wf-4ol">
                                 <rect key="frame" x="42" y="675" width="57" height="34"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xCz-Wf-4ol" secondAttribute="height" multiplier="57:34" id="nvm-Ju-8J9"/>
                                 </constraints>
                                 <state key="normal" title="Save">
-                                    <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="saveButton:" destination="yI5-9V-7wn" eventType="touchUpInside" id="E0R-0S-UUu"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jUM-lB-liL" firstAttribute="centerY" secondItem="VkO-5N-TbK" secondAttribute="centerY" constant="118.5" id="2WJ-LF-qUX"/>
                             <constraint firstItem="eNB-Kh-et4" firstAttribute="width" secondItem="VkO-5N-TbK" secondAttribute="width" multiplier="0.8" id="3XX-Pw-eZd"/>
@@ -281,7 +282,7 @@
                                 </items>
                             </tabBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ak6-89-IDH">
-                                <rect key="frame" x="4" y="64" width="414" height="220.66666666666669"/>
+                                <rect key="frame" x="4" y="64" width="414" height="221"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9a-cf-bYb">
                                 <rect key="frame" x="0.0" y="64" width="418" height="275"/>
@@ -310,7 +311,7 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f2y-Nc-58S">
-                                <rect key="frame" x="137" y="74.000000000000014" width="149.33333333333331" height="149.33333333333337"/>
+                                <rect key="frame" x="137" y="74" width="149" height="149"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="f2y-Nc-58S" secondAttribute="height" multiplier="1:1" id="Gdm-oT-Qsx"/>
                                 </constraints>
@@ -323,7 +324,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dpi-tM-KtQ" id="Zkw-5o-Mgd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zp-mI-Up5">

@@ -36,7 +36,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
 
 
         contentView.addSubview(activityImageView)
-        activityImageView.backgroundColor = UIColor(red: 25/255, green: 15/255, blue: 8/255, alpha: 1)
+        activityImageView.backgroundColor = UIColor.black
         activityImageView.layer.borderWidth = 1
         activityImageView.layer.borderColor = UIColor.darkGray.cgColor
         activityImageView.layer.masksToBounds = true

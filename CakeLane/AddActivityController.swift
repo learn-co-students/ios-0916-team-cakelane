@@ -30,6 +30,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         descriptionTextView.delegate = self
         descriptionTextView.text = "Description"
         descriptionTextView.textColor = UIColor.lightGray
+        descriptionTextView.layer.cornerRadius = 5
+        descriptionTextView.clipsToBounds = true
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
        self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
     }
