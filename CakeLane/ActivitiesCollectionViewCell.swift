@@ -9,11 +9,17 @@
 import UIKit
 import Firebase
 
+protocol ActivitiesDelegate: class {
+    
+    func attendeeTapped(sender: ActivitiesCollectionViewCell)
+    
+}
+
 class ActivitiesCollectionViewCell: UICollectionViewCell {
 
     var activityImageView = UIImageView()
     var activityOverlay = UIView()
-    var transparentButton = UIButton()
+    var transparentButton = UIButton(type: UIButtonType.system)
     var activityLabel = UILabel()
     var locationLabel = UILabel()
     var timeLabel = UILabel()
@@ -22,7 +28,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     var firstProfileImage = UIImageView()
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
-
+    
+    var delegate: ActivitiesDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -134,13 +142,37 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(activityOverlay.snp.top).offset(8)
 
         }
+        
+        contentView.addSubview(transparentButton)
+        contentView.isUserInteractionEnabled = true
+        transparentButton.backgroundColor = UIColor.clear
+        transparentButton.snp.makeConstraints { (make) in
+            make.centerX.equalTo(activityOverlay.snp.centerX)
+            make.centerY.equalTo(activityOverlay.snp.centerY)
+            make.height.equalTo(activityOverlay.snp.height)
+            make.width.equalTo(activityOverlay.snp.width)
+        }
+        
+        
+        transparentButton.isUserInteractionEnabled = true
+        transparentButton.isEnabled = true
+        transparentButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
 
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    ////////////////////////////////////////////////////////////
+    func buttonAction(sender: UIButton) {
+        
+        
+        delegate?.attendeeTapped(sender: self)
+        
 
+    }
+    
 
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
@@ -175,5 +207,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
 
 
     }
+    
+    
 
 }
+
+
