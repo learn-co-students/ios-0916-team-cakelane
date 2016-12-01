@@ -30,7 +30,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         populateUserInfo()
         
         // set color scheme
-        navigationItem.title = "Best App"
+        navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
