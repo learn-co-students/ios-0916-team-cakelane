@@ -14,7 +14,6 @@
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
 		A2E0019A1DE9E9A800C24F49 /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */; };
 		A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */; };
-		A2ECAA7B1DDD17A9000E3CC6 /* ActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */; };
 		A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */; };
 		A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */; };
 		A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */; };
@@ -26,7 +25,6 @@
 		A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */; };
 		E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139B1DDF63F800A3C41C /* AppController.swift */; };
 		E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139E1DDF651F00A3C41C /* Constants.swift */; };
-		E53B16C91DEC5457009C84BC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16C81DEC5457009C84BC /* UserProfileViewController.swift */; };
 		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
 		E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */; };
 		EE688E4B4700EA0CCBD857F7 /* Pods_CakeLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */; };
@@ -42,11 +40,8 @@
 		1BDF62471DDD06C500C3D12E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CakeLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
-
 		A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityDetailsView.swift; path = CakeLane/ActivityDetailsView.swift; sourceTree = "<group>"; };
 		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailsView.xib; sourceTree = "<group>"; };
-		A2ECAA791DDD17A9000E3CC6 /* ActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTableViewController.swift; sourceTree = "<group>"; };
-
 		A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityController.swift; sourceTree = "<group>"; };
@@ -59,7 +54,6 @@
 		C41D7E374498749BF12BE214 /* Pods-CakeLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CakeLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CakeLane/Pods-CakeLane.debug.xcconfig"; sourceTree = "<group>"; };
 		E50D139B1DDF63F800A3C41C /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		E50D139E1DDF651F00A3C41C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E53B16C81DEC5457009C84BC /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		E5D504021DE353A2008452FB /* CakeLane.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CakeLane.entitlements; sourceTree = "<group>"; };
 		E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -143,7 +137,6 @@
 				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
 				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
 				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
-				E53B16C81DEC5457009C84BC /* UserProfileViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -306,7 +299,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */,
-				E53B16C91DEC5457009C84BC /* UserProfileViewController.swift in Sources */,
 				A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */,
 				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
