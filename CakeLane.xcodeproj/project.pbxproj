@@ -27,6 +27,7 @@
 		A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */; };
 		E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139B1DDF63F800A3C41C /* AppController.swift */; };
 		E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139E1DDF651F00A3C41C /* Constants.swift */; };
+		E51305A51DF0EB70009F0560 /* DetailUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51305A41DF0EB70009F0560 /* DetailUserViewController.swift */; };
 		E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */; };
 		E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */; };
 		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
@@ -60,6 +61,7 @@
 		C41D7E374498749BF12BE214 /* Pods-CakeLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CakeLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CakeLane/Pods-CakeLane.debug.xcconfig"; sourceTree = "<group>"; };
 		E50D139B1DDF63F800A3C41C /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		E50D139E1DDF651F00A3C41C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E51305A41DF0EB70009F0560 /* DetailUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailUserViewController.swift; sourceTree = "<group>"; };
 		E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsView.swift; sourceTree = "<group>"; };
 		E5D504021DE353A2008452FB /* CakeLane.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CakeLane.entitlements; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */,
 				7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */,
 				72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */,
+				E51305A41DF0EB70009F0560 /* DetailUserViewController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
 				A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */,
 				E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */,
+				E51305A51DF0EB70009F0560 /* DetailUserViewController.swift in Sources */,
 				E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */,
 				E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */,
 				A2F4B8D41DE4D46F00933A94 /* DataStore.swift in Sources */,

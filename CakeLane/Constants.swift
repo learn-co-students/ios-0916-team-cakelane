@@ -17,5 +17,6 @@ enum StoryboardID: String {
     case addActivityVC = "add-activity-view-controller"
     case userProfileVC = "user-profile-view-controller"
     case calendarVC = "calendar-view-controller"
+    case detailUserVC = "detail-user-view-controller"
     // TODO: add Firebase (child) constants
 }
