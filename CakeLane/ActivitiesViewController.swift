@@ -50,6 +50,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.tabBarController?.tabBar.barTintColor = UIColor.black
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.tabBarController?.tabBar.isTranslucent = false
 
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.11*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
 
@@ -323,6 +325,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             var result = false
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
             if let aDate = dateFormatter.date(from: a.date){
                 if let bDate = dateFormatter.date(from: b.date){
                     if aDate < bDate {
@@ -342,6 +345,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
             if let aDate = dateFormatter.date(from: a.date) {
                 if calendar.isDateInToday(aDate){
                     result = true
@@ -358,6 +362,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
+
             let currentDate = Date()
             let currentWeek = calendar.component(.weekOfMonth, from: currentDate)
 
@@ -378,6 +384,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
+
             let currentDate = Date()
             let currentMonth = calendar.component(.month, from: currentDate)
 
