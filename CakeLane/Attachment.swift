@@ -21,11 +21,11 @@ struct Attachment {
     let titleLink: String?
     let text: String?
     let imageURL: String?
-    let thumbURL: String?  // image must be 75 x 75px, doesn't show if imageURL is available
+    let thumbURL: String?       // image must be 75 x 75px, doesn't show if imageURL is available
     let footer: String?
     let footerIcon: String?
-    let ts: Int?
-    let mrkdwnIn: [String]?
+    let ts: Int?                //Timestamp should be in Epoch format
+    let mrkdwnIn: [String]?     //Markdown flag for text fields (e.g. bold *bold*, code `code`, italic _italic_, strike ~strike~)
     
     internal init(attachment: [String: Any]?) {
         fallback = attachment?["fallback"] as? String
@@ -46,8 +46,8 @@ struct Attachment {
     }
     
     init(title:String, colorHex: String? = nil, pretext: String, authorName: String, authorLink: String? = nil, authorIcon: String, titleLink: String? = nil, text: String? = nil, imageURL: String? = nil, thumbURL: String? = nil) {
-        self.fallback = pretext //setting fallback to pretext for now
-        self.color = colorHex
+        self.fallback = pretext     //setting fallback to pretext for now
+        self.color = "#ff8800"      //setting to #ff8800 (orange) for now to match current Teem! color scheme
         self.pretext = pretext
         self.authorName = authorName
         self.authorLink = authorLink
@@ -58,7 +58,7 @@ struct Attachment {
         self.imageURL = imageURL
         self.thumbURL = thumbURL
         self.footer = "posted by Teem!"
-        self.footerIcon = "https://mlblogsmlbastian.files.wordpress.com/2010/07/tlogo.gif"
+        self.footerIcon = "http://gdurl.com/508R"
         self.ts = Int(Date().timeIntervalSince1970)
         self.mrkdwnIn = ["fallback","text", "pretext"]
     }
