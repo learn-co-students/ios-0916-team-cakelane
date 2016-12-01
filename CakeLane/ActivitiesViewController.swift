@@ -51,7 +51,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
 
-        let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.05*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
+        let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.11*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
 
         self.detailView = ActivityDetailsView(frame: frame)
 
