@@ -19,7 +19,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var detailView: ActivityDetailsView!
     let ref = FIRDatabase.database().reference()
     let whenDropDown = DropDown()
-    let whatDropDown = DropDown()
     
     
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
@@ -46,8 +45,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         self.detailView = ActivityDetailsView(frame: frame)
         
+        
+        
+        
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
+        
         createLayout()
         
          let activitiesRef = ref.child(teamID).child("activities")
@@ -57,18 +60,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
             for activity in snapshot.children {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)
-
                 newActivites.append(item)
             }
-            
             OperationQueue.main.addOperation {
                self.activities = self.sortedActivities(newActivites)
                 self.activitiesCollectionView.reloadData()
             }
-
         })
         
-//        filterActions()
+
         whenDropDown.selectionAction = { [unowned self] (index,item) in
             
             if index == 0 {
@@ -79,36 +79,28 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     
                     for activity in snapshot.children {
                         let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        
                         newActivites.append(item)
                     }
-                    
                     OperationQueue.main.addOperation {
                         self.activities = self.sortedActivities(newActivites)
                         self.activitiesCollectionView.reloadData()
                     }
-                    
                 })
-                
             }
             
             if index == 1 {
                 
                 activitiesRef.observe(.value, with: { (snapshot) in
-                    
                     var newActivites = [Activity]()
                     
                     for activity in snapshot.children {
                         let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        
                         newActivites.append(item)
                     }
-                    
                     OperationQueue.main.addOperation {
                         self.activities = self.filterTodayActivities(newActivites)
                         self.activitiesCollectionView.reloadData()
                     }
-                    
                 })
             }
             
@@ -119,15 +111,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     
                     for activity in snapshot.children {
                         let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        
                         newActivites.append(item)
                     }
-                    
                     OperationQueue.main.addOperation {
                         self.activities = self.filterWeekActivities(newActivites)
                         self.activitiesCollectionView.reloadData()
                     }
-                    
                 })
             }
             
@@ -138,15 +127,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     
                     for activity in snapshot.children {
                         let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        
                         newActivites.append(item)
                     }
-                    
                     OperationQueue.main.addOperation {
                         self.activities = self.filterMonthActivities(newActivites)
                         self.activitiesCollectionView.reloadData()
                     }
-                    
                 })
             }
         }
@@ -164,7 +150,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
         }
-
+        
     }
 
 
@@ -184,8 +170,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         activitiesCollectionView.dataSource = self
         activitiesCollectionView.delegate = self
 
-        activitiesCollectionView.register(ActivitiesCollectionViewCell.self, forCellWithReuseIdentifier: "activityCell")
+        activitiesCollectionView.register(ActivitiesCollectionViewCell.self, forCellWithReuseIdentifier: "activityCollectionCell")
+        activitiesCollectionView.isUserInteractionEnabled = true
+
     }
+    
+
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -195,11 +185,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCell", for: indexPath) as! ActivitiesCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
         
-//        let copyActivitiesCollectionCell = ActivitiesCollectionViewCell()
-//        let copyButton = copyActivitiesCollectionCell.transparentButton
-        cell.transparentButton.addTarget(self, action: Selector(("buttonAction")) , for: UIControlEvents.touchUpInside)
+        if cell.delegate == nil { cell.delegate = self }
         
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
@@ -211,6 +199,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         self.detailView.selectedActivity = self.activities[indexPath.row]
         self.detailView.closeButton.addTarget(self, action: #selector(dismissView), for: .allTouchEvents)
         self.view.addSubview(blurEffectView)
@@ -221,10 +210,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         UIView.transition(with: self.activitiesCollectionView, duration: 0.4, options: .transitionCrossDissolve, animations:{
             self.detailView.alpha = 1.0
         }) { _ in }
-        
-
     }
-
+    
+    
+    
+    
+    
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
     }
@@ -328,82 +321,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
     
     
-    //Filter Actions
-    
-//    func filterActions() {
-//        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-//        let activitiesRef = ref.child(teamID).child("activities")
-//        
-//        whenDropDown.selectionAction = { [unowned self] (index,item) in
-//            
-//            if index == 0 {
-//                
-//                activitiesRef.observe(.value, with: { (snapshot) in
-//                    
-//                    var newActivites = [Activity]()
-//                    
-//                    for activity in snapshot.children {
-//                        let item = Activity(snapshot: activity as! FIRDataSnapshot)
-//                        
-//                        newActivites.append(item)
-//                    }
-//                    
-//                    OperationQueue.main.addOperation {
-//                        self.activities = self.sortedActivities(newActivites)
-//                        self.activitiesCollectionView.reloadData()
-//                    }
-//                    
-//                })
-//                
-//            }
-//            
-//            if index == 1 {
-//                
-//                activitiesRef.observe(.value, with: { (snapshot) in
-//                    
-//                    var newActivites = [Activity]()
-//                    
-//                    for activity in snapshot.children {
-//                        let item = Activity(snapshot: activity as! FIRDataSnapshot)
-//                        
-//                        newActivites.append(item)
-//                    }
-//                    
-//                    OperationQueue.main.addOperation {
-//                        self.activities = self.filterWeekActivities(newActivites)
-//                        self.activitiesCollectionView.reloadData()
-//                    }
-//                    
-//                })
-//            }
-//            
-//            if index == 2 {
-//                activitiesRef.observe(.value, with: { (snapshot) in
-//                    
-//                    var newActivites = [Activity]()
-//                    
-//                    for activity in snapshot.children {
-//                        let item = Activity(snapshot: activity as! FIRDataSnapshot)
-//
-//                        newActivites.append(item)
-//                    }
-//                    
-//                    OperationQueue.main.addOperation {
-//                        self.activities = self.filterMonthActivities(newActivites)
-//                        self.activitiesCollectionView.reloadData()
-//                    }
-//                    
-//                })
-//            }
-//        }
-//    }
-    
-    func buttonAction(sender:UIButton!) {
-        
-        
-        self.present(UsersTableViewController(), animated: true, completion: nil)
-        print("HELLLOOOO")
-    }
 
     func dismissView() {
 
@@ -416,4 +333,22 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
+}
+
+
+extension ActivitiesViewController: ActivitiesDelegate {
+    
+    func attendeeTapped(sender: ActivitiesCollectionViewCell) {
+        
+        
+        
+        let userTableView = UsersTableViewController()
+        let navController = UINavigationController(rootViewController: userTableView)
+        userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
+        self.present(navController, animated: false, completion: nil)
+    }
+    
+    func dismissController() {
+        self.dismiss(animated: false, completion: nil)
+    }
 }
