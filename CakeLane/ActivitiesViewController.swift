@@ -22,9 +22,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
 
-    override func viewDidLoad() {
-
-
     let whenDropDown = DropDown()
 
 
@@ -38,6 +35,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         print(SlackAPIClient.getUserInfo(with: ))
 
+
         super.viewDidLoad()
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
@@ -45,7 +43,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
@@ -62,7 +59,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
 
         setUpWhenBarDropDown()
-
         setUpActivityCollectionCells()
 
         createLayout()
@@ -155,6 +151,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             }
         }
 
+
     }
 
     func createLayout() {
@@ -187,11 +184,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         activitiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         activitiesCollectionView.dataSource = self
         activitiesCollectionView.delegate = self
+
         activitiesCollectionView.register(ActivitiesCollectionViewCell.self, forCellWithReuseIdentifier: "activityCollectionCell")
         activitiesCollectionView.isUserInteractionEnabled = true
 
     }
-
 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -202,7 +199,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-
+        var activity = self.activities[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
 
         if cell.delegate == nil { cell.delegate = self }
@@ -225,9 +222,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         }
         self.activities[indexPath.row].imageview = activity.imageview
+        
+    }
         return cell
     }
-
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)
@@ -292,13 +290,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
 
-
-
-
-
-
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
     }
@@ -324,6 +316,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
 
     }
+
     // MARK: _ Sort the activities based on time
     func sortedActivities(_ array: [Activity]) -> [Activity] {
         let sortedArray = array.sorted { (a, b) -> Bool in
@@ -341,8 +334,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
         return sortedArray
     }
-
-
 
     // WhenDropDown Filters
     func filterTodayActivities(_ array: [Activity]) -> [Activity] {
@@ -401,9 +392,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
         return filterArray
     }
-
-
-
+    
     func dismissView() {
 
         UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
