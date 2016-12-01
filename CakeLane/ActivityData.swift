@@ -21,7 +21,7 @@ struct Activity {
     var image: String
     var description: String
     var location: String
-//    var attendees: [String]
+    var attendees: [String] = []
     var imageview: UIImage?
     let reference : FIRDatabaseReference?
 

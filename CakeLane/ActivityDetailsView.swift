@@ -14,6 +14,7 @@ class ActivityDetailsView: UIView {
     var activityImageView: UIImageView!
     var closeButton : UIButton!
     var editButton: UIButton!
+    var joinButton: UIButton!
     var nameLabel = UILabel()
     var activityOverlay = UIView()
     var numberOfAttendeesLabel = UILabel()
@@ -29,12 +30,17 @@ class ActivityDetailsView: UIView {
     var selectedActivity: Activity! {
         
         didSet {
-            //  activityImageView.image = selectedActivity.imageview
-            nameLabel.text = selectedActivity.name
-            locationLabel.text = "  \(selectedActivity.location)"
-            dateLabel.text = "  \(selectedActivity.date)"
-            dateLabel.text = "  \(selectedActivity.date)"
-            descriptionTextView.text = "  \(selectedActivity.description)"
+            OperationQueue.main.addOperation {
+                self.activityImageView.image = self.selectedActivity.imageview
+                self.nameLabel.text = self.selectedActivity.name
+                self.locationLabel.text = "  \(self.selectedActivity.location)"
+                self.dateLabel.text = "  \(self.selectedActivity.date)"
+                self.dateLabel.text = "  \(self.selectedActivity.date)"
+                self.descriptionTextView.text = "  \(self.selectedActivity.description)"
+            }
+            
+            
+            
         }
         
         
@@ -62,6 +68,7 @@ class ActivityDetailsView: UIView {
         setupImageView()
         setupCloseButton()
         setupEditButton()
+        setupJoinButton()
         setupActivityOverLay()
         setupLabel()
         
@@ -74,12 +81,13 @@ class ActivityDetailsView: UIView {
         self.activityImageView.translatesAutoresizingMaskIntoConstraints = false
         self.activityImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
         self.activityImageView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor).isActive = true
-        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.36).isActive = true
+        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.45).isActive = true
         self.activityImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         self.activityImageView.backgroundColor = UIColor.clear
         self.activityImageView.contentMode = .scaleAspectFill
         self.activityImageView.clipsToBounds = true
-        self.activityImageView.image = UIImage(named: "snow")
+        self.activityImageView.contentMode = .scaleAspectFill
+        //self.activityImageView.image = UIImage(named: "snow")
     }
     
     func setupCloseButton() {
@@ -92,7 +100,7 @@ class ActivityDetailsView: UIView {
         self.closeButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
         self.closeButton.heightAnchor.constraint(equalTo: self.closeButton.widthAnchor).isActive = true
         self.closeButton.setTitle("X", for: .normal)
-        self.closeButton.setTitleColor(UIColor.white, for: .normal)
+        self.closeButton.setTitleColor(UIColor.black, for: .normal)
         self.closeButton.backgroundColor = UIColor.clear
         
     }
@@ -103,13 +111,29 @@ class ActivityDetailsView: UIView {
         self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
         self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
-        self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: -10).isActive = true
+        self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: +5).isActive = true
         self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.06, constant: 0.0).isActive = true
         self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
-       // self.editButton.setTitle("edit", for: .normal)
-        let image = UIImage(named: "Edit2")?.tint(color: .orange)
+        let image = UIImage(named: "Edit2")?.tint(color: .black)
         self.editButton.setImage(image, for: .normal)
-
+        
+    }
+    
+    func setupJoinButton(){
+        
+        self.joinButton = UIButton()
+        self.contentView.addSubview(joinButton)
+        self.joinButton.translatesAutoresizingMaskIntoConstraints = false
+        self.joinButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-30.0).isActive = true
+        self.joinButton.rightAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.rightAnchor, constant: -0.75*self.contentView.center.x).isActive = true
+        self.joinButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0.75*self.contentView.center.x).isActive = true
+        self.joinButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
+        self.joinButton.setTitle("Join Us!!!", for: .normal)
+        self.joinButton.setTitleColor(UIColor.black, for: .normal)
+        self.joinButton.layer.borderWidth = 1
+        self.joinButton.clipsToBounds = true
+        self.joinButton.layer.cornerRadius = 10
+        self.joinButton.backgroundColor = UIColor.orange
     }
     
     func setupLabel() {
@@ -213,7 +237,6 @@ class ActivityDetailsView: UIView {
         numberOfAttendeesLabel.topAnchor.constraint(equalTo: self.activityOverlay.topAnchor, constant: 10).isActive = true
         numberOfAttendeesLabel.rightAnchor.constraint(equalTo: self.activityOverlay.rightAnchor, constant: -20).isActive = true
         
-        
         addSubViewToOverlay(profileImage: firstProfileImage)
         addSubViewToOverlay(profileImage: secondProfileImage)
         addSubViewToOverlay(profileImage: thirdProfileImage)
@@ -230,12 +253,12 @@ class ActivityDetailsView: UIView {
         profileImage.backgroundColor = UIColor.green
         profileImage.layer.masksToBounds = true
         profileImage.layer.borderColor = UIColor.black.cgColor
-        profileImage.layer.cornerRadius = 15
+        profileImage.layer.cornerRadius = 17
         profileImage.clipsToBounds = true
         profileImage.translatesAutoresizingMaskIntoConstraints = false
-        profileImage.topAnchor.constraint(equalTo: self.activityOverlay.topAnchor, constant: 1.5).isActive = true
+        profileImage.topAnchor.constraint(equalTo: self.activityOverlay.topAnchor, constant: 1.8).isActive = true
         profileImage.widthAnchor.constraint(equalTo: self.activityOverlay.widthAnchor, multiplier: 1/12).isActive = true
-        profileImage.heightAnchor.constraint(equalTo: self.activityOverlay.heightAnchor, multiplier: 1/1.1).isActive = true
+        profileImage.heightAnchor.constraint(equalTo: self.activityOverlay.heightAnchor, multiplier: 1/1.2).isActive = true
     }
     
 }

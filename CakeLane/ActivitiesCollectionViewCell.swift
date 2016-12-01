@@ -28,7 +28,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
 
 
         contentView.addSubview(activityImageView)
-        activityImageView.backgroundColor = UIColor.blue
+        activityImageView.backgroundColor = UIColor(red: 25/255, green: 15/255, blue: 8/255, alpha: 1)
         activityImageView.layer.borderWidth = 1
         activityImageView.layer.borderColor = UIColor.darkGray.cgColor
         activityImageView.layer.masksToBounds = true
@@ -162,18 +162,12 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
-        self.activityImageView.image = UIImage(named: "snow")
+        if activity.image == " " {
+            self.activityImageView.image = UIImage(named: "smallerAppLogo")
+        }
+        
 
 
-        // MARK: download activity image from firebase
-//        self.downloadImage(at: activity.image) { (success, image) in
-//            DispatchQueue.main.async {
-//                self.activityImageView.image = image
-//                self.setNeedsLayout()
-//            }
-//        }
-
-
-    }
+   }
 
 }

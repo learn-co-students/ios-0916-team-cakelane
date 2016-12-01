@@ -14,23 +14,15 @@ import Firebase
 class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     var databaseReference = FIRDatabase.database().reference()
-    
     let imagePicker = UIImagePickerController()
-    
     var selectedActivity: Activity?
     var isEdit: Bool = false
     
     @IBOutlet weak var activityName: UITextField!
-    
-    
     @IBOutlet weak var activityDate: UITextField!
-    
     @IBOutlet weak var activityLocation: UITextField!
-    
     @IBOutlet weak var descriptionTextView: UITextView!
-    
     @IBOutlet weak var activityImage: UIImageView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +31,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         descriptionTextView.text = "Description"
         descriptionTextView.textColor = UIColor.lightGray
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
-        self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
+       self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,9 +65,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         let storageRef = FIRStorage.storage().reference().child("activityImages").child("\(imageName).png")
         if let image = self.activityImage.image {
             if let uploadData = UIImagePNGRepresentation(image) {
-                
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
-                    
                     if error != nil {
                         print(error!)
                         return
@@ -83,23 +73,26 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                     
        if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
         
-          guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
+        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
         
         // Create an activity on Firebase
         
         let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        
         if self.isEdit {
         self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
             self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
-        }else{
+        } else {
+            
         let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
         let key = addedActivity.key
         addedActivity.setValue(newActivity.toAnyObject())
         
         // add activity with its ID to the user
         let newactivity = [key:date]
-    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+
+ self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
         }
                     }
                 })
@@ -169,11 +162,14 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.activityDate.text = selectedActivity.date
 
         self.activityLocation.text = selectedActivity.location
-     
-        self.activityImage.image = selectedActivity.imageview
+        
+        DispatchQueue.main.async {
+            self.activityImage.image = selectedActivity.imageview
+        }
         self.descriptionTextView.textColor = UIColor.black
         self.descriptionTextView.text = selectedActivity.description
         self.isEdit = true
+        
     }
     
     
