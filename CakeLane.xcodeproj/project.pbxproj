@@ -29,6 +29,7 @@
 		E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139B1DDF63F800A3C41C /* AppController.swift */; };
 		E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D139E1DDF651F00A3C41C /* Constants.swift */; };
 		E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */; };
+
 		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
 		E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */; };
 		EE688E4B4700EA0CCBD857F7 /* Pods_CakeLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */; };
@@ -145,10 +146,12 @@
 				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
 				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
 				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
+
 				7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */,
 				7292DB731DEF8A02009BE840 /* UserInfoCell.swift */,
 				E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */,
 				72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */,
+
 			);
 			name = Controllers;
 			sourceTree = "<group>";
