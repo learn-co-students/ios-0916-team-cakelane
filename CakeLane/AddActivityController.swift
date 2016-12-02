@@ -68,7 +68,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         let imageName = NSUUID().uuidString
         let storageRef = FIRStorage.storage().reference().child("activityImages").child("\(imageName).png")
         if let image = self.activityImage.image {
-            if let uploadData = UIImagePNGRepresentation(image) {
+            if let uploadData = UIImageJPEGRepresentation(image, 0.25){
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
                         print(error!)
