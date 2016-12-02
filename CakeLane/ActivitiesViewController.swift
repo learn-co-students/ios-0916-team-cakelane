@@ -55,7 +55,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
 
-        let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.11*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
+        let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
 
         self.detailView = ActivityDetailsView(frame: frame)
 
@@ -249,29 +249,36 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
-        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-
+        let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+        let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
         let activitiesRef = ref.child(teamID).child("activities").child((selectedActivity?.id)!)
         activitiesRef.observe(.value, with: { (snapshot) in
 
-            self.selectedActivity = Activity(snapshot: snapshot)
+        self.selectedActivity = Activity(snapshot: snapshot)
 
-                self.downloadImage(at: (self.selectedActivity?.image)!, completion: { (success, image) in
-                    self.selectedActivity?.imageview = image
-                    self.detailView.selectedActivity = self.selectedActivity
-                     guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-                     OperationQueue.main.addOperation {
-                        if self.detailView.selectedActivity.owner == slackID {
-                            
-                            self.detailView.editButton.isHidden = false
-                            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
-                            self.detailView.joinButton.isHidden = true
-                            
-                            
-                        }else{
-                            self.detailView.editButton.isHidden = true
-                            self.detailView.joinButton.isHidden = false
-                            
+        self.downloadImage(at: (self.selectedActivity?.image)!, completion: { (success, image) in
+            
+            self.selectedActivity?.imageview = image
+            self.detailView.selectedActivity = self.selectedActivity
+            OperationQueue.main.addOperation {
+            if self.detailView.selectedActivity.owner == slackID {
+            self.detailView.editButton.isHidden = false
+            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
+            self.detailView.joinButton.isHidden = true
+            } else {
+                
+            self.detailView.editButton.isHidden = true
+                if self.detailView.selectedActivity.attendees.keys.contains(slackID) {
+                    self.detailView.joinButton.setTitle("Leave", for: .normal)
+                  
+  
+                } else {
+                    
+                    self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
+                    
+                }
+                self.detailView.joinButton.addTarget(self, action: #selector(self.joinOrLeaveToActivity), for: .allTouchEvents)
+                
                         }
                     
                     }
@@ -279,8 +286,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 })
 
             self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
-
-            self.detailView.joinButton.addTarget(self, action: #selector(self.joinToActivity), for: .touchUpInside)
            
                 self.view.addSubview(self.blurEffectView)
                 
@@ -430,19 +435,38 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
 
-    func joinToActivity() {
+    func joinOrLeaveToActivity() {
 
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
         guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-        
-        
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
         let newAttendingUser = [slackID:true]
         let newAttendingActivity: [String:String] = [key:date]
-  self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
        
-        self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+        if self.detailView.joinButton.titleLabel?.text == "Join Us!!!" {
+        self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
+            
+            self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+        } else {
+            
+        self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
+            
+            self.ref.child(teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
+        }
+        
+    }
+    
+    
+    func leaveActivity() {
+        print("$$$$$$$$$$$$$$$$$")
+        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
+        let key = self.selectedActivity?.id ?? ""
+    self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
+        
+        self.ref.child(teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
+        
     }
 }
 
