@@ -21,7 +21,7 @@ struct Activity {
     var image: String
     var description: String
     var location: String
-    var attendees: [String:String] = [:]
+    var attendees: [String:Bool] = [:]
     var imageview: UIImage?
     let reference : FIRDatabaseReference?
 
@@ -49,7 +49,7 @@ struct Activity {
         image = snapshotValue["image"] as? String ?? "No image"
         location = snapshotValue["location"] as? String ?? "No location"
         description = snapshotValue["description"] as? String ?? "No description"
-        attendees = snapshotValue["attending"] as? [String:String] ?? ["No attending":""]
+        attendees = snapshotValue["attending"] as? [String:Bool] ?? ["No attending":false]
         reference = snapshot.ref
         id = snapshot.key
     }
