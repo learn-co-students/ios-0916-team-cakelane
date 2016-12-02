@@ -24,8 +24,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     let whenDropDown = DropDown()
 
-    var slackUsersStore = SlackUsersDataStore.sharedInstance
-
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
     override func viewWillAppear(_ animated: Bool) {
@@ -36,24 +34,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // MARK: Populate users & bots in Slack Users Data Store
-        SlackAPIClient.getAllUsersInfo { (manyUsersInfo) in
-            let manyUsersData = manyUsersInfo["members"] as! [Any]
-                        print("%%%%%%%**********%%%%%%%%%%%")
-                        print(manyUsersData)
-                        print("%%%%%%%**********%%%%%%%%%%%")
-            for (index, entry) in manyUsersData.enumerated() {
-                let userData = manyUsersData[index] as! [String:Any]
-                let userProfile = User(dictionary: userData)
-                // TODO: add bot names to Constants.swift
-                if userProfile.firstName == "slackbot" || userProfile.firstName == "Trello" || userProfile.firstName == "TeemToo" {
-                    self.slackUsersStore.bots.append(userProfile)
-                    continue
-                }
-                self.slackUsersStore.users.append(userProfile)
-            }
-
-        }
+        // MARK: Populate users & bots in Firebase Users Data Store
+        
 
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
@@ -216,30 +198,20 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return activities.count
 
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         var activity = self.activities[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
 
         if cell.delegate == nil { cell.delegate = self }
-
+        
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
             self.activities[indexPath.row].imageview = cell.activityImageView.image
 
         OperationQueue.main.addOperation {
             cell.updateCell(with: activity)
-
-            self.downloadImage(at: activity.image) { (success, image) in
-                DispatchQueue.main.async {
-                    cell.activityImageView.image = image
-                    activity.imageview = image
-                    cell.setNeedsLayout()
-                }
-            }
-
-
         }
         self.activities[indexPath.row].imageview = activity.imageview
 
@@ -262,6 +234,23 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        var activity = self.activities[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
+        
+        if cell.activityImageView.image?.description == "smallerAppLogo" {
+            self.downloadImage(at: activity.image) { (success, image) in
+                DispatchQueue.main.async {
+                    cell.activityImageView.image = image
+                    activity.imageview = image
+                    cell.setNeedsLayout()
+                }
+            }
+        }
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
@@ -451,7 +440,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
         guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
 
-
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
         let newAttendingUser = [slackID:true]
@@ -475,3 +463,4 @@ extension ActivitiesViewController: ActivitiesDelegate {
         self.dismiss(animated: false, completion: nil)
     }
 }
+

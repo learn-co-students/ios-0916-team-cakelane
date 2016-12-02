@@ -8,8 +8,8 @@
 
 import Foundation
 
-class SlackUsersDataStore {
-    static let sharedInstance = SlackUsersDataStore()
+class FirebaseUsersDataStore {
+    static let sharedInstance = FirebaseUsersDataStore()
     private init() { }
     
     var users = [User]()

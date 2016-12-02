@@ -16,7 +16,7 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var activities = [Activity]()
     let ref = FIRDatabase.database().reference()
 
-    var slackUsersStore = SlackUsersDataStore.sharedInstance
+    var firebaseUsersStore = FirebaseUsersDataStore.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
