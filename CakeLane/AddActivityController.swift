@@ -80,10 +80,13 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         guard let userIcon = UserDefaults.standard.string(forKey: "image72") else {return}
         // Create an activity on Firebase
 
+        // Create an activity notification on Slack --> SlackAPIClient.postSlackNotification()
         let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
-        let newAttachment = Attachment.init(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(userFirstName)_.", authorName: "\(userFirstName)_.", authorIcon: userIcon, text: newActivity.description, imageURL: newActivity.image)
-        print("NEWATTACHMENT Dictionary!!!!! ++++++++++++++\(newAttachment)")
+        let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(userFirstName)_.", authorIcon: userIcon, text: newActivity.description, imageURL: newActivity.image)
         self.store.attachmentDictionary = newAttachment.dictionary
+        print("selfstoreattachment Dictionary!!!!! ++++++++++++++\(self.store.attachmentDictionary)")
+        
+        SlackAPIClient.postSlackNotification()
         
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
