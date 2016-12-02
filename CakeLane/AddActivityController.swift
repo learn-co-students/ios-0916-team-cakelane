@@ -19,7 +19,11 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     let imagePicker = UIImagePickerController()
     var selectedActivity: Activity?
     var isEdit: Bool = false
-
+    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+    let userFirstName = UserDefaults.standard.string(forKey: "firstName") ?? " "
+    let userIcon = UserDefaults.standard.string(forKey: "image72") ?? " "
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+    
     @IBOutlet weak var activityName: UITextField!
     @IBOutlet weak var activityDate: UITextField!
     @IBOutlet weak var activityLocation: UITextField!
@@ -53,7 +57,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     @IBAction func saveButton(_ sender: Any) {
 
-        // create an activity
+        
         let unwrappedName = self.activityName.text ?? " "
         let location = self.activityLocation.text ?? " "
         let description = self.descriptionTextView.text ?? " "
@@ -68,50 +72,50 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         let imageName = NSUUID().uuidString
         let storageRef = FIRStorage.storage().reference().child("activityImages").child("\(imageName).png")
         if let image = self.activityImage.image {
-            if let uploadData = UIImagePNGRepresentation(image) {
+            if let uploadData = UIImageJPEGRepresentation(image, 0.25) {
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
                         print(error!)
                         return
                     }
                     
-                    if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
+
+        if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
+        // Create an activity on Firebase
+
+                 
+
                         
-                        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-                        guard let userFirstName = UserDefaults.standard.string(forKey: "firstName") else {return}
-                        guard let userIcon = UserDefaults.standard.string(forKey: "image72") else {return}
-                        
-                        // Create an activity on Firebase
-                        
-                        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
+        let newActivity = Activity(owner: self.slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
                     
-                        let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(userFirstName)_.", authorIcon: userIcon, text: newActivity.description, imageURL: newActivity.image)
+
+                        // Create an attachment for the notification
+                        
+                        let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(self.userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(self.userFirstName)_.", authorIcon: self.userIcon, text: newActivity.description, imageURL: newActivity.image)
                         self.store.attachmentDictionary = newAttachment.dictionary
-                        print("selfstoreattachment Dictionary!!!!! ++++++++++++++\(self.store.attachmentDictionary)")
-                    
-                    SlackAPIClient.postSlackNotification()
+                                        SlackAPIClient.postSlackNotification()
 
                     
-                        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        // check if the user is editing the activity and update the activity and the user's activity data
                         
-                        if self.isEdit {
-                            self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
-                        } else {
+        if self.isEdit {
+            
+         self.databaseReference.child(self.teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
+            
+    self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
+                    } else {
                             
-                let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
-                            let key = addedActivity.key
-                          
-                            let newAttendingUser = [slackID:true]
-                            
-                                addedActivity.setValue(newActivity.toAnyObject())
-                            self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
-                            
-                            // add activity with its ID to the user
-                            let newactivity = [key:date]
-                            
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
+        let addedActivity = self.databaseReference.child(self.teamID).child("activities").childByAutoId()
+        let key = addedActivity.key
+        let newAttendingUser = [self.slackID:true]
+        let newactivity = [key:date]
+
+        addedActivity.setValue(newActivity.toAnyObject())
+            
+        self.databaseReference.child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+            
+    self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+    self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
                         }
                     }
                 })
@@ -156,6 +160,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     }
 
+    // MARK: - add a placeholder to the textView
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
 
         if descriptionTextView.textColor == UIColor.lightGray {
@@ -172,6 +178,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         }
     }
 
+
+    // MARK: - fill the text fields with the selected activity info
+
+    
     func fillTextFields(with selectedActivity: Activity) {
 
         self.activityName.text = selectedActivity.name
