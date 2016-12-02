@@ -51,6 +51,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
 
+
         self.detailView = ActivityDetailsView(frame: frame)
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
