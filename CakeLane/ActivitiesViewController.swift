@@ -28,6 +28,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
     override func viewWillAppear(_ animated: Bool) {
+        //MARK: Replace with tableview.reload() so that ViewDidload doesn't get called twice
         viewDidLoad()
     }
 
@@ -37,6 +38,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
 
         super.viewDidLoad()
+        
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
