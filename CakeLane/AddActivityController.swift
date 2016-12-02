@@ -53,7 +53,12 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     @IBAction func saveButton(_ sender: Any) {
 
-        // create an activity
+        let slackID = UserDefaults.standard.string(forKey: "slackID") ?? "invalid ID"
+        let userFirstName = UserDefaults.standard.string(forKey: "firstName") ?? "invalid Name"
+        let userIcon = UserDefaults.standard.string(forKey: "image72") ?? "invalid Icon"
+        let teamID = UserDefaults.standard.string(forKey: "teamID") ?? "invalid Team"
+
+        
         let unwrappedName = self.activityName.text ?? " "
         let location = self.activityLocation.text ?? " "
         let description = self.descriptionTextView.text ?? " "
@@ -77,41 +82,37 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                     
                     if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
                         
-                        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-                        guard let userFirstName = UserDefaults.standard.string(forKey: "firstName") else {return}
-                        guard let userIcon = UserDefaults.standard.string(forKey: "image72") else {return}
-                        
                         // Create an activity on Firebase
                         
                         let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
                     
+                        // Create an attachment for the notification
+                        
                         let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(userFirstName)_.", authorIcon: userIcon, text: newActivity.description, imageURL: newActivity.image)
                         self.store.attachmentDictionary = newAttachment.dictionary
-                        print("selfstoreattachment Dictionary!!!!! ++++++++++++++\(self.store.attachmentDictionary)")
-                    
-                    SlackAPIClient.postSlackNotification()
+                                        SlackAPIClient.postSlackNotification()
 
                     
-                        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        // check if the user is editing the activity and update the activity and the user's activity data
                         
-                        if self.isEdit {
-                            self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
-                        } else {
+        if self.isEdit {
+            
+         self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
+            
+    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
+                    } else {
                             
-                let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
-                            let key = addedActivity.key
-                          
-                            let newAttendingUser = [slackID:true]
-                            
-                                addedActivity.setValue(newActivity.toAnyObject())
-                            self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
-                            
-                            // add activity with its ID to the user
-                            let newactivity = [key:date]
-                            
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
+        let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
+        let key = addedActivity.key
+        let newAttendingUser = [slackID:true]
+        let newactivity = [key:date]
+
+        addedActivity.setValue(newActivity.toAnyObject())
+            
+        self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+            
+    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
                         }
                     }
                 })
@@ -156,6 +157,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     }
 
+    // MARK: - add a placeholder to the textView
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
 
         if descriptionTextView.textColor == UIColor.lightGray {
@@ -172,6 +175,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         }
     }
 
+    // MARK: - fill the text fields with the selected activity info
+    
     func fillTextFields(with selectedActivity: Activity) {
 
         self.activityName.text = selectedActivity.name
