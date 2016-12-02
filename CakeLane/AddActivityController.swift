@@ -53,7 +53,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     @IBAction func saveButton(_ sender: Any) {
 
-        // create an activity
+        let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+        let userFirstName = UserDefaults.standard.string(forKey: "firstName") ?? " "
+        let userIcon = UserDefaults.standard.string(forKey: "image72") ?? " "
+        let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
         let unwrappedName = self.activityName.text ?? " "
         let location = self.activityLocation.text ?? " "
         let description = self.descriptionTextView.text ?? " "
@@ -75,43 +78,34 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                         return
                     }
                     
-                    if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
+        if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
+        // Create an activity on Firebase
                         
-                        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-                        guard let userFirstName = UserDefaults.standard.string(forKey: "firstName") else {return}
-                        guard let userIcon = UserDefaults.standard.string(forKey: "image72") else {return}
-                        
-                        // Create an activity on Firebase
-                        
-                        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
+        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
                     
-                        let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(userFirstName)_.", authorIcon: userIcon, text: newActivity.description, imageURL: newActivity.image)
-                        self.store.attachmentDictionary = newAttachment.dictionary
-                        print("selfstoreattachment Dictionary!!!!! ++++++++++++++\(self.store.attachmentDictionary)")
-                    
-                    SlackAPIClient.postSlackNotification()
+        let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(userFirstName)_.", authorIcon: userIcon, text: newActivity.description, imageURL: newActivity.image)
+        self.store.attachmentDictionary = newAttachment.dictionary
+        SlackAPIClient.postSlackNotification()
 
-                    
-                        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+         // Check if the user is editing an activity and update firebase
                         
-                        if self.isEdit {
-                            self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
+        if self.isEdit {
+            
+        self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
+    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
                         } else {
                             
-                let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
-                            let key = addedActivity.key
-                          
-                            let newAttendingUser = [slackID:true]
+        let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
+        let key = addedActivity.key
+        let newactivity = [key:date]
+        let newAttendingUser = [slackID:true]
                             
-                                addedActivity.setValue(newActivity.toAnyObject())
-                            self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+        addedActivity.setValue(newActivity.toAnyObject())
+            
+        self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
                             
-                            // add activity with its ID to the user
-                            let newactivity = [key:date]
-                            
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
-                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
+    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
                         }
                     }
                 })
@@ -172,6 +166,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         }
     }
 
+    // Fill the textfields with the selected activity info
+    
     func fillTextFields(with selectedActivity: Activity) {
 
         self.activityName.text = selectedActivity.name
