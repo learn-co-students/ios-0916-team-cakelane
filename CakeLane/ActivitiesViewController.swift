@@ -24,6 +24,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     let whenDropDown = DropDown()
 
+    var slackUsersStore = SlackUsersDataStore.sharedInstance
 
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
@@ -32,11 +33,27 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
     override func viewDidLoad() {
-
-        print(SlackAPIClient.getUserInfo(with: ))
-
-
         super.viewDidLoad()
+        
+        // MARK: Populate users & bots in Slack Users Data Store
+        SlackAPIClient.getAllUsersInfo { (manyUsersInfo) in
+            let manyUsersData = manyUsersInfo["members"] as! [Any]
+                        print("%%%%%%%**********%%%%%%%%%%%")
+                        print(manyUsersData)
+                        print("%%%%%%%**********%%%%%%%%%%%")
+            for (index, entry) in manyUsersData.enumerated() {
+                let userData = manyUsersData[index] as! [String:Any]
+                let userProfile = User(dictionary: userData)
+                // TODO: add bot names to Constants.swift
+                if userProfile.firstName == "slackbot" || userProfile.firstName == "Trello" || userProfile.firstName == "TeemToo" {
+                    self.slackUsersStore.bots.append(userProfile)
+                    continue
+                }
+                self.slackUsersStore.users.append(userProfile)
+            }
+            
+        }
+        
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
@@ -429,19 +446,16 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 }
 
-
 extension ActivitiesViewController: ActivitiesDelegate {
-
+    
     func attendeeTapped(sender: ActivitiesCollectionViewCell) {
-
-
-
+        
         let userTableView = UsersTableViewController()
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
         self.present(navController, animated: false, completion: nil)
     }
-
+    
     func dismissController() {
         self.dismiss(animated: false, completion: nil)
     }

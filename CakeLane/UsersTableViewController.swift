@@ -16,9 +16,10 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var activities = [Activity]()
     let ref = FIRDatabase.database().reference()
 
+    var slackUsersStore = SlackUsersDataStore.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
@@ -59,8 +60,6 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     // MARK: - Table view data source
-
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         print("1111111111111111111")
@@ -75,6 +74,14 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
 
-   
+    // TODO: Prepare for segue to DetailUserViewController
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
+//   
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        <#code#>
+//    }
 
 }
