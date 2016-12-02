@@ -193,6 +193,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
+        self.numberOfAttendeesLabel.text = String(activity.attendees.count)
+        
+        
         if activity.image == " " {
             self.activityImageView.image = UIImage(named: "smallerAppLogo")
         }
