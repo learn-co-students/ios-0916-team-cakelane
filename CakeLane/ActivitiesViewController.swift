@@ -442,8 +442,6 @@ extension ActivitiesViewController: ActivitiesDelegate {
 
     func attendeeTapped(sender: ActivitiesCollectionViewCell) {
 
-
-
         let userTableView = UsersTableViewController()
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
