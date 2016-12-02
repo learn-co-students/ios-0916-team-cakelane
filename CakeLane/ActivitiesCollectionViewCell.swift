@@ -15,7 +15,7 @@ protocol ActivitiesDelegate: class {
 
 }
 
-class ActivitiesCollectionViewCell: UICollectionViewCell {
+class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate {
 
     var activityImageView = UIImageView()
     var activityOverlay = UIView()
@@ -28,6 +28,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     var firstProfileImage = UIImageView()
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
+    
+    var placeholderImage = true
 
     var delegate: ActivitiesDelegate?
 
@@ -172,7 +174,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
 
     }
 
-
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)
@@ -188,6 +189,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         }
 
     }
+    
     func updateCell(with activity: Activity) {
 
         self.activityLabel.text = activity.name
@@ -195,15 +197,12 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.locationLabel.text = activity.location
         self.numberOfAttendeesLabel.text = String(activity.attendees.count)
         
-        
+        // update cell with local placeholder image
         if activity.image == " " {
             self.activityImageView.image = UIImage(named: "smallerAppLogo")
+            self.placeholderImage = true
         }
-
-
-
-
-
+        
     }
 
 
