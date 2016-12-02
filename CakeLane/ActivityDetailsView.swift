@@ -12,9 +12,9 @@ class ActivityDetailsView: UIView {
     
     @IBOutlet var contentView: UIView!
     var activityImageView: UIImageView!
-    var closeButton : UIButton!
-    var editButton: UIButton!
-    var joinButton: UIButton!
+    var closeButton = UIButton()
+    var editButton =  UIButton()
+    var joinButton = UIButton()
     var nameLabel = UILabel()
     var activityOverlay = UIView()
     var numberOfAttendeesLabel = UILabel()
@@ -86,13 +86,10 @@ class ActivityDetailsView: UIView {
         self.activityImageView.backgroundColor = UIColor.clear
         self.activityImageView.contentMode = .scaleAspectFill
         self.activityImageView.clipsToBounds = true
-        self.activityImageView.contentMode = .scaleAspectFill
-        //self.activityImageView.image = UIImage(named: "snow")
     }
     
     func setupCloseButton() {
         
-        self.closeButton = UIButton()
         self.contentView.addSubview(closeButton)
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
         self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
@@ -107,14 +104,13 @@ class ActivityDetailsView: UIView {
     
     func setupEditButton() {
         
-        self.editButton = UIButton()
         self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
         self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
         self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: +5).isActive = true
         self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.06, constant: 0.0).isActive = true
         self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
-        let image = UIImage(named: "Edit2")?.tint(color: .black)
+        let image = UIImage(named: "Edit2")?.tint(color: .orange)
         self.editButton.setImage(image, for: .normal)
         
     }
@@ -129,7 +125,7 @@ class ActivityDetailsView: UIView {
         self.joinButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0.75*self.contentView.center.x).isActive = true
         self.joinButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.joinButton.setTitle("Join Us!!!", for: .normal)
-        self.joinButton.setTitleColor(UIColor.black, for: .normal)
+        self.joinButton.setTitleColor(UIColor.darkGray, for: .normal)
         self.joinButton.layer.borderWidth = 1
         self.joinButton.clipsToBounds = true
         self.joinButton.layer.cornerRadius = 10
@@ -145,58 +141,24 @@ class ActivityDetailsView: UIView {
         nameLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
         self.nameLabel.bottomAnchor.constraint(equalTo: self.activityImageView.bottomAnchor, constant: -20).isActive = true
         
-        self.contentView.addSubview(locationTitlelabel)
+        self.setupTitleLabel(titleLabel: locationTitlelabel)
         locationTitlelabel.text = "Location"
-        locationTitlelabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
-        locationTitlelabel.textColor = UIColor.orange
-        locationTitlelabel.translatesAutoresizingMaskIntoConstraints = false
-        locationTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
         locationTitlelabel.topAnchor.constraint(equalTo: self.activityOverlay.bottomAnchor, constant: 10).isActive = true
         
-        
-        self.contentView.addSubview(locationLabel)
-        locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
-        locationLabel.textColor = UIColor.black
-        locationLabel.translatesAutoresizingMaskIntoConstraints = false
-        locationLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        locationLabel.topAnchor.constraint(equalTo: self.locationTitlelabel.bottomAnchor).isActive = true
-        locationLabel.backgroundColor = UIColor.white
-        locationLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
-        locationLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        locationLabel.layer.cornerRadius = 5
-        locationLabel.layer.borderWidth = 1
-        locationLabel.clipsToBounds = true
-        
-        self.contentView.addSubview(dateTitlelabel)
+        self.setupTitleLabel(titleLabel: dateTitlelabel)
         dateTitlelabel.text = "Date"
-        dateTitlelabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
-        dateTitlelabel.textColor = UIColor.orange
-        dateTitlelabel.translatesAutoresizingMaskIntoConstraints = false
-        dateTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
         dateTitlelabel.topAnchor.constraint(equalTo: self.locationLabel.bottomAnchor, constant: 10).isActive = true
         
-        
-        self.contentView.addSubview(dateLabel)
-        dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
-        dateLabel.textColor = UIColor.black
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        dateLabel.topAnchor.constraint(equalTo: self.dateTitlelabel.bottomAnchor).isActive = true
-        dateLabel.backgroundColor = UIColor.white
-        dateLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
-        dateLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dateLabel.backgroundColor = UIColor.white
-        dateLabel.layer.cornerRadius = 5
-        dateLabel.layer.borderWidth = 1
-        dateLabel.clipsToBounds = true
-        
-        self.contentView.addSubview(descriptionTitlelabel)
+        self.setupTitleLabel(titleLabel: descriptionTitlelabel)
         descriptionTitlelabel.text = "Description"
-        descriptionTitlelabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
-        descriptionTitlelabel.textColor = UIColor.orange
-        descriptionTitlelabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
         descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 10).isActive = true
+        
+        self.setupLabel(label: locationLabel)
+        locationLabel.topAnchor.constraint(equalTo: self.locationTitlelabel.bottomAnchor).isActive = true
+        
+        self.setupLabel(label: dateLabel)
+        dateLabel.topAnchor.constraint(equalTo: self.dateTitlelabel.bottomAnchor).isActive = true
+        
         
         self.contentView.addSubview(descriptionTextView)
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
@@ -261,9 +223,37 @@ class ActivityDetailsView: UIView {
         profileImage.heightAnchor.constraint(equalTo: self.activityOverlay.heightAnchor, multiplier: 1/1.2).isActive = true
     }
     
+    
+    func setupTitleLabel( titleLabel:UILabel) {
+        
+        self.contentView.addSubview(titleLabel)
+        titleLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        titleLabel.textColor = UIColor.orange
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        
+    }
+    
+    func setupLabel(label: UILabel) {
+        
+        self.contentView.addSubview(label)
+        label.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
+        label.textColor = UIColor.black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
+        label.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        label.backgroundColor = UIColor.white
+        label.layer.cornerRadius = 5
+        label.layer.borderWidth = 1
+        label.clipsToBounds = true
+        
+    }
+    
 }
 
 extension UIView {
+    
     func constrainEdges(to view: UIView) {
         
         leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
