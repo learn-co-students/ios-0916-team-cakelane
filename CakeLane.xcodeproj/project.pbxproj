@@ -15,6 +15,9 @@
 		72972BAB1DEDD27500D3FA60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72972BA91DEDD27500D3FA60 /* Main.storyboard */; };
 		72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */; };
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
+		75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */; };
+		75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */; };
+		A2E0019A1DE9E9A800C24F49 /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */; };
 		A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */; };
 		A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */; };
 		A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */; };
@@ -49,6 +52,10 @@
 		72972BAA1DEDD27500D3FA60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
+		75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
+		75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackMessageStore.swift; sourceTree = "<group>"; };
+		A2E001991DE9E9A800C24F49 /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityDetailsView.swift; path = CakeLane/ActivityDetailsView.swift; sourceTree = "<group>"; };
+
 		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailsView.xib; sourceTree = "<group>"; };
 		A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,7 +130,10 @@
 			isa = PBXGroup;
 			children = (
 				A2ECAA851DDDED55000E3CC6 /* UserData.swift */,
+				75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */,
 				A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */,
+				A2F4B8D31DE4D46F00933A94 /* DataStore.swift */,
+				75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */,
 				75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */,
 				A2F4B8D31DE4D46F00933A94 /* CoreDataStore.swift */,
 				E51305A61DF1A984009F0560 /* SlackUsersDataStore.swift */,
@@ -342,9 +352,11 @@
 				E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */,
 				E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */,
 				A2F4B8D41DE4D46F00933A94 /* CoreDataStore.swift in Sources */,
+				75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */,
 				1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */,
 				A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */,
 				A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */,
+				75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */,
 				75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */,
 				E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */,
 				A2F4B8D21DE39E5300933A94 /* Secrets.swift in Sources */,

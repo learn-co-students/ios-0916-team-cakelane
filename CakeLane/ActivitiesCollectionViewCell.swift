@@ -36,7 +36,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
 
 
         contentView.addSubview(activityImageView)
-        activityImageView.backgroundColor = UIColor(red: 25/255, green: 15/255, blue: 8/255, alpha: 1)
+        activityImageView.backgroundColor = UIColor.black
         activityImageView.layer.borderWidth = 1
         activityImageView.layer.borderColor = UIColor.darkGray.cgColor
         activityImageView.layer.masksToBounds = true
@@ -193,6 +193,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
+        self.numberOfAttendeesLabel.text = String(activity.attendees.count)
+        
+        
         if activity.image == " " {
             self.activityImageView.image = UIImage(named: "smallerAppLogo")
         }

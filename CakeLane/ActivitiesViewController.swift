@@ -29,12 +29,13 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
     override func viewWillAppear(_ animated: Bool) {
+        //MARK: Replace with tableview.reload() so that ViewDidload doesn't get called twice
         viewDidLoad()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // MARK: Populate users & bots in Slack Users Data Store
         SlackAPIClient.getAllUsersInfo { (manyUsersInfo) in
             let manyUsersData = manyUsersInfo["members"] as! [Any]
@@ -51,9 +52,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 }
                 self.slackUsersStore.users.append(userProfile)
             }
-            
+
         }
-        
+
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
@@ -67,6 +68,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.tabBarController?.tabBar.barTintColor = UIColor.black
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.tabBarController?.tabBar.isTranslucent = false
 
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.11*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
 
@@ -239,7 +242,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         }
         self.activities[indexPath.row].imageview = activity.imageview
-        
+
     }
         return cell
     }
@@ -273,14 +276,20 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     self.selectedActivity?.imageview = image
                     self.detailView.selectedActivity = self.selectedActivity
                      guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-                    if self.detailView.selectedActivity.owner == slackID {
+                     OperationQueue.main.addOperation {
+                        if self.detailView.selectedActivity.owner == slackID {
 
-                        self.detailView.editButton.isHidden = false
-                        self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
+                            self.detailView.editButton.isHidden = false
+                            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
+                            self.detailView.joinButton.isHidden = true
 
 
-                    }else{
-                        self.detailView.editButton.isHidden = true
+                        }else{
+                            self.detailView.editButton.isHidden = true
+                            self.detailView.joinButton.isHidden = false
+
+                        }
+
                     }
 
                 })
@@ -289,10 +298,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
             self.detailView.joinButton.addTarget(self, action: #selector(self.joinToActivity), for: .touchUpInside)
 
-            self.view.addSubview(self.blurEffectView)
+                self.view.addSubview(self.blurEffectView)
 
-            self.view.addSubview(self.detailView)
-
+                self.view.addSubview(self.detailView)
 
 
 
@@ -307,7 +315,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
     }
@@ -340,6 +347,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             var result = false
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
             if let aDate = dateFormatter.date(from: a.date){
                 if let bDate = dateFormatter.date(from: b.date){
                     if aDate < bDate {
@@ -359,6 +367,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
             if let aDate = dateFormatter.date(from: a.date) {
                 if calendar.isDateInToday(aDate){
                     result = true
@@ -375,6 +384,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
+
             let currentDate = Date()
             let currentWeek = calendar.component(.weekOfMonth, from: currentDate)
 
@@ -395,6 +406,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.long
+            dateFormatter.timeStyle = .long
+
             let currentDate = Date()
             let currentMonth = calendar.component(.month, from: currentDate)
 
@@ -409,7 +422,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
         return filterArray
     }
-    
+
     func dismissView() {
 
         UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
@@ -437,25 +450,27 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
         guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
+
+
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
-        let newAttendingUser = [String(describing: self.selectedActivity?.attendees.count):slackID]
+        let newAttendingUser = [slackID:true]
         let newAttendingActivity: [String:String] = [key:date]
- self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
+  self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
+
         self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
     }
 }
 
 extension ActivitiesViewController: ActivitiesDelegate {
-    
+
     func attendeeTapped(sender: ActivitiesCollectionViewCell) {
-        
         let userTableView = UsersTableViewController()
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
         self.present(navController, animated: false, completion: nil)
     }
-    
+
     func dismissController() {
         self.dismiss(animated: false, completion: nil)
     }
