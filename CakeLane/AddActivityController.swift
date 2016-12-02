@@ -89,7 +89,9 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                             
                 let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
                             let key = addedActivity.key
-                            let newAttendingUser = [String(describing: newActivity.attendees.count):slackID]
+                            let attendID = NSUUID().uuidString
+
+                            let newAttendingUser = [attendID:slackID]
                             
                             
                                 addedActivity.setValue(newActivity.toAnyObject())

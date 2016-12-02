@@ -426,7 +426,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
-        let newAttendingUser = [String(describing: self.selectedActivity?.attendees.count):slackID]
+        let attendID = NSUUID().uuidString
+        let newAttendingUser = [attendID:slackID]
         let newAttendingActivity: [String:String] = [key:date]
  self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
         self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
