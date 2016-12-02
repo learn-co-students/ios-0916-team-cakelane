@@ -19,7 +19,11 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     let imagePicker = UIImagePickerController()
     var selectedActivity: Activity?
     var isEdit: Bool = false
-
+    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+    let userFirstName = UserDefaults.standard.string(forKey: "firstName") ?? " "
+    let userIcon = UserDefaults.standard.string(forKey: "image72") ?? " "
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+    
     @IBOutlet weak var activityName: UITextField!
     @IBOutlet weak var activityDate: UITextField!
     @IBOutlet weak var activityLocation: UITextField!
@@ -53,10 +57,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     @IBAction func saveButton(_ sender: Any) {
 
-        let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
-        let userFirstName = UserDefaults.standard.string(forKey: "firstName") ?? " "
-        let userIcon = UserDefaults.standard.string(forKey: "image72") ?? " "
-        let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+        
         let unwrappedName = self.activityName.text ?? " "
         let location = self.activityLocation.text ?? " "
         let description = self.descriptionTextView.text ?? " "
@@ -81,9 +82,9 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
         // Create an activity on Firebase
                         
-        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
+        let newActivity = Activity(owner: self.slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
                     
-        let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(userFirstName)_.", authorIcon: userIcon, text: newActivity.description, imageURL: newActivity.image)
+        let newAttachment = Attachment(title: newActivity.name, pretext: "*New Activity:* \(newActivity.name) _by \(self.userFirstName)_. \n*Date:* \(newActivity.date)", authorName: "\(self.userFirstName)_.", authorIcon: self.userIcon, text: newActivity.description, imageURL: newActivity.image)
         self.store.attachmentDictionary = newAttachment.dictionary
         SlackAPIClient.postSlackNotification()
 
@@ -91,21 +92,21 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                         
         if self.isEdit {
             
-        self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
-    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
+        self.databaseReference.child(self.teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
+    self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
                         } else {
                             
-        let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
+        let addedActivity = self.databaseReference.child(self.teamID).child("activities").childByAutoId()
         let key = addedActivity.key
         let newactivity = [key:date]
-        let newAttendingUser = [slackID:true]
+        let newAttendingUser = [self.slackID:true]
                             
         addedActivity.setValue(newActivity.toAnyObject())
             
-        self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+        self.databaseReference.child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
                             
-    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
-    self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
+    self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+    self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
                         }
                     }
                 })
