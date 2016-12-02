@@ -30,8 +30,10 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         descriptionTextView.delegate = self
         descriptionTextView.text = "Description"
         descriptionTextView.textColor = UIColor.lightGray
+        descriptionTextView.layer.cornerRadius = 5
+        descriptionTextView.clipsToBounds = true
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
-       self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
+        self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,36 +73,43 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                         return
                     }
                     
-       if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
-        
-        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-        
-        // Create an activity on Firebase
-        
-        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
-        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-        
-        if self.isEdit {
-        self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
-            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
-        } else {
-            
-        let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
-        let key = addedActivity.key
-        addedActivity.setValue(newActivity.toAnyObject())
-        
-        // add activity with its ID to the user
-        let newactivity = [key:date]
+                    if let activityImageUrl = metadata?.downloadURL()?.absoluteString {
+                        
+                        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
+                        
+                        // Create an activity on Firebase
+                        
+                        let newActivity = Activity(owner: slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
+                        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+                        
+                        if self.isEdit {
+                            self.databaseReference.child(teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
+                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
+                        } else {
+                            
+                let addedActivity = self.databaseReference.child(teamID).child("activities").childByAutoId()
+                            let key = addedActivity.key
+                            let attendID = NSUUID().uuidString
 
- self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
-        }
+                            let newAttendingUser = [attendID:slackID]
+                            
+                            
+                                addedActivity.setValue(newActivity.toAnyObject())
+                            self.databaseReference.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+                            
+                            // add activity with its ID to the user
+                            let newactivity = [key:date]
+                            
+                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+                            self.databaseReference.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
+                        }
                     }
                 })
                 
             }
-        
+            
         }
-    
+        
         dismiss(animated: true, completion: nil)
         
     }
@@ -156,11 +165,11 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     
     func fillTextFields(with selectedActivity: Activity) {
-       
+        
         self.activityName.text = selectedActivity.name
-
+        
         self.activityDate.text = selectedActivity.date
-
+        
         self.activityLocation.text = selectedActivity.location
         
         DispatchQueue.main.async {

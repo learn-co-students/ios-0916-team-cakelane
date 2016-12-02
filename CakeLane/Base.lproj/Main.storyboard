@@ -74,7 +74,7 @@
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="jUM-lB-liL">
                                 <rect key="frame" x="41.333333333333343" y="339.33333333333337" width="331.33333333333337" height="294.33333333333337"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-YP-MVE">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-YP-MVE">
                                         <rect key="frame" x="0.0" y="0.0" width="331.33333333333337" height="67"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
@@ -109,7 +109,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhL-sG-hY4">
                                 <rect key="frame" x="316" y="675" width="56" height="34"/>
                                 <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="cancelButton:" destination="yI5-9V-7wn" eventType="touchUpInside" id="fsf-t5-DLn"/>
@@ -117,12 +117,12 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCz-Wf-4ol">
                                 <rect key="frame" x="42" y="675" width="57" height="34"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xCz-Wf-4ol" secondAttribute="height" multiplier="57:34" id="nvm-Ju-8J9"/>
                                 </constraints>
                                 <state key="normal" title="Save">
-                                    <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="saveButton:" destination="yI5-9V-7wn" eventType="touchUpInside" id="E0R-0S-UUu"/>
@@ -156,7 +156,8 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jUM-lB-liL" firstAttribute="centerY" secondItem="VkO-5N-TbK" secondAttribute="centerY" constant="118.5" id="2WJ-LF-qUX"/>
                             <constraint firstItem="eNB-Kh-et4" firstAttribute="width" secondItem="VkO-5N-TbK" secondAttribute="width" multiplier="0.8" id="3XX-Pw-eZd"/>

@@ -258,14 +258,20 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     self.selectedActivity?.imageview = image
                     self.detailView.selectedActivity = self.selectedActivity
                      guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-                    if self.detailView.selectedActivity.owner == slackID {
-
-                        self.detailView.editButton.isHidden = false
-                        self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
-
-
-                    }else{
-                        self.detailView.editButton.isHidden = true
+                     OperationQueue.main.addOperation {
+                        if self.detailView.selectedActivity.owner == slackID {
+                            
+                            self.detailView.editButton.isHidden = false
+                            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
+                            self.detailView.joinButton.isHidden = true
+                            
+                            
+                        }else{
+                            self.detailView.editButton.isHidden = true
+                            self.detailView.joinButton.isHidden = false
+                            
+                        }
+                    
                     }
 
                 })
@@ -273,13 +279,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
 
             self.detailView.joinButton.addTarget(self, action: #selector(self.joinToActivity), for: .touchUpInside)
-
-            self.view.addSubview(self.blurEffectView)
-
-            self.view.addSubview(self.detailView)
-
-
-
+           
+                self.view.addSubview(self.blurEffectView)
+                
+                self.view.addSubview(self.detailView)
+            
+            
 
         })
 
@@ -292,7 +297,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
     }
@@ -430,7 +434,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
-        let newAttendingUser = [String(describing: self.selectedActivity?.attendees.count):slackID]
+        let attendID = NSUUID().uuidString
+        let newAttendingUser = [attendID:slackID]
         let newAttendingActivity: [String:String] = [key:date]
  self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
         self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
