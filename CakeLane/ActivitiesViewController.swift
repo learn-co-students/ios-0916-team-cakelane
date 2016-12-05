@@ -13,33 +13,38 @@ import DropDown
 
 class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
+    // MARK: UI
     var activitiesCollectionView: UICollectionView!
-    var activities = [Activity]()
     var blurEffectView: UIVisualEffectView!
+    
+    // TODO1: Move out of AVC
     var detailView: ActivityDetailsView!
-    let ref = FIRDatabase.database().reference()
-    var selectedActivity: Activity?
+    
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
+    
+    // MARK: Filter DropDown
     let whenDropDown = DropDown()
-
-    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
-    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
-
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
-    override func viewWillAppear(_ animated: Bool) {
-    //MARK: Replace with tableview.reload() so that ViewDidload doesn't get called twice
-        viewDidLoad()
-    }
-
+    // MARK: Data
+    let ref = FIRDatabase.database().reference()
+    var activities = [Activity]()
+    var selectedActivity: Activity?
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+    
+    // TODO: Figure out "Feed Refresh" -> Pull Down
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // TODO1: Use Blur In Segue
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        // MARK: Navigation Setup
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
@@ -52,14 +57,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
 
-
+        // TODO1: Move out of AVC
         self.detailView = ActivityDetailsView(frame: frame)
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
 
         createLayout()
 
-        // update the activities array from Firebase
+        // MARK: Update activities array from Firebase
 
         let activitiesRef = ref.child(teamID).child("activities")
         activitiesRef.observe(.value, with: { (snapshot) in
@@ -79,6 +84,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         })
 
 
+        // MARK: Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in
 
             if index == 0 {
@@ -164,7 +170,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
-
+    // MAR: Setup cells
     func setUpActivityCollectionCells() {
 
         let screenSize = UIScreen.main.bounds
@@ -186,13 +192,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
-
+    // MARK: Number of cells
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         return activities.count
 
     }
 
+    // MARK: CellForItemAt
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         var activity = self.activities[indexPath.row]
@@ -200,6 +207,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         if cell.delegate == nil { cell.delegate = self }
 
+        // TODO: Move cell update to cell
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
             self.activities[indexPath.row].imageview = cell.activityImageView.image
@@ -212,6 +220,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
         return cell
     }
+    
+    // TODO: Move image download to cell
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)
@@ -228,6 +238,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
+    // TODO: WillDisplayCell
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
         var activity = self.activities[indexPath.row]
@@ -245,6 +256,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
+    // MARK: DidSelectItemAt -> Show take user to ActivityDetails -> Move logic there
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
@@ -301,11 +313,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
-
+    // MARK: Filter Button ~ show DropDown
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
     }
 
+    // MARK: Setup DropDown
     func setUpWhenBarDropDown() {
 
         whenDropDown.anchorView = filterWhenOutlet
@@ -347,7 +360,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return sortedArray
     }
 
-    // WhenDropDown Filters
+    // MARK: Today's DropDown Filter
     func filterTodayActivities(_ array: [Activity]) -> [Activity] {
         let filterArray = array.filter { (a) -> Bool in
             var result = false
@@ -365,6 +378,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return filterArray
     }
 
+    // MARK: This Week's DropDown Filter
     func filterWeekActivities(_ array: [Activity]) -> [Activity] {
         let filterArray = array.filter { (a) -> Bool in
             var result = false
@@ -387,6 +401,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return filterArray
     }
 
+    // MARK: This Month's DropDown Filter
     func filterMonthActivities(_ array: [Activity]) -> [Activity] {
         let filterArray = array.filter { (a) -> Bool in
             var result = false
@@ -410,6 +425,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return filterArray
     }
 
+    // MARK: Dismiss View
     func dismissView() {
 
         UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
@@ -419,11 +435,13 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }) { _ in }
     }
 
+    // MARK: Edit Button takes user to Edit Activity VC
     func editSelectedActivity() {
         performSegue(withIdentifier: "editActivity", sender: self)
 
     }
 
+    // MARK: Segue to Add Activity VC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editActivity" {
             let dest = segue.destination as! AddActivityController
@@ -432,7 +450,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
     }
 
-
+    // MARK: Join/Leave Button
     func joinOrLeaveToActivity() {
 
         let key = self.selectedActivity?.id ?? ""
@@ -455,6 +473,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
 }
 
+// MARK: Activities Delegate ~ Present Attendees VC
 extension ActivitiesViewController: ActivitiesDelegate {
 
     func attendeeTapped(sender: ActivitiesCollectionViewCell) {

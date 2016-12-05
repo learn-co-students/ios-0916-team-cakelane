@@ -58,7 +58,6 @@ class AppController: UIViewController {
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! LoginViewController
         case .feedVC:
             let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
-//            let navVC = UINavigationController(rootViewController: vc)
             return vc
         default:
             fatalError("ERROR: Unable to find controller with storyboard id: \(id)")
@@ -81,6 +80,10 @@ class AppController: UIViewController {
         
         switch notification.name {
         case Notification.Name.closeLoginVC:
+            
+            // MARK: Switch from Login Flow to Main Flow (Activity Feed)
+            switchToViewController(withID: .feedVC)
+            
             // MARK: Basic Slack API call ~ used to populate user profile (called once during signup)
             SlackAPIClient.getUserInfo { userInfo in
                 
@@ -92,7 +95,7 @@ class AppController: UIViewController {
                 print(userData["is_primary_owner"])
                 print("***************++++++++**********\n\n")
                 
-                DispatchQueue.main.async {
+                OperationQueue.main.addOperation {
                     
                     // instantiate user profile
                     let userProfile = User(dictionary: userData)
@@ -119,9 +122,6 @@ class AppController: UIViewController {
                 }
                 
             }
-            
-            // MARK: Switch from Login Flow to Main Flow (Activity Feed)
-            switchToViewController(withID: .feedVC)
         case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
         default:

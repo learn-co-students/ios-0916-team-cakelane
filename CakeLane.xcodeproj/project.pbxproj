@@ -33,6 +33,7 @@
 		E51305A71DF1A984009F0560 /* FirebaseUsersDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51305A61DF1A984009F0560 /* FirebaseUsersDataStore.swift */; };
 		E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */; };
 		E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */; };
+		E5D395E51DF5D2BA00016483 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D395E41DF5D2BA00016483 /* FirebaseClient.swift */; };
 		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
 		E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */; };
 		EE688E4B4700EA0CCBD857F7 /* Pods_CakeLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */; };
@@ -70,6 +71,7 @@
 		E51305A61DF1A984009F0560 /* FirebaseUsersDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUsersDataStore.swift; sourceTree = "<group>"; };
 		E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsView.swift; sourceTree = "<group>"; };
+		E5D395E41DF5D2BA00016483 /* FirebaseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
 		E5D504021DE353A2008452FB /* CakeLane.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CakeLane.entitlements; sourceTree = "<group>"; };
 		E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -129,10 +131,7 @@
 				A2ECAA851DDDED55000E3CC6 /* UserData.swift */,
 				75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */,
 				A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */,
-				75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */,
-				75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */,
-				A2F4B8D31DE4D46F00933A94 /* CoreDataStore.swift */,
-				E51305A61DF1A984009F0560 /* FirebaseUsersDataStore.swift */,
+				E5D395E31DF5D29500016483 /* Networking&Storage */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -197,6 +196,18 @@
 				E51305A41DF0EB70009F0560 /* DetailUserViewController.swift */,
 			);
 			name = User;
+			sourceTree = "<group>";
+		};
+		E5D395E31DF5D29500016483 /* Networking&Storage */ = {
+			isa = PBXGroup;
+			children = (
+				E5D395E41DF5D2BA00016483 /* FirebaseClient.swift */,
+				75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */,
+				A2F4B8D31DE4D46F00933A94 /* CoreDataStore.swift */,
+				75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */,
+				E51305A61DF1A984009F0560 /* FirebaseUsersDataStore.swift */,
+			);
+			name = "Networking&Storage";
 			sourceTree = "<group>";
 		};
 		E7D76156BC8025C34B746C8D /* Frameworks */ = {
@@ -361,6 +372,7 @@
 				72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */,
 				E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */,
 				7292DB721DEF2A09009BE840 /* UserTableViewCell.swift in Sources */,
+				E5D395E51DF5D2BA00016483 /* FirebaseClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
