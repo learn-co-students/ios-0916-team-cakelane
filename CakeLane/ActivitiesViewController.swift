@@ -17,9 +17,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var activitiesCollectionView: UICollectionView!
     var blurEffectView: UIVisualEffectView!
     
-    // TODO1: Move out of AVC
-    var detailView: ActivityDetailsView!
-    
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
     
@@ -28,11 +25,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
     // MARK: Data
-    let ref = FIRDatabase.database().reference()
+    let firebaseClient = FirebaseClient.sharedInstance
+    let teamID = FirebaseClient.sharedInstance.teamID
+    let slackID = FirebaseClient.sharedInstance.slackID
     var activities = [Activity]()
     var selectedActivity: Activity?
-    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
-    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
     
     // TODO: Figure out "Feed Refresh" -> Pull Down
     override func viewDidLoad() {
@@ -55,10 +52,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
 
-        let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
-
-        // TODO1: Move out of AVC
-        self.detailView = ActivityDetailsView(frame: frame)
+        // MARK: DropDown Setup
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
 
@@ -66,7 +60,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         // MARK: Update activities array from Firebase
 
-        let activitiesRef = ref.child(teamID).child("activities")
+        let activitiesRef = firebaseClient.ref.child(teamID).child("activities")
         activitiesRef.observe(.value, with: { (snapshot) in
 
             var newActivites = [Activity]()
@@ -156,6 +150,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
+    // MARK: Self-explanatory func
     func createLayout() {
 
         view.backgroundColor = UIColor.black
@@ -202,7 +197,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     // MARK: CellForItemAt
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        var activity = self.activities[indexPath.row]
+        let activity = self.activities[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
 
         if cell.delegate == nil { cell.delegate = self }
@@ -220,96 +215,32 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
         return cell
     }
-    
-    // TODO: Move image download to cell
-    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
-        let session = URLSession.shared
-        let newUrl = URL(string: url)
-        if let unwrappedUrl = newUrl {
-            let request = URLRequest(url: unwrappedUrl)
-            let task = session.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
 
-                guard let image = UIImage(data: data) else { return }
-                completion(true, image)
-            }
-            task.resume()
-        }
-
-    }
-
-    // TODO: WillDisplayCell
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-
-        var activity = self.activities[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-
-        if cell.activityImageView.image?.description == "smallerAppLogo" {
-            self.downloadImage(at: activity.image) { (success, image) in
-                DispatchQueue.main.async {
-                    cell.activityImageView.image = image
-                    activity.imageview = image
-                    cell.setNeedsLayout()
-                }
-            }
-        }
-
-    }
+//    // TODO: WillDisplayCell
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//
+//        var activity = self.activities[indexPath.row]
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
+//
+//        if cell.activityImageView.image?.description == "smallerAppLogo" {
+//            self.downloadImage(at: activity.image) { (success, image) in
+//                DispatchQueue.main.async {
+//                    cell.activityImageView.image = image
+//                    activity.imageview = image
+//                    cell.setNeedsLayout()
+//                }
+//            }
+//        }
+//
+//    }
 
     // MARK: DidSelectItemAt -> Show take user to ActivityDetails -> Move logic there
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
-
-        let activitiesRef = ref.child(teamID).child("activities").child((selectedActivity?.id)!)
-        activitiesRef.observe(.value, with: { (snapshot) in
-
-        self.selectedActivity = Activity(snapshot: snapshot)
-
-        self.downloadImage(at: (self.selectedActivity?.image)!, completion: { (success, image) in
-
-            self.selectedActivity?.imageview = image
-            self.detailView.selectedActivity = self.selectedActivity
-            OperationQueue.main.addOperation {
-            if self.detailView.selectedActivity.owner == self.slackID {
-            self.detailView.editButton.isHidden = false
-            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
-            self.detailView.joinButton.isHidden = true
-            } else {
-
-            self.detailView.editButton.isHidden = true
-                if self.detailView.selectedActivity.attendees.keys.contains(self.slackID) {
-                    self.detailView.joinButton.setTitle("Leave", for: .normal)
-
-
-                } else {
-
-                    self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
-
-                }
-                self.detailView.joinButton.addTarget(self, action: #selector(self.joinOrLeaveToActivity), for: .allTouchEvents)
-
-                        }
-
-                    }
-
-                })
-
-            self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
-
-                self.view.addSubview(self.blurEffectView)
-
-                self.view.addSubview(self.detailView)
-
-
-
-        })
-
-        self.detailView.alpha = 0
-        UIView.animate(withDuration: 0.4 , animations: {
-            self.detailView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.detailView.alpha = 1
-        });
+        
+        // MARK: Notify App Controller ~ show Activity Details
+        NotificationCenter.default.post(name: .showActivityDetailsVC, object: self.selectedActivity)
 
     }
 
@@ -425,22 +356,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return filterArray
     }
 
-    // MARK: Dismiss View
-    func dismissView() {
-
-        UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
-            self.blurEffectView.removeFromSuperview()
-            self.detailView.removeFromSuperview()
-            self.activitiesCollectionView.alpha = 1
-        }) { _ in }
-    }
-
-    // MARK: Edit Button takes user to Edit Activity VC
-    func editSelectedActivity() {
-        performSegue(withIdentifier: "editActivity", sender: self)
-
-    }
-
     // MARK: Segue to Add Activity VC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editActivity" {
@@ -448,27 +363,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             dest.selectedActivity = self.selectedActivity
 
         }
-    }
-
-    // MARK: Join/Leave Button
-    func joinOrLeaveToActivity() {
-
-        let key = self.selectedActivity?.id ?? ""
-        let date = self.selectedActivity?.date ?? String(describing: Date())
-        let newAttendingUser = [slackID:true]
-        let newAttendingActivity: [String:String] = [key:date]
-
-        if self.detailView.joinButton.titleLabel?.text == "Join Us!!!" {
-        self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
-
-            self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
-        } else {
-
-        self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
-
-            self.ref.child(teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
-        }
-
     }
 
 }

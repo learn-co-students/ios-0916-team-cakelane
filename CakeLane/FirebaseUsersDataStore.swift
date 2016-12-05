@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 class FirebaseUsersDataStore {
     static let sharedInstance = FirebaseUsersDataStore()

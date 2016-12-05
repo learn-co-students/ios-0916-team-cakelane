@@ -13,6 +13,7 @@ class AppController: UIViewController {
 
     @IBOutlet weak var containerView: UIView!
     var actingViewController: UIViewController!
+    var notificationObject: Any?
     var token: String?
     
     // MARK: View lifecycle
@@ -44,11 +45,11 @@ class AppController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeLoginVC, object: nil)
         // close activities if user has logged out
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeProfileVC, object: nil)
-        
+        // MARK: Add observer: close activities feed -> show activity details
+        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .showActivityDetailsVC, object: nil)
     }
     
     // MARK: View Controller Handling
-    
     private func loadViewController(withID id: StoryboardID) -> UIViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -57,73 +58,38 @@ class AppController: UIViewController {
         case .loginVC:
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! LoginViewController
         case .feedVC:
-            let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
+            let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! UITabBarController
             return vc
+        case .activityDetailsVC:
+            let advc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivityDetailsViewController
+            if let activity = notificationObject {
+                advc.detailView.selectedActivity = activity as! Activity
+            }
+            return advc
         default:
             fatalError("ERROR: Unable to find controller with storyboard id: \(id)")
         }
-        
-        
     }
     
     private func addActing(viewController: UIViewController) {
-        
         self.addChildViewController(viewController)
         containerView.addSubview(viewController.view)
         viewController.view.frame = containerView.bounds
         viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         viewController.didMove(toParentViewController: self)
-        
     }
     
     func switchViewController(with notification: Notification) {
         
         switch notification.name {
         case Notification.Name.closeLoginVC:
-            
             // MARK: Switch from Login Flow to Main Flow (Activity Feed)
             switchToViewController(withID: .feedVC)
-            
-            // MARK: Basic Slack API call ~ used to populate user profile (called once during signup)
-            SlackAPIClient.getUserInfo { userInfo in
-                
-                let userData = userInfo["user"] as! [String: Any]
-                
-                print("***************++++++++**********\n\n")
-                print(userData)
-                print("***************++++++++**********\n\n")
-                print(userData["is_primary_owner"])
-                print("***************++++++++**********\n\n")
-                
-                OperationQueue.main.addOperation {
-                    
-                    // instantiate user profile
-                    let userProfile = User(dictionary: userData)
-                    let defaults = UserDefaults.standard
-                    defaults.set(userProfile.slackID, forKey: "slackID")
-                    defaults.set(userProfile.teamID, forKey: "teamID")
-                    defaults.set(userProfile.username, forKey: "username")
-                    defaults.set(userProfile.firstName, forKey: "firstName")
-                    defaults.set(userProfile.lastName, forKey: "lastName")
-                    defaults.set(userProfile.email, forKey: "email")
-                    defaults.set(userProfile.image72, forKey: "image72")
-                    defaults.set(userProfile.image512, forKey: "image512")
-                    defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
-                    
-                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
-                    defaults.set(userProfile.isOwner, forKey: "isOwner")
-                    defaults.set(userProfile.isPrimaryOwner, forKey: "isPrimaryOwner")
-                    
-                    defaults.synchronize()
-                    
-                    // sync to Firebase
-                    let reference = FIRDatabase.database().reference()
-                    reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
-                }
-                
-            }
         case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
+        case Notification.Name.showActivityDetailsVC:
+            self.notificationObject = notification.object as! Activity
+            switchToViewController(withID: .activityDetailsVC)
         default:
             fatalError("ERROR: Unable to match notification name")
         }

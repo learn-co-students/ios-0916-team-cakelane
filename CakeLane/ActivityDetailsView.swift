@@ -38,14 +38,8 @@ class ActivityDetailsView: UIView {
                 self.dateLabel.text = "  \(self.selectedActivity.date)"
                 self.descriptionTextView.text = "  \(self.selectedActivity.description)"
             }
-            
-            
-            
         }
-        
-        
     }
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -255,9 +249,23 @@ class ActivityDetailsView: UIView {
         profileImage.heightAnchor.constraint(equalTo: self.activityOverlay.heightAnchor, multiplier: 1/1.2).isActive = true
     }
     
-    
-    
+    // MARK: Image download -> move to cell
+    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
+        let session = URLSession.shared
+        let newUrl = URL(string: url)
+        if let unwrappedUrl = newUrl {
+            let request = URLRequest(url: unwrappedUrl)
+            let task = session.dataTask(with: request) { (data, response, error) in
+                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
+                
+                guard let image = UIImage(data: data) else { return }
+                completion(true, image)
+            }
+            task.resume()
+        }
         
+    }
+    
 }
 
 extension UIView {

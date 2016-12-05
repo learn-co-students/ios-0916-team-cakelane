@@ -75,7 +75,7 @@ class LoginViewController: UIViewController {
                 defaults.set(teamID, forKey: "TeamID")
                 defaults.set(teamName, forKey: "TeamName")
                 defaults.synchronize()
-
+                
                 NotificationCenter.default.post(name: .closeLoginVC, object: self)
             }.resume()
             self.safariViewController.dismiss(animated: true, completion: nil)

@@ -74,6 +74,47 @@ class SlackAPIClient {
         }
     }
 
-
+    // TODO: CONSTANTS FOR USER DEFAULTS & CODING -> STORE USER STRUCT INSTEAD OF KEYS
+    class func storeUserInfo() {
+        // MARK: Basic Slack API call ~ used to populate user profile (called once during signup)
+        self.getUserInfo { userInfo in
+            
+            let userData = userInfo["user"] as! [String: Any]
+            
+            print("***************++++++++**********\n\n")
+            print("USER DATA STILL BEING STORED AFTER LE GREAT REFACTOR #GREATSUCCESS")
+            print(userData)
+            print("***************++++++++**********\n\n")
+            print(userData["is_primary_owner"])
+            print("***************++++++++**********\n\n")
+            
+            OperationQueue.main.addOperation {
+                
+                // instantiate user profile
+                let userProfile = User(dictionary: userData)
+                let defaults = UserDefaults.standard
+                defaults.set(userProfile.slackID, forKey: "slackID")
+                defaults.set(userProfile.teamID, forKey: "teamID")
+                defaults.set(userProfile.username, forKey: "username")
+                defaults.set(userProfile.firstName, forKey: "firstName")
+                defaults.set(userProfile.lastName, forKey: "lastName")
+                defaults.set(userProfile.email, forKey: "email")
+                defaults.set(userProfile.image72, forKey: "image72")
+                defaults.set(userProfile.image512, forKey: "image512")
+                defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
+                
+                defaults.set(userProfile.isAdmin, forKey: "isAdmin")
+                defaults.set(userProfile.isOwner, forKey: "isOwner")
+                defaults.set(userProfile.isPrimaryOwner, forKey: "isPrimaryOwner")
+                
+                defaults.synchronize()
+                
+                // sync to Firebase
+                let reference = FirebaseClient.sharedInstance.ref
+                reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
+            }
+            
+        }
+    }
 
 }
