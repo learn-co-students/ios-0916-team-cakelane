@@ -36,7 +36,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-
         contentView.addSubview(activityImageView)
         activityImageView.backgroundColor = UIColor.black
         activityImageView.layer.borderWidth = 1

@@ -65,14 +65,10 @@ class LoginViewController: UIViewController {
 
                 let token = json["access_token"] as! String
                 let teamName = json["team_name"] as! String
-                let teamID = json["team_id"] as! String
-                let userID = json["user_id"] as! String
 
-                // save slack account token, user id, team id, and team name using UserDefaults
+                // save slack account token, team name using UserDefaults
                 let defaults = UserDefaults.standard
                 defaults.setValue(token, forKey: "SlackToken")
-                defaults.set(userID, forKey: "SlackUser")
-                defaults.set(teamID, forKey: "TeamID")
                 defaults.set(teamName, forKey: "TeamName")
                 defaults.synchronize()
                 

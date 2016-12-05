@@ -31,10 +31,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var activities = [Activity]()
     var selectedActivity: Activity?
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewDidLoad()
+    }
+    
     // TODO: Figure out "Feed Refresh" -> Pull Down
+    // TODO: RECURSIVE CALL FOR ACTIVITY BATCH OF SIZE (10)
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // TODO1: Use Blur In Segue
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -205,10 +210,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         // TODO: Move cell update to cell
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
-            self.activities[indexPath.row].imageview = cell.activityImageView.image
+            self.activities[indexPath.row].imageview = UIImage(named: "smallerAppLogo")
 
         OperationQueue.main.addOperation {
             cell.updateCell(with: activity)
+            cell.setNeedsLayout()
         }
         self.activities[indexPath.row].imageview = activity.imageview
 
@@ -222,15 +228,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 //        var activity = self.activities[indexPath.row]
 //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
 //
-//        if cell.activityImageView.image?.description == "smallerAppLogo" {
-//            self.downloadImage(at: activity.image) { (success, image) in
-//                DispatchQueue.main.async {
-//                    cell.activityImageView.image = image
-//                    activity.imageview = image
-//                    cell.setNeedsLayout()
-//                }
-//            }
-//        }
+////        if cell.activityImageView.image?.description == "smallerAppLogo" {
+////            cell.downloadImage(at: activity.image) { (success, image) in
+////                DispatchQueue.main.async {
+////                    cell.activityImageView.image = image
+////                    activity.imageview = image
+////                    cell.setNeedsLayout()
+////                }
+////            }
+////        }
 //
 //    }
 
