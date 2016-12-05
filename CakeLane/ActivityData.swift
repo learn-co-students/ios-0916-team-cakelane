@@ -22,7 +22,7 @@ struct Activity {
     var description: String
     var location: String
     var attendees: [String:Bool] = [:]
-    var imageview: UIImage?
+    var imageview: UIImageView?
     let reference : FIRDatabaseReference?
 
     // Mark: - initializer for activity object

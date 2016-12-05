@@ -30,14 +30,14 @@ class ActivityDetailsView: UIView {
     var selectedActivity: Activity! {
         
         didSet {
-            OperationQueue.main.addOperation {
-                self.activityImageView.image = self.selectedActivity.imageview
+           OperationQueue.main.addOperation {
+            self.activityImageView.sd_setImage(with: URL(string:self.selectedActivity.image))
                 self.nameLabel.text = self.selectedActivity.name
                 self.locationLabel.text = "  \(self.selectedActivity.location)"
                 self.dateLabel.text = "  \(self.selectedActivity.date)"
                 self.dateLabel.text = "  \(self.selectedActivity.date)"
                 self.descriptionTextView.text = "  \(self.selectedActivity.description)"
-            }
+        }
             
             
             

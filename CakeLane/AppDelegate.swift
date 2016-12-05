@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import IQKeyboardManagerSwift
 import DropDown
+import SDWebImage
 
 
 @UIApplicationMain
@@ -29,6 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DropDown.startListeningToKeyboard()
         UITabBar.appearance().tintColor = UIColor.orange
+        
+        SDWebImageManager.shared().imageCache.maxCacheAge = 60*60*24*14
+        let sd = SDImageCache()
+        print("%%%%%%%%%%%%%%")
+        print(sd.getDiskCount())
+        print(sd.getSize())
+        
+
     
         return true
     }

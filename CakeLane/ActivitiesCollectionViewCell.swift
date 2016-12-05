@@ -196,13 +196,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
         self.numberOfAttendeesLabel.text = String(activity.attendees.count)
-        
-        // update cell with local placeholder image
-        if activity.image == " " {
-            self.activityImageView.image = UIImage(named: "smallerAppLogo")
-            self.placeholderImage = true
-        }
-        
+        self.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
+                
     }
 
 

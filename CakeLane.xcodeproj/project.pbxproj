@@ -53,6 +53,7 @@
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
 		75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
 		75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackMessageStore.swift; sourceTree = "<group>"; };
+		A28C74161DF5CBD20076A023 /* CakeLane-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CakeLane-Bridging-Header.h"; sourceTree = "<group>"; };
 		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailsView.xib; sourceTree = "<group>"; };
 		A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 				A2ECAA831DDD19F4000E3CC6 /* GoogleService-Info.plist */,
 				E5D504021DE353A2008452FB /* CakeLane.entitlements */,
 				1BDF623F1DDD06C500C3D12E /* CakeLane.xcdatamodeld */,
+				A28C74161DF5CBD20076A023 /* CakeLane-Bridging-Header.h */,
 			);
 			path = CakeLane;
 			sourceTree = "<group>";
@@ -243,6 +245,7 @@
 					1BDF62341DDD06C400C3D12E = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = KXY9EDFTF5;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -487,6 +490,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = KXY9EDFTF5;
@@ -495,6 +499,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.FlatironSchool.CakeLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CakeLane/CakeLane-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -505,6 +511,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = KXY9EDFTF5;
@@ -513,6 +520,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.FlatironSchool.CakeLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CakeLane/CakeLane-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

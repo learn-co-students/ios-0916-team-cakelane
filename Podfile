@@ -13,6 +13,7 @@ pod 'SnapKit'
 pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
 pod 'DropDown'
+pod 'SDWebImage'
 
 end
 

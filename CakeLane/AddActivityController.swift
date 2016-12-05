@@ -192,7 +192,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.activityLocation.text = selectedActivity.location
 
         DispatchQueue.main.async {
-            self.activityImage.image = selectedActivity.imageview
+            self.activityImage.image = selectedActivity.imageview?.image
         }
         self.descriptionTextView.textColor = UIColor.black
         self.descriptionTextView.text = selectedActivity.description

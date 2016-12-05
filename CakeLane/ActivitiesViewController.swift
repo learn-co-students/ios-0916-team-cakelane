@@ -195,68 +195,28 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        var activity = self.activities[indexPath.row]
+        let activity = self.activities[indexPath.row]
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
+        
+        cell.updateCell(with: self.activities[indexPath.row])
+        
+        activity.imageview?.image = cell.activityImageView.image
+    
+        self.activities[indexPath.row].imageview?.image = activity.imageview?.image
 
-        if cell.delegate == nil { cell.delegate = self }
-
-        OperationQueue.main.addOperation {
-            cell.updateCell(with: self.activities[indexPath.row])
-            self.activities[indexPath.row].imageview = cell.activityImageView.image
-
-        OperationQueue.main.addOperation {
-            cell.updateCell(with: activity)
-        }
-        self.activities[indexPath.row].imageview = activity.imageview
-
-    }
         return cell
     }
-    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
-        let session = URLSession.shared
-        let newUrl = URL(string: url)
-        if let unwrappedUrl = newUrl {
-            let request = URLRequest(url: unwrappedUrl)
-            let task = session.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
-
-                guard let image = UIImage(data: data) else { return }
-                completion(true, image)
-            }
-            task.resume()
-        }
-
-    }
-
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-
-        var activity = self.activities[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-
-        if cell.activityImageView.image?.description == "smallerAppLogo" {
-            self.downloadImage(at: activity.image) { (success, image) in
-                DispatchQueue.main.async {
-                    cell.activityImageView.image = image
-                    activity.imageview = image
-                    cell.setNeedsLayout()
-                }
-            }
-        }
-
-    }
-
+   
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
 
         let activitiesRef = ref.child(teamID).child("activities").child((selectedActivity?.id)!)
-        activitiesRef.observe(.value, with: { (snapshot) in
-
+        activitiesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        
         self.selectedActivity = Activity(snapshot: snapshot)
 
-        self.downloadImage(at: (self.selectedActivity?.image)!, completion: { (success, image) in
-
-            self.selectedActivity?.imageview = image
             self.detailView.selectedActivity = self.selectedActivity
             OperationQueue.main.addOperation {
             if self.detailView.selectedActivity.owner == self.slackID {
@@ -289,9 +249,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
                 self.view.addSubview(self.detailView)
 
-
-
-        })
 
         self.detailView.alpha = 0
         UIView.animate(withDuration: 0.4 , animations: {
