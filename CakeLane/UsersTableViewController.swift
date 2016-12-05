@@ -10,11 +10,13 @@ import UIKit
 import Firebase
 import SnapKit
 
+
 class UsersTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var usersTableView: UITableView!
-    var activities = [Activity]()
     let ref = FIRDatabase.database().reference()
+    var selectedActivity: Activity?
+    var userArray = [User]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,51 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         createLayout()
         setUpTableViewCells()
+        
+        
+        //get all users
+//        getUsers {
+//            self.usersTableView.reloadData()
+//        }
+    }
+    
+    func getUsers(completion:()->()){
+        print("running get users")
+        
+        var arrayOfImages: [UIImage] = []
+        
+        for eachUser in (selectedActivity?.attendees.keys)! {
+            let teamID = UserDefaults.standard.string(forKey: "teamID")
+            let userRef = ref.child(teamID!).child("users").child(eachUser)
+            let imageRef = ref.child(teamID!).child("users").child(eachUser).child("image72")
+            
+            userRef.observeSingleEvent(of:.value, with: { (snapshot) in
+                let dictionary = snapshot as! [String:Any]
+                print(dictionary)
+            
+                let user = User(dictionary: dictionary)
+                print(user)
+                self.userArray.append(user)
+                
+//                let url = snapshot.value as! String
+//                self.downloadImage(at: url, completion: { (success, image) in
+//                    arrayOfImages.append(image)
+//                    OperationQueue.main.addOperation {
+//                        //                        cell.profileImage.image = arrayOfImages[indexPath.row]
+//                        
+//                    }
+//                })
+            })
+        }
+        completion()
+        
+
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("+++++++++++++++++++++\(selectedActivity)")
     }
     
     func dismissController() {
@@ -63,16 +110,46 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        print("1111111111111111111")
-        return 10
+        
+        return (selectedActivity?.attendees.count)!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: UITableViewCell
-        cell = tableView.dequeueReusableCell(withIdentifier: "usersCell", for: indexPath) as! UserTableViewCell
-        print("hellooooooooooooo")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "usersCell", for: indexPath) as! UserTableViewCell
+//       cell.updateCell(with: self.selectedActivity!)
+        print(userArray.count)
+        let user = userArray[indexPath.row]
+        
+        downloadImage(at: user.image72) { (success, image) in
+            if success {
+                OperationQueue.main.addOperation {
+                    cell.profileImage.image = image
+                }
+            }
+        }
+        cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
+        
+             // cell.profileImage.image = arrayOfImages[indexPath.row]
+       // dump("+++++++++++++++++++++++++++++++\(arrayOfImages)")
         return cell
+    }
+    
+    
+    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
+        let session = URLSession.shared
+        let newUrl = URL(string: url)
+        if let unwrappedUrl = newUrl {
+            let request = URLRequest(url: unwrappedUrl)
+            let task = session.dataTask(with: request) { (data, response, error) in
+                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
+                
+                guard let image = UIImage(data: data) else { return }
+                completion(true, image)
+            }
+            task.resume()
+        }
+        
     }
 
    

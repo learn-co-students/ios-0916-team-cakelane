@@ -11,7 +11,7 @@ import SnapKit
 import Firebase
 import DropDown
 
-class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
     var activitiesCollectionView: UICollectionView!
     var activities = [Activity]()
@@ -19,8 +19,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var detailView: ActivityDetailsView!
     let ref = FIRDatabase.database().reference()
     var selectedActivity: Activity?
-    var isAnimating: Bool = false
-    var dropDownViewIsDisplayed: Bool = false
+    
+    
 
     let whenDropDown = DropDown()
 
@@ -60,8 +60,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.detailView = ActivityDetailsView(frame: frame)
 
 
-
-
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
 
@@ -85,6 +83,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             }
 
         })
+        
 
 
         whenDropDown.selectionAction = { [unowned self] (index,item) in
@@ -117,6 +116,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     }
                     OperationQueue.main.addOperation {
                         self.activities = self.filterTodayActivities(newActivites)
+                        self.activities = self.sortedActivities(newActivites)
                         self.activitiesCollectionView.reloadData()
                     }
                 })
@@ -133,6 +133,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     }
                     OperationQueue.main.addOperation {
                         self.activities = self.filterWeekActivities(newActivites)
+                        self.activities = self.sortedActivities(newActivites)
                         self.activitiesCollectionView.reloadData()
                     }
                 })
@@ -149,6 +150,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     }
                     OperationQueue.main.addOperation {
                         self.activities = self.filterMonthActivities(newActivites)
+                        self.activities = self.sortedActivities(newActivites)
                         self.activitiesCollectionView.reloadData()
                     }
                 })
@@ -202,34 +204,43 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         var activity = self.activities[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-
+        
         if cell.delegate == nil { cell.delegate = self }
-
+        
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
             self.activities[indexPath.row].imageview = cell.activityImageView.image
-
-        OperationQueue.main.addOperation {
-            cell.updateCell(with: activity)
-
-            self.downloadImage(at: activity.image) { (success, image) in
-                DispatchQueue.main.async {
-                    cell.activityImageView.image = image
-                    activity.imageview = image
-                    cell.setNeedsLayout()
+            
+            OperationQueue.main.addOperation {
+                cell.updateCell(with: activity)
+                
+                
+                self.downloadImage(at: activity.image) { (success, image) in
+                    DispatchQueue.main.async {
+                        cell.activityImageView.image = image
+                        activity.imageview = image
+                        cell.setNeedsLayout()
+                    }
                 }
+                
+                
             }
-
-
+            self.activities[indexPath.row].imageview = activity.imageview
+            
         }
-        self.activities[indexPath.row].imageview = activity.imageview
         
-    }
+//        cell.transparentButton.tag = indexPath.row
+        
         return cell
     }
+    
+    
+    
+    
+    
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)
@@ -297,7 +308,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         });
 
     }
-
+    
 
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
@@ -427,7 +438,17 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             dest.selectedActivity = self.selectedActivity
 
         }
+        
+//        if segue.identifier == "userSegue" {
+//            let dest = segue.destination as! UsersTableViewController
+//            print(self.selectedActivity)
+//        
+//            dest.selectedActivity = self.activities[0]
+//        }
     }
+    
+    
+    
 
 
     func joinToActivity() {
@@ -444,17 +465,32 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
        
         self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
     }
+    
+    
+   
 }
 
 
 extension ActivitiesViewController: ActivitiesDelegate {
 
-    func attendeeTapped(sender: ActivitiesCollectionViewCell) {
+    func attendeesTapped(sender: ActivitiesCollectionViewCell) {
 
+        
+        guard let indexPathForCell = activitiesCollectionView.indexPath(for: sender) else { return }
+        var activity = self.activities[indexPathForCell.row]
         let userTableView = UsersTableViewController()
+        userTableView.selectedActivity = activity
+        userTableView.userArray = sender.users
+    
+        
+        
+        
+        
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
-        self.present(navController, animated: false, completion: nil)
+        self.present(navController, animated: true, completion: nil)
+//        self.performSegue(withIdentifier: "userSegue", sender: self)
+        
     }
 
     func dismissController() {
