@@ -272,15 +272,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S8X-7Y-Gfj">
-                                <rect key="frame" x="0.0" y="687" width="414" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <tabBarItem systemItem="recents" id="dO0-dp-WTn"/>
-                                    <tabBarItem systemItem="contacts" id="x1m-Yx-DvF"/>
-                                </items>
-                            </tabBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ak6-89-IDH">
                                 <rect key="frame" x="4" y="64" width="414" height="221"/>
                             </imageView>
@@ -417,6 +408,7 @@
             </objects>
             <point key="canvasLocation" x="1132" y="901"/>
         </scene>
+
         <!--Detail User View Controller-->
         <scene sceneID="O7K-LK-RS7">
             <objects>
@@ -502,6 +494,7 @@
             </objects>
             <point key="canvasLocation" x="2069.5652173913045" y="-719.02173913043487"/>
         </scene>
+
     </scenes>
     <resources>
         <image name="appLogo" width="535" height="472"/>

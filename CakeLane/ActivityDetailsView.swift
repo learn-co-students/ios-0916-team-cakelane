@@ -12,9 +12,9 @@ class ActivityDetailsView: UIView {
     
     @IBOutlet var contentView: UIView!
     var activityImageView: UIImageView!
-    var closeButton : UIButton!
-    var editButton: UIButton!
-    var joinButton: UIButton!
+    var closeButton = UIButton()
+    var editButton =  UIButton()
+    var joinButton = UIButton()
     var nameLabel = UILabel()
     var activityOverlay = UIView()
     var numberOfAttendeesLabel = UILabel()
@@ -86,13 +86,10 @@ class ActivityDetailsView: UIView {
         self.activityImageView.backgroundColor = UIColor.clear
         self.activityImageView.contentMode = .scaleAspectFill
         self.activityImageView.clipsToBounds = true
-        self.activityImageView.contentMode = .scaleAspectFill
-        //self.activityImageView.image = UIImage(named: "snow")
     }
     
     func setupCloseButton() {
         
-        self.closeButton = UIButton()
         self.contentView.addSubview(closeButton)
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
         self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
@@ -107,14 +104,13 @@ class ActivityDetailsView: UIView {
     
     func setupEditButton() {
         
-        self.editButton = UIButton()
         self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
         self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
         self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: +5).isActive = true
         self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.06, constant: 0.0).isActive = true
         self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
-        let image = UIImage(named: "Edit2")?.tint(color: .black)
+        let image = UIImage(named: "Edit2")?.tint(color: .orange)
         self.editButton.setImage(image, for: .normal)
         
     }
@@ -129,7 +125,7 @@ class ActivityDetailsView: UIView {
         self.joinButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0.75*self.contentView.center.x).isActive = true
         self.joinButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.joinButton.setTitle("Join Us!!!", for: .normal)
-        self.joinButton.setTitleColor(UIColor.black, for: .normal)
+        self.joinButton.setTitleColor(UIColor.darkGray, for: .normal)
         self.joinButton.layer.borderWidth = 1
         self.joinButton.clipsToBounds = true
         self.joinButton.layer.cornerRadius = 10
@@ -212,8 +208,6 @@ class ActivityDetailsView: UIView {
         descriptionTextView.textColor = UIColor.black
         descriptionTextView.isScrollEnabled = true
         descriptionTextView.isEditable = false
-        
-        
     }
     
     
@@ -261,9 +255,13 @@ class ActivityDetailsView: UIView {
         profileImage.heightAnchor.constraint(equalTo: self.activityOverlay.heightAnchor, multiplier: 1/1.2).isActive = true
     }
     
+    
+    
+        
 }
 
 extension UIView {
+    
     func constrainEdges(to view: UIView) {
         
         leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true

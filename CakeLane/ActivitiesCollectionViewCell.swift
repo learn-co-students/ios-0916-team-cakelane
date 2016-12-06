@@ -15,7 +15,7 @@ protocol ActivitiesDelegate: class {
 
 }
 
-class ActivitiesCollectionViewCell: UICollectionViewCell {
+class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate {
 
     var activityImageView = UIImageView()
     var activityOverlay = UIView()
@@ -30,11 +30,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
     var thirdProfileImage = UIImageView()
     let ref = FIRDatabase.database().reference()
     var users = [User]()
-    
-
-//    var activityID: String? = ""
-    
-    
+    var placeholderImage = true
 
     var delegate: ActivitiesDelegate?
 
@@ -175,11 +171,10 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
 
 
         delegate?.attendeesTapped(sender: self)
-        
-        
+
+
 
     }
-
 
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
@@ -196,6 +191,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         }
 
     }
+
     func updateCell(with activity: Activity) {
 
         self.activityLabel.text = activity.name
@@ -203,11 +199,11 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
         self.locationLabel.text = activity.location
         self.numberOfAttendeesLabel.text = ("\(String(activity.attendees.count)) attending   >")
 
-        
+
 
         var arrayOfImages: [UIImage] = []
-    
-        
+
+
         for eachUser in activity.attendees.keys {
             guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
             let userRef = ref.child(teamID).child("users").child(eachUser)
@@ -216,13 +212,13 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
                 print(dict)
                 let user = User(snapShot: dict)
                 self.users.append(user)
-                
+
             })
-            
+
             let imageRef = ref.child(teamID).child("users").child(eachUser).child("image72")
-            
+
             imageRef.observeSingleEvent(of:.value, with: { (snapshot) in
-        
+
                 let url = snapshot.value as! String
                 self.downloadImage(at: url, completion: { (success, image) in
                     arrayOfImages.append(image)
@@ -243,13 +239,12 @@ class ActivitiesCollectionViewCell: UICollectionViewCell {
                 })
             })
         }
-        
-        
-        
+
+
+        // update cell with local placeholder image
         if activity.image == " " {
             self.activityImageView.image = UIImage(named: "smallerAppLogo")
+            self.placeholderImage = true
         }
     }
-    
 }
-

@@ -8,16 +8,14 @@
 
 import UIKit
 
-class DetailUserViewController: UIViewController {
-
+class DetailUserViewController: UserInfoViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     
-
 }
