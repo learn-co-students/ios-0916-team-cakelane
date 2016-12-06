@@ -161,7 +161,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         view.backgroundColor = UIColor.black
         view.addSubview(activitiesCollectionView)
-        activitiesCollectionView.backgroundColor = UIColor.white
+//        activitiesCollectionView.backgroundColor = UIColor.white
         activitiesCollectionView.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top)
             make.height.equalTo(view.snp.height)
@@ -203,14 +203,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         var activity = self.activities[indexPath.row]
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
 
         if cell.delegate == nil { cell.delegate = self }
 
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
-            self.activities[indexPath.row].imageview = cell.activityImageView.image
-            
+            self.activities[indexPath.row].imageview?.image = cell.activityImageView.image
+
             OperationQueue.main.addOperation {
                 cell.updateCell(with: activity)
 
@@ -218,7 +219,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 self.downloadImage(at: activity.image) { (success, image) in
                     DispatchQueue.main.async {
                         cell.activityImageView.image = image
-                        activity.imageview = image
+                        activity.imageview?.image = image
                         cell.setNeedsLayout()
                     }
                 }
@@ -251,41 +252,27 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
-        var activity = self.activities[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-
-        if cell.activityImageView.image?.description == "smallerAppLogo" {
-            self.downloadImage(at: activity.image) { (success, image) in
-                DispatchQueue.main.async {
-                    cell.activityImageView.image = image
-                    activity.imageview = image
-                    cell.setNeedsLayout()
-                }
-            }
-        }
-
-    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
 
         let activitiesRef = ref.child(teamID).child("activities").child((selectedActivity?.id)!)
-        activitiesRef.observe(.value, with: { (snapshot) in
+        activitiesRef.observeSingleEvent(of: .value, with: { (snapshot) in
 
         self.selectedActivity = Activity(snapshot: snapshot)
 
-        self.downloadImage(at: (self.selectedActivity?.image)!, completion: { (success, image) in
-
-            self.selectedActivity?.imageview = image
             self.detailView.selectedActivity = self.selectedActivity
+
             OperationQueue.main.addOperation {
+
             if self.detailView.selectedActivity.owner == self.slackID {
+
             self.detailView.editButton.isHidden = false
             self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
             self.detailView.joinButton.isHidden = true
+
             } else {
 
             self.detailView.editButton.isHidden = true
@@ -312,9 +299,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
                 self.view.addSubview(self.detailView)
 
-
-
-        })
 
         self.detailView.alpha = 0
         UIView.animate(withDuration: 0.4 , animations: {
@@ -461,6 +445,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     func joinOrLeaveToActivity() {
 
+        UIView.animate(withDuration: 0.3, animations: {
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+
+        }, completion: { (success) in
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+
+        })
+
+
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
         let newAttendingUser = [slackID:true]
@@ -470,11 +463,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
 
             self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+            self.detailView.joinButton.setTitle("Leave", for: .normal)
         } else {
 
         self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
 
             self.ref.child(teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
+          //  self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
+
         }
 
     }

@@ -30,14 +30,14 @@ class ActivityDetailsView: UIView {
     var selectedActivity: Activity! {
         
         didSet {
-            OperationQueue.main.addOperation {
-                self.activityImageView.image = self.selectedActivity.imageview
+           OperationQueue.main.addOperation {
+            self.activityImageView.sd_setImage(with: URL(string:self.selectedActivity.image))
                 self.nameLabel.text = self.selectedActivity.name
                 self.locationLabel.text = "  \(self.selectedActivity.location)"
                 self.dateLabel.text = "  \(self.selectedActivity.date)"
                 self.dateLabel.text = "  \(self.selectedActivity.date)"
                 self.descriptionTextView.text = "  \(self.selectedActivity.description)"
-            }
+        }
             
             
             
@@ -121,8 +121,7 @@ class ActivityDetailsView: UIView {
         self.contentView.addSubview(joinButton)
         self.joinButton.translatesAutoresizingMaskIntoConstraints = false
         self.joinButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-30.0).isActive = true
-        self.joinButton.rightAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.rightAnchor, constant: -0.75*self.contentView.center.x).isActive = true
-        self.joinButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0.75*self.contentView.center.x).isActive = true
+        self.joinButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.25).isActive = true
         self.joinButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.joinButton.setTitle("Join Us!!!", for: .normal)
         self.joinButton.setTitleColor(UIColor.darkGray, for: .normal)
@@ -200,7 +199,7 @@ class ActivityDetailsView: UIView {
         descriptionTextView.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor).isActive = true
         descriptionTextView.backgroundColor = UIColor.white
         descriptionTextView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
-        descriptionTextView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        descriptionTextView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         descriptionTextView.clipsToBounds = true
         descriptionTextView.layer.cornerRadius = 5
