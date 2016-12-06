@@ -438,13 +438,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             dest.selectedActivity = self.selectedActivity
 
         }
-        
-//        if segue.identifier == "userSegue" {
-//            let dest = segue.destination as! UsersTableViewController
-//            print(self.selectedActivity)
-//        
-//            dest.selectedActivity = self.activities[0]
-//        }
     }
     
     
@@ -477,19 +470,14 @@ extension ActivitiesViewController: ActivitiesDelegate {
 
         
         guard let indexPathForCell = activitiesCollectionView.indexPath(for: sender) else { return }
-        var activity = self.activities[indexPathForCell.row]
+        let activity = self.activities[indexPathForCell.row]
         let userTableView = UsersTableViewController()
         userTableView.selectedActivity = activity
         userTableView.userArray = sender.users
     
-        
-        
-        
-        
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
         self.present(navController, animated: true, completion: nil)
-//        self.performSegue(withIdentifier: "userSegue", sender: self)
         
     }
 

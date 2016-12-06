@@ -37,39 +37,28 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
 //        }
     }
     
-    func getUsers(completion:()->()){
-        print("running get users")
-        
-        var arrayOfImages: [UIImage] = []
-        
-        for eachUser in (selectedActivity?.attendees.keys)! {
-            let teamID = UserDefaults.standard.string(forKey: "teamID")
-            let userRef = ref.child(teamID!).child("users").child(eachUser)
-            let imageRef = ref.child(teamID!).child("users").child(eachUser).child("image72")
-            
-            userRef.observeSingleEvent(of:.value, with: { (snapshot) in
-                let dictionary = snapshot as! [String:Any]
-                print(dictionary)
-            
-                let user = User(dictionary: dictionary)
-                print(user)
-                self.userArray.append(user)
-                
-//                let url = snapshot.value as! String
-//                self.downloadImage(at: url, completion: { (success, image) in
-//                    arrayOfImages.append(image)
-//                    OperationQueue.main.addOperation {
-//                        //                        cell.profileImage.image = arrayOfImages[indexPath.row]
-//                        
-//                    }
-//                })
-            })
-        }
-        completion()
-        
-
-        
-    }
+//    func getUsers(completion:()->()){
+//        print("running get users")
+//    
+//        for eachUser in (selectedActivity?.attendees.keys)! {
+//            let teamID = UserDefaults.standard.string(forKey: "teamID")
+//            let userRef = ref.child(teamID!).child("users").child(eachUser)
+//
+//            userRef.observeSingleEvent(of:.value, with: { (snapshot) in
+//                let dictionary = snapshot as! [String:Any]
+//                print(dictionary)
+//            
+//                let user = User(dictionary: dictionary)
+//                print(user)
+//                self.userArray.append(user)
+//                
+//            })
+//        }
+//        completion()
+//        
+//
+//        
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -117,8 +106,8 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersCell", for: indexPath) as! UserTableViewCell
-//       cell.updateCell(with: self.selectedActivity!)
-        print(userArray.count)
+
+        
         let user = userArray[indexPath.row]
         
         downloadImage(at: user.image72) { (success, image) in
@@ -130,8 +119,7 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
         
-             // cell.profileImage.image = arrayOfImages[indexPath.row]
-       // dump("+++++++++++++++++++++++++++++++\(arrayOfImages)")
+        
         return cell
     }
     
