@@ -20,8 +20,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     let ref = FIRDatabase.database().reference()
     var selectedActivity: Activity?
 <<<<<<< HEAD
-    
-    
+
+
 
 =======
     var isAnimating: Bool = false
@@ -91,7 +91,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             }
 
         })
-        
+
 
 
         whenDropDown.selectionAction = { [unowned self] (index,item) in
@@ -212,21 +212,20 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
         var activity = self.activities[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-        
+
         if cell.delegate == nil { cell.delegate = self }
-        
+
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
             self.activities[indexPath.row].imageview = cell.activityImageView.image
-<<<<<<< HEAD
             
             OperationQueue.main.addOperation {
                 cell.updateCell(with: activity)
-                
-                
+
+
                 self.downloadImage(at: activity.image) { (success, image) in
                     DispatchQueue.main.async {
                         cell.activityImageView.image = image
@@ -234,31 +233,19 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                         cell.setNeedsLayout()
                     }
                 }
-                
-                
+
+
             }
             self.activities[indexPath.row].imageview = activity.imageview
-            
-        }
-        
-//        cell.transparentButton.tag = indexPath.row
-        
-=======
 
-        OperationQueue.main.addOperation {
-            cell.updateCell(with: activity)
         }
-        self.activities[indexPath.row].imageview = activity.imageview
-
-    }
->>>>>>> master
         return cell
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)
@@ -347,7 +334,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         });
 
     }
-    
+
 
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
@@ -478,9 +465,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         }
     }
-    
-    
-    
+
+
+
 
 
     func joinOrLeaveToActivity() {
@@ -502,35 +489,22 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
 
     }
-<<<<<<< HEAD
-    
-    
-   
-}
-=======
->>>>>>> master
-
 }
 
 extension ActivitiesViewController: ActivitiesDelegate {
 
-<<<<<<< HEAD
     func attendeesTapped(sender: ActivitiesCollectionViewCell) {
 
-        
         guard let indexPathForCell = activitiesCollectionView.indexPath(for: sender) else { return }
         let activity = self.activities[indexPathForCell.row]
-=======
-    func attendeeTapped(sender: ActivitiesCollectionViewCell) {
->>>>>>> master
         let userTableView = UsersTableViewController()
         userTableView.selectedActivity = activity
         userTableView.userArray = sender.users
-    
+
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
         self.present(navController, animated: true, completion: nil)
-        
+
     }
 
     func dismissController() {
