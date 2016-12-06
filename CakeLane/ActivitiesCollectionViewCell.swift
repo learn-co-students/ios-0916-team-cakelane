@@ -11,7 +11,7 @@ import Firebase
 
 protocol ActivitiesDelegate: class {
 
-    func attendeeTapped(sender: ActivitiesCollectionViewCell)
+    func attendeesTapped(sender: ActivitiesCollectionViewCell)
 
 }
 
@@ -28,7 +28,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     var firstProfileImage = UIImageView()
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
-    
+    let ref = FIRDatabase.database().reference()
+    var users = [User]()
     var placeholderImage = true
 
     var delegate: ActivitiesDelegate?
@@ -96,7 +97,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityOverlay.addSubview(firstProfileImage)
-        firstProfileImage.backgroundColor = UIColor.green
+        firstProfileImage.contentMode = UIViewContentMode.scaleToFill
         firstProfileImage.layer.masksToBounds = true
         firstProfileImage.layer.borderColor = UIColor.black.cgColor
         firstProfileImage.layer.cornerRadius = 18
@@ -109,7 +110,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityOverlay.addSubview(secondProfileImage)
-        secondProfileImage.backgroundColor = UIColor.green
+        secondProfileImage.contentMode = UIViewContentMode.scaleToFill
         secondProfileImage.layer.masksToBounds = true
         secondProfileImage.layer.borderColor = UIColor.black.cgColor
         secondProfileImage.layer.cornerRadius = 18
@@ -122,7 +123,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityOverlay.addSubview(thirdProfileImage)
-        thirdProfileImage.backgroundColor = UIColor.green
+        thirdProfileImage.contentMode = UIViewContentMode.scaleToFill
         thirdProfileImage.layer.masksToBounds = true
         thirdProfileImage.layer.borderColor = UIColor.black.cgColor
         thirdProfileImage.layer.cornerRadius = 18
@@ -140,7 +141,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         numberOfAttendeesLabel.textColor = UIColor.black
         numberOfAttendeesLabel.snp.makeConstraints { (make) in
             make.right.equalTo(activityOverlay.snp.right).offset(-20)
-            make.top.equalTo(activityOverlay.snp.top).offset(8)
+            make.centerY.equalTo(activityOverlay.snp.centerY)
 
         }
 
@@ -168,7 +169,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     func buttonAction(sender: UIButton) {
 
 
-        delegate?.attendeeTapped(sender: self)
+        delegate?.attendeesTapped(sender: self)
+
 
 
     }
@@ -188,22 +190,65 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
     }
-    
+
     func updateCell(with activity: Activity) {
 
         self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
-        self.numberOfAttendeesLabel.text = String(activity.attendees.count)
-        
+
+        self.numberOfAttendeesLabel.text = ("\(String(activity.attendees.count)) attending   >")
+
+
+
+        var arrayOfImages: [UIImage] = []
+
+
+        for eachUser in activity.attendees.keys {
+            guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+            let userRef = ref.child(teamID).child("users").child(eachUser)
+            userRef.observeSingleEvent(of:.value, with: { (snapshot) in
+                let dict = snapshot.value as! [String:Any]
+                print(dict)
+                let user = User(snapShot: dict)
+                self.users.append(user)
+
+            })
+
+            let imageRef = ref.child(teamID).child("users").child(eachUser).child("image72")
+
+            imageRef.observeSingleEvent(of:.value, with: { (snapshot) in
+
+                let url = snapshot.value as! String
+                self.downloadImage(at: url, completion: { (success, image) in
+                    arrayOfImages.append(image)
+                    OperationQueue.main.addOperation {
+                        if arrayOfImages.count == 1 {
+                            self.firstProfileImage.image = arrayOfImages[0]
+                        }
+                        else if arrayOfImages.count == 2 {
+                            self.firstProfileImage.image = arrayOfImages[0]
+                            self.secondProfileImage.image = arrayOfImages[1]
+                        }
+                        else if arrayOfImages.count >= 3 {
+                            self.firstProfileImage.image = arrayOfImages[0]
+                            self.secondProfileImage.image = arrayOfImages[1]
+                            self.thirdProfileImage.image = arrayOfImages[2]
+                        }
+                    }
+                })
+            })
+        }
+
+
         // update cell with local placeholder image
         if activity.image == " " {
             self.activityImageView.image = UIImage(named: "smallerAppLogo")
             self.placeholderImage = true
         }
-        
+
+        self.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
+
+
     }
-
-
-
 }

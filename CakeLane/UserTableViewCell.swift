@@ -14,6 +14,7 @@ class UserTableViewCell: UITableViewCell {
 
     var profileImage = UIImageView()
     var nameLabel = UILabel()
+    let ref = FIRDatabase.database().reference()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,26 +32,28 @@ class UserTableViewCell: UITableViewCell {
         
         contentView.addSubview(profileImage)
         profileImage.backgroundColor = UIColor.green
-        profileImage.layer.masksToBounds = true
+//        profileImage.layer.masksToBounds = true
         profileImage.layer.borderColor = UIColor.black.cgColor
-        profileImage.layer.cornerRadius = 22
+        profileImage.layer.cornerRadius = 23
         profileImage.clipsToBounds = true
+        profileImage.layer.masksToBounds = true
         profileImage.snp.makeConstraints { (make) in
             make.left.equalTo(contentView.snp.left).offset(10)
             make.centerY.equalTo(contentView.snp.centerY)
             make.width.equalTo(contentView.snp.width).dividedBy(9)
+            make.width.equalTo(contentView.snp.width)
             make.height.equalTo(contentView.snp.height).dividedBy(1.4)
 
         }
         
         contentView.addSubview(nameLabel)
-        nameLabel.text = "Henry"
+        nameLabel.text = ""
         nameLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 12)
         nameLabel.textColor = UIColor.black
         nameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(profileImage.snp.right).offset(15)
             make.centerY.equalTo(contentView.snp.centerY)
-            make.width.equalTo(contentView.snp.width).dividedBy(12)
+            make.width.equalTo(contentView.snp.width).dividedBy(2)
             make.height.equalTo(contentView.snp.height).dividedBy(1.1)
         }
     }
@@ -62,21 +65,43 @@ class UserTableViewCell: UITableViewCell {
     
     
     func updateCell(with activity: Activity) {
-        
-//        self.activityLabel.text = activity.name
-//        self.dateLabel.text = activity.date
-//        self.locationLabel.text = activity.location
-        self.profileImage.image = UIImage(named: "snow")
+       nameLabel.text = activity.name
         
         
-        // MARK: download activity image from firebase
-        //        self.downloadImage(at: activity.image) { (success, image) in
-        //            DispatchQueue.main.async {
-        //                self.activityImageView.image = image
-        //                self.setNeedsLayout()
-        //            }
-        //        }
+//        var arrayOfImages: [UIImage] = []
+//        for eachUser in activity.attendees.keys {
+//            guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+//            let imageRef = ref.child(teamID).child("users").child(eachUser).child("image72")
+//            
+//            imageRef.observeSingleEvent(of:.value, with: { (snapshot) in
+//                
+//                let url = snapshot.value as! String
+//                self.downloadImage(at: url, completion: { (success, image) in
+//                    arrayOfImages.append(image)
+//                    OperationQueue.main.addOperation {
+//                        self.profileImage.image = image
+//                        
+//                    }
+//                })
+//            })
+//        }
         
+        
+
+    }
+    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
+        let session = URLSession.shared
+        let newUrl = URL(string: url)
+        if let unwrappedUrl = newUrl {
+            let request = URLRequest(url: unwrappedUrl)
+            let task = session.dataTask(with: request) { (data, response, error) in
+                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
+                
+                guard let image = UIImage(data: data) else { return }
+                completion(true, image)
+            }
+            task.resume()
+        }
         
     }
     

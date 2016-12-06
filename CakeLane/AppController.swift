@@ -68,7 +68,7 @@ class AppController: UIViewController {
             // reconstruct Activity instance
             if let activity = activity as? Activity {
                 var newActivity = activity as! Activity
-                newActivity.imageview = UIImage(named: "smallerAppLogo")
+                newActivity.imageview?.image = UIImage(named: "smallerAppLogo")
                 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
                 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
                 dump(newActivity as! Activity)

@@ -33,7 +33,29 @@ struct User {
     var attendedActivities = [[String: String]]()
     let reference : FIRDatabaseReference?
     
+    
+
+    
     // MARK: - initializer for activity object
+    
+    init(snapShot: [String:Any]){
+        self.slackID = snapShot["slackID"] as! String
+        self.teamID = snapShot["teamID"] as! String
+        self.firstName = snapShot["firstName"] as! String
+        self.lastName = snapShot["lastName"] as! String
+        self.image72 = snapShot["image72"] as! String
+        self.image512 = snapShot["image512"] as! String
+        self.email = snapShot["email"] as! String
+        self.username = snapShot["username"] as! String
+        self.timeZoneLabel = snapShot["timeZoneLabel"] as! String
+        self.teamID = snapShot["teamID"] as! String
+        self.reference = nil
+        self.isAdmin = snapShot["isAdmin"] as! Bool
+        self.isOwner = false
+        self.isPrimaryOwner = false
+        
+
+    }
     init(dictionary: [String:Any]) {
         let slackID = dictionary["id"] as! String
         let teamID = dictionary["team_id"] as! String

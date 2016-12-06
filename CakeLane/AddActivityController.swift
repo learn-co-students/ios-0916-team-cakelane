@@ -38,6 +38,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         descriptionTextView.textColor = UIColor.lightGray
         descriptionTextView.layer.cornerRadius = 5
         descriptionTextView.clipsToBounds = true
+        descriptionTextView.textContainer.maximumNumberOfLines = 10
+        descriptionTextView.textContainer.lineBreakMode = .byCharWrapping
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
     }
@@ -72,6 +74,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         let imageName = NSUUID().uuidString
         let storageRef = FIRStorage.storage().reference().child("activityImages").child("\(imageName).png")
         if let image = self.activityImage.image {
+
             if let uploadData = UIImageJPEGRepresentation(image, 0.25) {
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
@@ -191,12 +194,21 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.activityLocation.text = selectedActivity.location
 
         DispatchQueue.main.async {
-            self.activityImage.image = selectedActivity.imageview
+            self.activityImage.image = selectedActivity.imageview?.image
         }
         self.descriptionTextView.textColor = UIColor.black
         self.descriptionTextView.text = selectedActivity.description
         self.isEdit = true
 
+    }
+    
+    func textViewDidChange(_ textView: UITextView){
+        let fixedWidth = textView.frame.size.width
+        textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        var newFrame = textView.frame
+        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+        textView.frame = newFrame;
     }
 
 

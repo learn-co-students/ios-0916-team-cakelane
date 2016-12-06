@@ -32,7 +32,7 @@ class ActivityDetailsViewController: UIViewController {
             
             self.detailView.downloadImage(at: (self.detailView.selectedActivity?.image)!, completion: { (success, image) in
                 
-                self.detailView.selectedActivity?.imageview = image
+                self.detailView.selectedActivity?.imageview?.image = image
                 
                 OperationQueue.main.addOperation {
                     if self.detailView.selectedActivity.owner == self.slackID {
