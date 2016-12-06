@@ -391,6 +391,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
 
     func joinOrLeaveToActivity() {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            
+        }, completion: { (success) in
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+            
+        })
+
 
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
