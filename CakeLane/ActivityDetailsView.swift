@@ -121,8 +121,7 @@ class ActivityDetailsView: UIView {
         self.contentView.addSubview(joinButton)
         self.joinButton.translatesAutoresizingMaskIntoConstraints = false
         self.joinButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-30.0).isActive = true
-        self.joinButton.rightAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.rightAnchor, constant: -0.75*self.contentView.center.x).isActive = true
-        self.joinButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0.75*self.contentView.center.x).isActive = true
+        self.joinButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.25).isActive = true
         self.joinButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.joinButton.setTitle("Join Us!!!", for: .normal)
         self.joinButton.setTitleColor(UIColor.darkGray, for: .normal)
