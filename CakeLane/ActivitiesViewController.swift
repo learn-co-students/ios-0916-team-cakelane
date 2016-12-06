@@ -35,8 +35,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         viewDidLoad()
     }
     
-    // TODO: Figure out "Feed Refresh" -> Pull Down
-    // TODO: RECURSIVE CALL FOR ACTIVITY BATCH OF SIZE (10)
+    // TODO: Figure out "Feed Refresh" -> Pull Down & RECURSIVE CALL FOR ACTIVITY BATCH OF SIZE (10)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,119 +61,63 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         setUpActivityCollectionCells()
 
         createLayout()
-
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities")
         
+        // MARK: Get user info from Slack -> retrieve activities list from Firebase
         SlackAPIClient.storeUserInfo() { success in
             
-            FirebaseClient.retrieveActivities() { [unowned self] activities in
+            FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
                 DispatchQueue.main.async {
                     
                     print("We're here")
+                    
                     self.activities = activities
                     self.activitiesCollectionView.reloadData()
                 }
-                
             }
-            
         }
-      
         
-            
-            
-            
-            FirebaseClient.writeUserInfo()
+        // MARK: Upload user info to Firebase
+        FirebaseClient.writeUserInfo()
         
-        
-//        // MARK: Update activities array from Firebase
-//
-////        let activitiesRef = firebaseClient.ref.child(teamID).child("activities")
-//        activitiesRef.observe(.value, with: { (snapshot) in
-//
-//            var newActivites = [Activity]()
-//
-//            for activity in snapshot.children {
-//                let item = Activity(snapshot: activity as! FIRDataSnapshot)
-//
-//                newActivites.append(item)
-//            }
-//            OperationQueue.main.addOperation {
-//                self.activities = self.sortedActivities(newActivites)
-//                self.activitiesCollectionView.reloadData()
-//            }
-//
-//        })
-
-
         // MARK: Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in
 
             if index == 0 {
-
-                activitiesRef.observe(.value, with: { (snapshot) in
-
-                    var newActivites = [Activity]()
-
-                    for activity in snapshot.children {
-                        let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        newActivites.append(item)
-                    }
-                    OperationQueue.main.addOperation {
-                        self.activities = self.sortedActivities(newActivites)
+                FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
+                    DispatchQueue.main.async {
+                        self.activities = activities
                         self.activitiesCollectionView.reloadData()
                     }
-                })
+                }
             }
 
             if index == 1 {
-
-                activitiesRef.observe(.value, with: { (snapshot) in
-                    var newActivites = [Activity]()
-
-                    for activity in snapshot.children {
-                        let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        newActivites.append(item)
-                    }
-                    OperationQueue.main.addOperation {
-                        self.activities = self.filterTodayActivities(newActivites)
+                FirebaseClient.retrieveActivities(with: self.filterTodayActivities) { [unowned self] activities in
+                    DispatchQueue.main.async {
+                        self.activities = activities
                         self.activitiesCollectionView.reloadData()
                     }
-                })
+                }
             }
 
             if index == 2 {
-                activitiesRef.observe(.value, with: { (snapshot) in
-
-                    var newActivites = [Activity]()
-
-                    for activity in snapshot.children {
-                        let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        newActivites.append(item)
-                    }
-                    OperationQueue.main.addOperation {
-                        self.activities = self.filterWeekActivities(newActivites)
+                FirebaseClient.retrieveActivities(with: self.filterWeekActivities) { [unowned self] activities in
+                    DispatchQueue.main.async {
+                        self.activities = activities
                         self.activitiesCollectionView.reloadData()
                     }
-                })
+                }
             }
 
             if index == 3 {
-                activitiesRef.observe(.value, with: { (snapshot) in
-
-                    var newActivites = [Activity]()
-
-                    for activity in snapshot.children {
-                        let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                        newActivites.append(item)
-                    }
-                    OperationQueue.main.addOperation {
-                        self.activities = self.filterMonthActivities(newActivites)
+                FirebaseClient.retrieveActivities(with: self.filterMonthActivities) { [unowned self] activities in
+                    DispatchQueue.main.async {
+                        self.activities = activities
                         self.activitiesCollectionView.reloadData()
                     }
-                })
+                }
             }
         }
-
 
     }
 
@@ -245,28 +188,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return cell
     }
 
-//    // TODO: WillDisplayCell
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//
-//        var activity = self.activities[indexPath.row]
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-//
-//        if cell.activityImageView.image?.description == "smallerAppLogo" {
-//            cell.downloadImage(at: activity.image) { (success, image) in
-//                DispatchQueue.main.async {
-//                    cell.activityImageView.image = image
-//                    activity.imageview = image
-//                    cell.setNeedsLayout()
-//                }
-//            }
-//        }
-//
-//    }
-
     // MARK: DidSelectItemAt -> Show take user to ActivityDetails -> Move logic there
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
+        
+        // TODO: Fix Activity details functionality
         
         // MARK: Notify App Controller ~ show Activity Details
         NotificationCenter.default.post(name: .showActivityDetailsVC, object: self.activities[indexPath.row])
@@ -299,90 +226,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         whenDropDown.width = 140
 
 
-    }
-
-    // MARK: _ Sort the activities based on time
-    func sortedActivities(_ array: [Activity]) -> [Activity] {
-        let sortedArray = array.sorted { (a, b) -> Bool in
-            var result = false
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
-            if let aDate = dateFormatter.date(from: a.date){
-                if let bDate = dateFormatter.date(from: b.date){
-                    if aDate < bDate {
-                        result = true
-                    }
-                }
-            }
-            return result
-        }
-        return sortedArray
-    }
-
-    // MARK: Today's DropDown Filter
-    func filterTodayActivities(_ array: [Activity]) -> [Activity] {
-        let filterArray = array.filter { (a) -> Bool in
-            var result = false
-            let calendar = NSCalendar.current
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
-            if let aDate = dateFormatter.date(from: a.date) {
-                if calendar.isDateInToday(aDate){
-                    result = true
-                }
-            }
-            return result
-        }
-        return filterArray
-    }
-
-    // MARK: This Week's DropDown Filter
-    func filterWeekActivities(_ array: [Activity]) -> [Activity] {
-        let filterArray = array.filter { (a) -> Bool in
-            var result = false
-            let calendar = NSCalendar.current
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
-
-            let currentDate = Date()
-            let currentWeek = calendar.component(.weekOfMonth, from: currentDate)
-
-            if let aDate = dateFormatter.date(from: a.date) {
-                let thisWeek = calendar.component(.weekOfMonth, from: aDate)
-                if currentWeek == thisWeek {
-                    result = true
-                }
-            }
-            return result
-        }
-        return filterArray
-    }
-
-    // MARK: This Month's DropDown Filter
-    func filterMonthActivities(_ array: [Activity]) -> [Activity] {
-        let filterArray = array.filter { (a) -> Bool in
-            var result = false
-            let calendar = NSCalendar.current
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
-
-            let currentDate = Date()
-            let currentMonth = calendar.component(.month, from: currentDate)
-
-
-            if let aDate = dateFormatter.date(from: a.date) {
-                let thisMonth = calendar.component(.month, from: aDate)
-                if currentMonth == thisMonth {
-                    result = true
-                }
-            }
-            return result
-        }
-        return filterArray
     }
 
     // MARK: Segue to Add ActivityVC, ActivityDetailsVC

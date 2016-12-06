@@ -10,6 +10,7 @@ import Foundation
 import Firebase
 
 class FirebaseClient {
+    
     static let sharedInstance = FirebaseClient()
     private init() { }
     
@@ -20,34 +21,18 @@ class FirebaseClient {
     
     // MARK: Write current user's info to Firebase
     class func writeUserInfo() {
+        
         guard let userProfile = UserDefaults.standard.object(forKey: "userProfile") as? User else { return }
-        print("FIREBASEEEEEEEEEEE")
-        print(userProfile)
-        print("FIREBASEEEEEEEEEEE")
+        
         let reference = FirebaseClient.sharedInstance.ref
+        
         reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
+        
     }
     
-    // MARK: Update activities array from Firebase
-    class func retrieveActivities(handler: @escaping ([Activity]) -> Void) {
-        // TODO: move func to appropriate location
-        func sortedActivities(_ array: [Activity]) -> [Activity] {
-            let sortedArray = array.sorted { (a, b) -> Bool in
-                var result = false
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = DateFormatter.Style.long
-                dateFormatter.timeStyle = .long
-                if let aDate = dateFormatter.date(from: a.date){
-                    if let bDate = dateFormatter.date(from: b.date){
-                        if aDate < bDate {
-                            result = true
-                        }
-                    }
-                }
-                return result
-            }
-            return sortedArray
-        }
+    // MARK: Update activities array from Firebase using desired filter
+    class func retrieveActivities(with filter: @escaping ([Activity]) -> [Activity], handler: @escaping ([Activity]) -> Void) {
+        
         
         let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
         let activitiesRef = sharedInstance.ref.child(teamID).child("activities")
@@ -60,14 +45,10 @@ class FirebaseClient {
                 
                 newActivities.append(item)
             }
-            newActivities = sortedActivities(newActivities)
+            newActivities = filter(newActivities)
             
             handler(newActivities)
         })
-        
-        
-        
-        
         
     }
     

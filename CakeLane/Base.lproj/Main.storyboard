@@ -12,24 +12,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Activity Details View Controller-->
-        <scene sceneID="RFF-jB-08J">
-            <objects>
-                <viewController storyboardIdentifier="activity-details-view-controller" id="PlV-F0-RcT" customClass="ActivityDetailsViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mGz-cw-22v"/>
-                        <viewControllerLayoutGuide type="bottom" id="lGH-vF-XWl"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Mic-lL-KOe">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V6j-b2-sfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2070" y="-614"/>
-        </scene>
         <!--Activities View Controller-->
         <scene sceneID="Kyh-Es-c9f">
             <objects>
