@@ -409,7 +409,7 @@
             </objects>
             <point key="canvasLocation" x="1132" y="901"/>
         </scene>
-<<<<<<< HEAD
+
         <!--Detail User View Controller-->
         <scene sceneID="O7K-LK-RS7">
             <objects>
@@ -515,8 +515,7 @@
             </objects>
             <point key="canvasLocation" x="3009" y="-696"/>
         </scene>
-=======
->>>>>>> master
+
     </scenes>
     <resources>
         <image name="appLogo" width="535" height="472"/>
