@@ -68,9 +68,9 @@ struct User {
         let image512 = profile["image_512"] as? String ?? ""
         let timeZoneLabel = dictionary["tz_label"] as? String ?? ""
         
-        let isAdmin = dictionary["is_admin"] as! Bool
-        let isOwner = dictionary["is_owner"] as! Bool
-        let isPrimaryOwner = dictionary["is_primary_owner"] as! Bool
+        let isAdmin = dictionary["is_admin"] as? Bool ?? false
+        let isOwner = dictionary["is_owner"] as? Bool ?? false
+        let isPrimaryOwner = dictionary["is_primary_owner"] as? Bool ?? false
         
         self.slackID = slackID
         self.teamID = teamID

@@ -19,27 +19,28 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var detailView: ActivityDetailsView!
     let ref = FIRDatabase.database().reference()
     var selectedActivity: Activity?
+<<<<<<< HEAD
     
     
 
+=======
+    var isAnimating: Bool = false
+    var dropDownViewIsDisplayed: Bool = false
+>>>>>>> master
     let whenDropDown = DropDown()
 
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
 
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
     override func viewWillAppear(_ animated: Bool) {
-        //MARK: Replace with tableview.reload() so that ViewDidload doesn't get called twice
+    //MARK: Replace with tableview.reload() so that ViewDidload doesn't get called twice
         viewDidLoad()
     }
 
     override func viewDidLoad() {
-
-        print(SlackAPIClient.getUserInfo(with: ))
-
-
         super.viewDidLoad()
-        
-        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -55,11 +56,18 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
 
+<<<<<<< HEAD
         let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.11*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
 
         self.detailView = ActivityDetailsView(frame: frame)
 
 
+=======
+        let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
+
+
+        self.detailView = ActivityDetailsView(frame: frame)
+>>>>>>> master
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
 
@@ -213,6 +221,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         OperationQueue.main.addOperation {
             cell.updateCell(with: self.activities[indexPath.row])
             self.activities[indexPath.row].imageview = cell.activityImageView.image
+<<<<<<< HEAD
             
             OperationQueue.main.addOperation {
                 cell.updateCell(with: activity)
@@ -234,6 +243,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
 //        cell.transparentButton.tag = indexPath.row
         
+=======
+
+        OperationQueue.main.addOperation {
+            cell.updateCell(with: activity)
+        }
+        self.activities[indexPath.row].imageview = activity.imageview
+
+    }
+>>>>>>> master
         return cell
     }
     
@@ -257,47 +275,68 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+        var activity = self.activities[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
+
+        if cell.activityImageView.image?.description == "smallerAppLogo" {
+            self.downloadImage(at: activity.image) { (success, image) in
+                DispatchQueue.main.async {
+                    cell.activityImageView.image = image
+                    activity.imageview = image
+                    cell.setNeedsLayout()
+                }
+            }
+        }
+
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         self.selectedActivity = self.activities[indexPath.row]
-        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
 
         let activitiesRef = ref.child(teamID).child("activities").child((selectedActivity?.id)!)
         activitiesRef.observe(.value, with: { (snapshot) in
 
-            self.selectedActivity = Activity(snapshot: snapshot)
+        self.selectedActivity = Activity(snapshot: snapshot)
 
-                self.downloadImage(at: (self.selectedActivity?.image)!, completion: { (success, image) in
-                    self.selectedActivity?.imageview = image
-                    self.detailView.selectedActivity = self.selectedActivity
-                     guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-                     OperationQueue.main.addOperation {
-                        if self.detailView.selectedActivity.owner == slackID {
-                            
-                            self.detailView.editButton.isHidden = false
-                            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
-                            self.detailView.joinButton.isHidden = true
-                            
-                            
-                        }else{
-                            self.detailView.editButton.isHidden = true
-                            self.detailView.joinButton.isHidden = false
-                            
+        self.downloadImage(at: (self.selectedActivity?.image)!, completion: { (success, image) in
+
+            self.selectedActivity?.imageview = image
+            self.detailView.selectedActivity = self.selectedActivity
+            OperationQueue.main.addOperation {
+            if self.detailView.selectedActivity.owner == self.slackID {
+            self.detailView.editButton.isHidden = false
+            self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
+            self.detailView.joinButton.isHidden = true
+            } else {
+
+            self.detailView.editButton.isHidden = true
+                if self.detailView.selectedActivity.attendees.keys.contains(self.slackID) {
+                    self.detailView.joinButton.setTitle("Leave", for: .normal)
+
+
+                } else {
+
+                    self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
+
+                }
+                self.detailView.joinButton.addTarget(self, action: #selector(self.joinOrLeaveToActivity), for: .allTouchEvents)
+
                         }
-                    
+
                     }
 
                 })
 
             self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
 
-            self.detailView.joinButton.addTarget(self, action: #selector(self.joinToActivity), for: .touchUpInside)
-           
                 self.view.addSubview(self.blurEffectView)
-                
+
                 self.view.addSubview(self.detailView)
-            
-            
+
+
 
         })
 
@@ -417,7 +456,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
         return filterArray
     }
-    
+
     func dismissView() {
 
         UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
@@ -444,33 +483,46 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     
 
 
-    func joinToActivity() {
+    func joinOrLeaveToActivity() {
 
-        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-        guard let slackID = UserDefaults.standard.string(forKey: "slackID") else {return}
-        
-        
         let key = self.selectedActivity?.id ?? ""
         let date = self.selectedActivity?.date ?? String(describing: Date())
         let newAttendingUser = [slackID:true]
         let newAttendingActivity: [String:String] = [key:date]
-  self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
-       
-        self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+
+        if self.detailView.joinButton.titleLabel?.text == "Join Us!!!" {
+        self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
+
+            self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+        } else {
+
+        self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
+
+            self.ref.child(teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
+        }
+
     }
+<<<<<<< HEAD
     
     
    
 }
+=======
+>>>>>>> master
 
+}
 
 extension ActivitiesViewController: ActivitiesDelegate {
 
+<<<<<<< HEAD
     func attendeesTapped(sender: ActivitiesCollectionViewCell) {
 
         
         guard let indexPathForCell = activitiesCollectionView.indexPath(for: sender) else { return }
         let activity = self.activities[indexPathForCell.row]
+=======
+    func attendeeTapped(sender: ActivitiesCollectionViewCell) {
+>>>>>>> master
         let userTableView = UsersTableViewController()
         userTableView.selectedActivity = activity
         userTableView.userArray = sender.users

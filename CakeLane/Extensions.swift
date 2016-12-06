@@ -23,5 +23,3 @@ extension URL {
         return query?.filter({$0.name == name}).first?.value
     }
 }
-
-
