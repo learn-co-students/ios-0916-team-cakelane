@@ -199,7 +199,7 @@ class ActivityDetailsView: UIView {
         descriptionTextView.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor).isActive = true
         descriptionTextView.backgroundColor = UIColor.white
         descriptionTextView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
-        descriptionTextView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        descriptionTextView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         descriptionTextView.clipsToBounds = true
         descriptionTextView.layer.cornerRadius = 5

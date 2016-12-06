@@ -410,11 +410,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
 
             self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
+            self.detailView.joinButton.setTitle("Leave", for: .normal)
         } else {
 
         self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
 
             self.ref.child(teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
+          //  self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
+
         }
 
     }
