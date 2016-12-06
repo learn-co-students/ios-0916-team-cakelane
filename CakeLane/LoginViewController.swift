@@ -64,12 +64,17 @@ class LoginViewController: UIViewController {
 //                print("+++++++++++++++*********++++++++++")
 
                 let token = json["access_token"] as! String
+                let userID = json["user_id"] as! String
+                let teamID = json["team_id"] as! String
                 let teamName = json["team_name"] as! String
-
+                
                 // save slack account token, team name using UserDefaults
                 let defaults = UserDefaults.standard
                 defaults.setValue(token, forKey: "SlackToken")
+                defaults.setValue(userID, forKey: "SlackUser")
+                defaults.setValue(teamID, forKey: "SlackTeam")
                 defaults.set(teamName, forKey: "TeamName")
+                
                 defaults.synchronize()
                 
                 NotificationCenter.default.post(name: .closeLoginVC, object: self)

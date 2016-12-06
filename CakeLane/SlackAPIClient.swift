@@ -15,16 +15,16 @@ class SlackAPIClient {
     static let store = SlackMessageStore.sharedInstance
     
     // Get User.Info from Slack
-    class func getUserInfo(with completion: @escaping ([String: Any])->()) {
+    class func getUserInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
-        guard let userID = UserDefaults.standard.object(forKey: "SlackUser") else { return }
+        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
+        guard let userID = UserDefaults.standard.object(forKey: "SlackUser") else { completion(nil); return }
 
         let urlString = "https://slack.com/api/users.info?user=\(userID)&token=\(token)"
         guard let url = URL(string: urlString) else { return }
         print(url)
         Alamofire.request(url).responseJSON { response in
-            guard let JSON = response.result.value else { return }
+            guard let JSON = response.result.value else { completion(nil); return }
             let completeJSON = JSON as! [String : Any]
             completion(completeJSON)
         }
@@ -74,25 +74,31 @@ class SlackAPIClient {
         }
     }
 
-    // TODO: CONSTANTS FOR USER DEFAULTS & CODING -> STORE USER STRUCT INSTEAD OF KEYS
-    class func storeUserInfo() {
+    // TODO: call in NetworkManager
+    class func storeUserInfo(handler: @escaping (Bool) -> Void) {
         // MARK: Basic Slack API call ~ used to populate user profile (called once during signup)
-        self.getUserInfo { userInfo in
+        self.getUserInfo { rawUserInfo in
+            
+            guard let userInfo = rawUserInfo else { handler(false); return }
             
             let userData = userInfo["user"] as! [String: Any]
             
-            print("***************++++++++**********\n\n")
-            print("USER DATA STILL BEING STORED AFTER LE GREAT REFACTOR #GREATSUCCESS")
-            print(userData)
-            print("***************++++++++**********\n\n")
-            print(userData["is_primary_owner"])
-            print("***************++++++++**********\n\n")
+//            print("***************++++++++**********\n\n")
+//            print("USER DATA STILL BEING STORED AFTER LE GREAT REFACTOR #GREATSUCCESS")
+//            print(userData)
+//            print("***************++++++++**********\n\n")
+//            print(userData["is_primary_owner"])
+//            print("***************++++++++**********\n\n")
             
             OperationQueue.main.addOperation {
                 
-                // instantiate user profile
+//                // instantiate user profile
                 let userProfile = User(dictionary: userData)
+//                
                 let defaults = UserDefaults.standard
+//                defaults.set(userProfile, forKey: "userProfile")
+//                defaults.synchronize()
+                
                 defaults.set(userProfile.slackID, forKey: "slackID")
                 defaults.set(userProfile.teamID, forKey: "teamID")
                 defaults.set(userProfile.username, forKey: "username")
@@ -109,9 +115,7 @@ class SlackAPIClient {
                 
                 defaults.synchronize()
                 
-                // sync to Firebase
-                let reference = FirebaseClient.sharedInstance.ref
-                reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
+                handler(true)
             }
             
         }

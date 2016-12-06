@@ -63,24 +63,47 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         createLayout()
 
-        // MARK: Update activities array from Firebase
-
         let activitiesRef = firebaseClient.ref.child(teamID).child("activities")
-        activitiesRef.observe(.value, with: { (snapshot) in
-
-            var newActivites = [Activity]()
-
-            for activity in snapshot.children {
-                let item = Activity(snapshot: activity as! FIRDataSnapshot)
-
-                newActivites.append(item)
+        
+        SlackAPIClient.storeUserInfo() { success in
+            
+            FirebaseClient.retrieveActivities() { [unowned self] activities in
+                DispatchQueue.main.async {
+                    
+                    print("We're here")
+                    self.activities = activities
+                    self.activitiesCollectionView.reloadData()
+                }
+                
             }
-            OperationQueue.main.addOperation {
-                self.activities = self.sortedActivities(newActivites)
-                self.activitiesCollectionView.reloadData()
-            }
-
-        })
+            
+        }
+      
+        
+            
+            
+            
+            FirebaseClient.writeUserInfo()
+        
+        
+//        // MARK: Update activities array from Firebase
+//
+////        let activitiesRef = firebaseClient.ref.child(teamID).child("activities")
+//        activitiesRef.observe(.value, with: { (snapshot) in
+//
+//            var newActivites = [Activity]()
+//
+//            for activity in snapshot.children {
+//                let item = Activity(snapshot: activity as! FIRDataSnapshot)
+//
+//                newActivites.append(item)
+//            }
+//            OperationQueue.main.addOperation {
+//                self.activities = self.sortedActivities(newActivites)
+//                self.activitiesCollectionView.reloadData()
+//            }
+//
+//        })
 
 
         // MARK: Filter activities via "Filter" DropDown
@@ -160,7 +183,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         view.backgroundColor = UIColor.black
         view.addSubview(activitiesCollectionView)
-        activitiesCollectionView.backgroundColor = UIColor.white
         activitiesCollectionView.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top)
             make.height.equalTo(view.snp.height)
@@ -207,7 +229,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
         if cell.delegate == nil { cell.delegate = self }
         
-        // TODO: Move cell update to cell
+        // TODO: REMOVE --> Move cell update to cell
         OperationQueue.main.addOperation {
             cell.updateCell(with: activity)
             
@@ -218,9 +240,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     cell.setNeedsLayout()
                 }
             })
-            
-//            self.activities[indexPath.row].imageview = UIImage(named: "appLogo-black")
-            
             
         }
         return cell

@@ -67,12 +67,14 @@ class AppController: UIViewController {
             // TODO: LOAD IMAGE FIRST
             // reconstruct Activity instance
             if let activity = activity as? Activity {
+                var newActivity = activity as! Activity
+                newActivity.imageview = UIImage(named: "smallerAppLogo")
                 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
                 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                dump(activity)
+                dump(newActivity as! Activity)
                 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
                 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                advc.detailView.selectedActivity = activity as! Activity!
+                advc.detailView.selectedActivity = newActivity
                 return advc
             }
             return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! UITabBarController
@@ -93,46 +95,6 @@ class AppController: UIViewController {
         
         switch notification.name {
         case Notification.Name.closeLoginVC:
-            // MARK: Slack API Call for full user data (TODO: move to NetworkManager)
-            SlackAPIClient.getUserInfo { userInfo in
-                
-                let userData = userInfo["user"] as! [String: Any]
-                
-                print("***************++++++++**********\n\n")
-                print("USER DATA STILL BEING STORED AFTER LE GREAT REFACTOR #GREATSUCCESS")
-                print(userData)
-                print("***************++++++++**********\n\n")
-                print(userData["is_primary_owner"])
-                print("***************++++++++**********\n\n")
-                
-                OperationQueue.main.addOperation {
-                    
-                    // instantiate user profile
-                    let userProfile = User(dictionary: userData)
-                    let defaults = UserDefaults.standard
-                    defaults.set(userProfile.slackID, forKey: "slackID")
-                    defaults.set(userProfile.teamID, forKey: "teamID")
-                    defaults.set(userProfile.username, forKey: "username")
-                    defaults.set(userProfile.firstName, forKey: "firstName")
-                    defaults.set(userProfile.lastName, forKey: "lastName")
-                    defaults.set(userProfile.email, forKey: "email")
-                    defaults.set(userProfile.image72, forKey: "image72")
-                    defaults.set(userProfile.image512, forKey: "image512")
-                    defaults.set(userProfile.timeZoneLabel, forKey: "timeZoneLabel")
-                    
-                    defaults.set(userProfile.isAdmin, forKey: "isAdmin")
-                    defaults.set(userProfile.isOwner, forKey: "isOwner")
-                    defaults.set(userProfile.isPrimaryOwner, forKey: "isPrimaryOwner")
-                    
-                    defaults.synchronize()
-                    
-                    // sync to Firebase
-                    let reference = FirebaseClient.sharedInstance.ref
-                    reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
-                }
-                
-            }
-            
             // MARK: Switch from Login Flow to Main Flow (Activity Feed)
             switchToViewController(withID: .tabBarController)
         case Notification.Name.closeProfileVC:
