@@ -201,24 +201,28 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
     // MARK: CellForItemAt
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let activity = self.activities[indexPath.row]
+        
+        var activity = self.activities[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-
+        
         if cell.delegate == nil { cell.delegate = self }
-
+        
         // TODO: Move cell update to cell
         OperationQueue.main.addOperation {
-            cell.updateCell(with: self.activities[indexPath.row])
-            self.activities[indexPath.row].imageview = UIImage(named: "smallerAppLogo")
-
-        OperationQueue.main.addOperation {
             cell.updateCell(with: activity)
-            cell.setNeedsLayout()
+            
+            cell.downloadImage(at: activity.image, completion: { (success, image) in
+                DispatchQueue.main.async {
+                    cell.activityImageView.image = image
+                    activity.imageview = image
+                    cell.setNeedsLayout()
+                }
+            })
+            
+//            self.activities[indexPath.row].imageview = UIImage(named: "appLogo-black")
+            
+            
         }
-        self.activities[indexPath.row].imageview = activity.imageview
-
-    }
         return cell
     }
 
@@ -228,15 +232,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 //        var activity = self.activities[indexPath.row]
 //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
 //
-////        if cell.activityImageView.image?.description == "smallerAppLogo" {
-////            cell.downloadImage(at: activity.image) { (success, image) in
-////                DispatchQueue.main.async {
-////                    cell.activityImageView.image = image
-////                    activity.imageview = image
-////                    cell.setNeedsLayout()
-////                }
-////            }
-////        }
+//        if cell.activityImageView.image?.description == "smallerAppLogo" {
+//            cell.downloadImage(at: activity.image) { (success, image) in
+//                DispatchQueue.main.async {
+//                    cell.activityImageView.image = image
+//                    activity.imageview = image
+//                    cell.setNeedsLayout()
+//                }
+//            }
+//        }
 //
 //    }
 
@@ -246,7 +250,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.selectedActivity = self.activities[indexPath.row]
         
         // MARK: Notify App Controller ~ show Activity Details
-        NotificationCenter.default.post(name: .showActivityDetailsVC, object: self.selectedActivity)
+        NotificationCenter.default.post(name: .showActivityDetailsVC, object: self.activities[indexPath.row])
 
     }
 
@@ -362,15 +366,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return filterArray
     }
 
-    // MARK: Segue to Add Activity VC
+    // MARK: Segue to Add ActivityVC, ActivityDetailsVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editActivity" {
             let dest = segue.destination as! AddActivityController
             dest.selectedActivity = self.selectedActivity
-
         }
     }
-
+    
 }
 
 // MARK: Activities Delegate ~ Present Attendees VC

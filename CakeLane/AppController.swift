@@ -15,6 +15,7 @@ class AppController: UIViewController {
     var actingViewController: UIViewController!
     var notificationObject: Any?
     var token: String?
+    let defaults = UserDefaults.standard
     
     // MARK: View lifecycle
     
@@ -30,7 +31,6 @@ class AppController: UIViewController {
     private func loadInitialViewController() {
         // access defaults
         // NOTE: token is stored as Optional value
-        let defaults = UserDefaults.standard
         if defaults.object(forKey: "SlackToken") == nil {
             actingViewController = loadViewController(withID: .loginVC)
         } else {
@@ -46,7 +46,7 @@ class AppController: UIViewController {
         // close activities if user has logged out
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeProfileVC, object: nil)
         // MARK: Add observer: close activities feed -> show activity details
-        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .showActivityDetailsVC, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .showActivityDetailsVC, object: notificationObject)
     }
     
     // MARK: View Controller Handling
@@ -62,10 +62,20 @@ class AppController: UIViewController {
             return vc
         case .activityDetailsVC:
             let advc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivityDetailsViewController
-            if let activity = notificationObject {
-                advc.detailView.selectedActivity = activity as! Activity
+            let activity = notificationObject
+            
+            // TODO: LOAD IMAGE FIRST
+            // reconstruct Activity instance
+            if let activity = activity as? Activity {
+                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+                dump(activity)
+                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+                advc.detailView.selectedActivity = activity as! Activity!
+                return advc
             }
-            return advc
+            return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! UITabBarController
         default:
             fatalError("ERROR: Unable to find controller with storyboard id: \(id)")
         }
@@ -128,7 +138,7 @@ class AppController: UIViewController {
         case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
         case Notification.Name.showActivityDetailsVC:
-            self.notificationObject = notification.object as! Activity
+            notificationObject = notification.object
             switchToViewController(withID: .activityDetailsVC)
         default:
             fatalError("ERROR: Unable to match notification name")
