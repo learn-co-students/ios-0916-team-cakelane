@@ -19,14 +19,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var detailView: ActivityDetailsView!
     let ref = FIRDatabase.database().reference()
     var selectedActivity: Activity?
-<<<<<<< HEAD
-
-
-
-=======
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
->>>>>>> master
+
     let whenDropDown = DropDown()
 
     let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
@@ -56,18 +51,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
 
-<<<<<<< HEAD
-        let frame = CGRect(x: 0.05*self.view.frame.maxX, y: 0.11*self.view.frame.maxY, width: self.view.frame.width*0.9, height: self.view.frame.height*0.81)
 
-        self.detailView = ActivityDetailsView(frame: frame)
-
-
-=======
         let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
 
 
         self.detailView = ActivityDetailsView(frame: frame)
->>>>>>> master
+
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
 
