@@ -154,7 +154,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         view.backgroundColor = UIColor.black
         view.addSubview(activitiesCollectionView)
-        activitiesCollectionView.backgroundColor = UIColor.white
+//        activitiesCollectionView.backgroundColor = UIColor.white
         activitiesCollectionView.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top)
             make.height.equalTo(view.snp.height)
@@ -218,11 +218,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.selectedActivity = Activity(snapshot: snapshot)
 
             self.detailView.selectedActivity = self.selectedActivity
+            
             OperationQueue.main.addOperation {
+                
             if self.detailView.selectedActivity.owner == self.slackID {
+                
             self.detailView.editButton.isHidden = false
             self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
             self.detailView.joinButton.isHidden = true
+                
             } else {
 
             self.detailView.editButton.isHidden = true
