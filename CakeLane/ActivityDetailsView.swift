@@ -86,12 +86,12 @@ class ActivityDetailsView: UIView {
 
         self.contentView.addSubview(closeButton)
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
-        self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
+        self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:10.0).isActive = true
         self.closeButton.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor).isActive = true
         self.closeButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
         self.closeButton.heightAnchor.constraint(equalTo: self.closeButton.widthAnchor).isActive = true
-        self.closeButton.setTitle("X", for: .normal)
-        self.closeButton.setTitleColor(UIColor.black, for: .normal)
+        let image = UIImage(named: "exit")
+        self.closeButton.setImage(image, for: .normal)
         self.closeButton.backgroundColor = UIColor.clear
 
     }
@@ -100,11 +100,15 @@ class ActivityDetailsView: UIView {
 
         self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
-        self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
-        self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: +5).isActive = true
-        self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.06, constant: 0.0).isActive = true
+        self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:10.0).isActive = true
+        self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: 0).isActive = true
+        self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
         self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
+<<<<<<< HEAD
         let image = UIImage(named: "Edit1")?.tint(color: .black)
+=======
+        let image = UIImage(named: "pencil")
+>>>>>>> master
         self.editButton.setImage(image, for: .normal)
 
     }

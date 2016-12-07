@@ -13,6 +13,7 @@ class FirebaseUsersDataStore {
     static let sharedInstance = FirebaseUsersDataStore()
     private init() { }
     
+    var primaryUser = User()
     var users = [User]()
     var bots = [User]()
 }

@@ -13,7 +13,6 @@ class AppController: UIViewController {
 
     @IBOutlet weak var containerView: UIView!
     var actingViewController: UIViewController!
-    var notificationObject: Any?
     var token: String?
     let defaults = UserDefaults.standard
     

@@ -66,12 +66,16 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     
                     self.activities = activities
                     self.activitiesCollectionView.reloadData()
+                    
+                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                    //FirebaseClient.writeUserInfo()
+
                 }
             }
         }
         
         // Upload user info to Firebase
-        FirebaseClient.writeUserInfo()
+       //  FirebaseClient.writeUserInfo()
         
         // Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in
@@ -169,8 +173,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         if cell.delegate == nil { cell.delegate = self }
         
         cell.updateCell(with: activity) { (success) in
-            cell.downloadAttendeeImages(activity: activity)
+            // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
+            // load attendee images
+            cell.downloadAttendeeImages(activity: activity)
+            
         }
         
         return cell
