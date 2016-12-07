@@ -13,27 +13,23 @@ import DropDown
 
 class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    // MARK: UI
+    // UI
     var activitiesCollectionView: UICollectionView!
     var blurEffectView: UIVisualEffectView!
     
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
     
-    // MARK: Filter DropDown
+    // Filter DropDown
     let whenDropDown = DropDown()
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
     
-    // MARK: Data
+    // Data
     let firebaseClient = FirebaseClient.sharedInstance
     let teamID = FirebaseClient.sharedInstance.teamID
     let slackID = FirebaseClient.sharedInstance.slackID
     var activities = [Activity]()
     var selectedActivity: Activity?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        viewDidLoad()
-    }
     
     // TODO: Figure out "Feed Refresh" -> Pull Down & RECURSIVE CALL FOR ACTIVITY BATCH OF SIZE (10)
     override func viewDidLoad() {
@@ -56,11 +52,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
         
-        // MARK: REFACTORED -> do we need this?
+        // REFACTORED -> do we need this?
         // let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
         // self.detailView = ActivityDetailsView(frame: frame)
         
-        // MARK: DropDown Setup
+        // DropDown Setup
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
         
@@ -80,10 +76,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             }
         }
         
-        // MARK: Upload user info to Firebase
+        // Upload user info to Firebase
         FirebaseClient.writeUserInfo()
         
-        // MARK: Filter activities via "Filter" DropDown
+        // Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in
             
             if index == 0 {
@@ -125,7 +121,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
     }
     
-    // MARK: Self-explanatory func
+    // Self-explanatory func
     func createLayout() {
         
         view.backgroundColor = UIColor.black
@@ -139,7 +135,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
     }
     
-    // MAR: Setup cells
+    // Setup cells
     func setUpActivityCollectionCells() {
         
         let screenSize = UIScreen.main.bounds
@@ -161,14 +157,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
     }
     
-    // MARK: Number of cells
+    // Number of cells
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return activities.count
         
     }
     
-    // MARK: CellForItemAt
+    // CellForItemAt
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let activity = self.activities[indexPath.row]
@@ -186,7 +182,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         return cell
     }
     
-    // MARK: DidSelectItemAt -> Show take user to ActivityDetails -> Move logic there
+    // DidSelectItemAt -> Show take user to ActivityDetails -> Move logic there
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         self.selectedActivity = self.activities[indexPath.row]
@@ -197,12 +193,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
     }
     
-    // MARK: Filter Button ~ show DropDown
+    // Filter Button ~ show DropDown
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
     }
     
-    // MARK: Setup DropDown
+    // Setup DropDown
     func setUpWhenBarDropDown() {
         
         whenDropDown.anchorView = filterWhenOutlet
@@ -225,7 +221,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
     }
     
-    // MARK: Segue to Add ActivityVC, ActivityDetailsVC
+    // Segue to Add ActivityVC, ActivityDetailsVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editActivity" {
             let dest = segue.destination as! AddActivityController
@@ -235,7 +231,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     
     
     
-    // MARK: REFACTORED -> do we need this *here*? I moved this to ActivityDetailsViewController (which reference ActivityDetailsView, which in turn references the .xib)
+    // REFACTORED -> do we need this *here*? I moved this to ActivityDetailsViewController (which reference ActivityDetailsView, which in turn references the .xib)
     
     // func joinOrLeaveToActivity() {
     //
