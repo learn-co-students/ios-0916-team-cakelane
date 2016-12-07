@@ -15,14 +15,18 @@ class FirebaseClient {
     private init() { }
     
     let ref = FIRDatabase.database().reference()
-    
     let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
     let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
     
     // MARK: Write current user's info to Firebase
     class func writeUserInfo() {
         
-        guard let userProfile = UserDefaults.standard.object(forKey: "userProfile") as? User else { return }
+        // access userProfile from singleton (passed from SlacAPIClient)
+        let userProfile = FirebaseUsersDataStore.sharedInstance.primaryUser
+        
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print(userProfile)
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         
         let reference = FirebaseClient.sharedInstance.ref
         

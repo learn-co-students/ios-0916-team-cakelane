@@ -31,14 +31,9 @@ struct User {
     // TODO: Integrate activities using Firebase
     var activitiesCreated = [[String:String]]()
     var attendedActivities = [[String: String]]()
-    let reference : FIRDatabaseReference?
-    
-    
-
     
     // MARK: - initializer for activity object
-    
-    init(snapShot: [String:Any]){
+    init(snapShot: [String:Any]) {
         self.slackID = snapShot["slackID"] as! String
         self.teamID = snapShot["teamID"] as! String
         self.firstName = snapShot["firstName"] as! String
@@ -49,13 +44,13 @@ struct User {
         self.username = snapShot["username"] as! String
         self.timeZoneLabel = snapShot["timeZoneLabel"] as! String
         self.teamID = snapShot["teamID"] as! String
-        self.reference = nil
         self.isAdmin = snapShot["isAdmin"] as! Bool
         self.isOwner = false
         self.isPrimaryOwner = false
         
 
     }
+    
     init(dictionary: [String:Any]) {
         let slackID = dictionary["id"] as! String
         let teamID = dictionary["team_id"] as! String
@@ -85,10 +80,23 @@ struct User {
         self.isAdmin = isAdmin
         self.isOwner = isOwner
         self.isPrimaryOwner = isPrimaryOwner
-        
-        self.reference = nil
     }
     
+    init() {
+        self.slackID = ""
+        self.teamID = ""
+        self.username = ""
+        self.firstName = ""
+        self.lastName = ""
+        self.email = ""
+        self.image72 = ""
+        self.image512 = ""
+        self.timeZoneLabel = ""
+        
+        self.isAdmin = false
+        self.isOwner = false
+        self.isPrimaryOwner = false
+    }
     
     // MARK: - creating objects using firbase data
   //  init(snapshot: FIRDataSnapshot) {

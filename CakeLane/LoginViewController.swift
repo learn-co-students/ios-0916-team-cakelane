@@ -70,10 +70,10 @@ class LoginViewController: UIViewController {
                 
                 // save slack account token, team name using UserDefaults
                 let defaults = UserDefaults.standard
-                defaults.setValue(token, forKey: "SlackToken")
-                defaults.setValue(userID, forKey: "SlackUser")
-                defaults.setValue(teamID, forKey: "SlackTeam")
-                defaults.set(teamName, forKey: "TeamName")
+                defaults.setValue(token, forKey: "slackToken")
+                defaults.setValue(userID, forKey: "slackID")
+                defaults.setValue(teamID, forKey: "teamID")
+                defaults.set(teamName, forKey: "teamName")
                 
                 defaults.synchronize()
                 

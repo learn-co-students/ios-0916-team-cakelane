@@ -208,7 +208,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     }
     
     func downloadAttendeeImages(activity: Activity) {
-        
+        // TODO: consider deleting array of images
         var arrayOfImages: [UIImage] = []
         
         for eachUser in activity.attendees.keys {
@@ -220,31 +220,24 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
                 let user = User(snapShot: dict)
                 self.users.append(user)
                 
-            })
-            
-            let imageRef = ref.child(teamID).child("users").child(eachUser).child("image72")
-            
-            imageRef.observeSingleEvent(of:.value, with: { (snapshot) in
-                
-                let url = snapshot.value as! String
-                self.downloadImage(at: url, completion: { (success, image) in
-                    arrayOfImages.append(image)
-                    OperationQueue.main.addOperation {
-                        if arrayOfImages.count == 1 {
-                            self.firstProfileImage.image = arrayOfImages[0]
-                        }
-                        else if arrayOfImages.count == 2 {
-                            self.firstProfileImage.image = arrayOfImages[0]
-                            self.secondProfileImage.image = arrayOfImages[1]
-                        }
-                        else if arrayOfImages.count >= 3 {
-                            self.firstProfileImage.image = arrayOfImages[0]
-                            self.secondProfileImage.image = arrayOfImages[1]
-                            self.thirdProfileImage.image = arrayOfImages[2]
-                        }
-                    }
+                if self.users.count == 1 {
+                    self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
+                        self.firstProfileImage.image = image
+                        arrayOfImages.append(image)
                 })
+                } else if self.users.count == 2 {
+                    self.downloadImage(at: self.users[1].image72, completion: { (success, image) in
+                        self.secondProfileImage.image = image
+                        arrayOfImages.append(image)
+                    })
+                } else if arrayOfImages.count == 3 {
+                    self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
+                        self.thirdProfileImage.image = image
+                        arrayOfImages.append(image)
+                    })
+                }
             })
+            
         }
     }
     

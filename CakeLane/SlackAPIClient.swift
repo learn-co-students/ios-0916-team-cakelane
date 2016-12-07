@@ -17,8 +17,8 @@ class SlackAPIClient {
     // Get User.Info from Slack
     class func getUserInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
-        guard let userID = UserDefaults.standard.object(forKey: "SlackUser") else { completion(nil); return }
+        guard let token = UserDefaults.standard.object(forKey: "slackToken") else { completion(nil); return }
+        guard let userID = UserDefaults.standard.object(forKey: "slackID") else { completion(nil); return }
 
         let urlString = "https://slack.com/api/users.info?user=\(userID)&token=\(token)"
         guard let url = URL(string: urlString) else { return }
@@ -63,7 +63,7 @@ class SlackAPIClient {
     
     
     class func getAllUsersInfo(with completion: @escaping ([String: Any])->()) {
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
+        guard let token = UserDefaults.standard.object(forKey: "slackToken") else { return }
         let urlString = "https://slack.com/api/users.list?token=\(token)"
         guard let url = URL(string: urlString) else { return }
         Alamofire.request(url).responseJSON { response in
@@ -92,12 +92,13 @@ class SlackAPIClient {
             
             OperationQueue.main.addOperation {
                 
-//                // instantiate user profile
+                // instantiate user profile
                 let userProfile = User(dictionary: userData)
-//                
+                
+                // store user profile in FirebaseUsersDataStore (and use it later in FirebaseClient)
+                FirebaseUsersDataStore.sharedInstance.primaryUser = userProfile
+                
                 let defaults = UserDefaults.standard
-//                defaults.set(userProfile, forKey: "userProfile")
-//                defaults.synchronize()
                 
                 defaults.set(userProfile.slackID, forKey: "slackID")
                 defaults.set(userProfile.teamID, forKey: "teamID")
