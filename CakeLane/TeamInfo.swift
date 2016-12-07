@@ -18,11 +18,11 @@ struct TeamInfo {
     let teemChannel: String?
     let webhook: String?
     
-    internal init(attachment: [String: Any]?) {
-        id = attachment?["id"] as? String
-        name = attachment?["name"] as? String
-        domain = attachment?["domain"] as? String
-        emailDomain = attachment?["email_domain"] as? String
+    init(dictionary: [String: Any]?) {
+        id = dictionary?["id"] as? String
+        name = dictionary?["name"] as? String
+        domain = dictionary?["domain"] as? String
+        emailDomain = dictionary?["email_domain"] as? String
         teemChannel = "**No Team Channel Set**"
         webhook = "**No Team Webhook Set**"
     }

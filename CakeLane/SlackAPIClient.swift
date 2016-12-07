@@ -35,12 +35,16 @@ class SlackAPIClient {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
         
+        let teamStore = SlackMessageStore.sharedInstance
+        
         let urlString = "https://slack.com/api/team.info?token=\(token)"
         guard let url = URL(string: urlString) else { return }
         print(url)
         Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { completion(nil); return }
             let completeJSON = JSON as! [String : Any]
+            
+//            print("\n\n\nTHIS IS THE getTeamInfo Completion!!! ++++++++++\(completeJSON)")
             completion(completeJSON)
         }
     }
