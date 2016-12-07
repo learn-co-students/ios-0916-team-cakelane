@@ -31,13 +31,18 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     var activities = [Activity]()
     var selectedActivity: Activity?
 
-    override func viewWillAppear(_ animated: Bool) {
-        viewDidLoad()
-    }
-
+//    override func viewWillAppear(_ animated: Bool) {
+//        viewDidLoad()
+//    }
+    
     // TODO: Figure out "Feed Refresh" -> Pull Down & RECURSIVE CALL FOR ACTIVITY BATCH OF SIZE (10)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//      MARK: Test location for SlackAPIClient.userJoinChannel
+//        SlackAPIClient.userJoinChannel { response in
+//            print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++n\n\n\(response)")
+//        }
 
         // TODO1: Use Blur In Segue
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)

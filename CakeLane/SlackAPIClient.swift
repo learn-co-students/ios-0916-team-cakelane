@@ -28,19 +28,27 @@ class SlackAPIClient {
             let completeJSON = JSON as! [String : Any]
             completion(completeJSON)
         }
-
     }
+    
+    // Get Team.info from Slack
+    class func getTeamInfo(with completion: @escaping ([String: Any]?)->()) {
+        // extract slack token & user id from user defaults
+        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
+        
+        let urlString = "https://slack.com/api/team.info?token=\(token)"
+        guard let url = URL(string: urlString) else { return }
+        print(url)
+        Alamofire.request(url).responseJSON { response in
+            guard let JSON = response.result.value else { completion(nil); return }
+            let completeJSON = JSON as! [String : Any]
+            completion(completeJSON)
+        }
+    }
+    
     // Post Slack Notification to webhook URL
     class func postSlackNotification() {
     
         let store = SlackMessageStore.sharedInstance
-
-//        let newAttachment = Attachment(title: "Gamer Night", colorHex: "#b942f4", pretext: "*New Activity:* APP POST TEST IS WORKING!! _by Bejan_.", authorName: "Bejan Fozdar", authorLink: "http://github.com/ixyzt", authorIcon: "https://secure.gravatar.com/avatar/6fff6c447ce00e3080ffe5bf969811db.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2F3654%2Fimg%2Favatars%2Fava_0023-24.png", titleLink: "https://docs.google.com/document/d/1iGqv8zaQHcxWUmQkLAntNRLTy5czsLPWHnkbhrPK3ig/edit?usp=sharing", text: "THIS IS A TEST!", imageURL: "http://oi44.tinypic.com/t8lxfn.jpg", thumbURL: "http://static4.redcart.pl/templates/images/thumb/7546/75/75/en/0/templates/images/products/7546/100bfb31d29178fd8aab980d11db5682.jpg")
-        
-        //print("\n\n\n\nTHIS IS THE Attachment Dictionary!!! ++++++++++\n\n\(newAttachment.dictionary)")
-        
-//        store.attachmentDictionary = newAttachment.dictionary
-        print("\n\n\n\nTHIS IS THE SlackMessageStore Attachment Dictionary!!! ++++++++++\n\n\(store.attachmentDictionary)")
         
         //TODO: Turn this into a model, and include Attachment initialization
         let notificationParameters: [String:Any] = [
@@ -59,6 +67,20 @@ class SlackAPIClient {
 //            print("\n\n\n\nTHIS IS THE RESPONSE DATA!!! ++++++++++\(response.data)")     // server data
         }
         
+    }
+    
+    // Get user token, then POST user to join the channel specified
+    class func userJoinChannel(with completion: @escaping ([String: Any])->()) {
+        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
+        let channelName = "teem_activitiesb"
+        let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelName)"
+        guard let url = URL(string: urlString) else { return }
+        Alamofire.request(url, method: .post).responseJSON { response in
+            guard let JSON = response.result.value else { return }
+            let completeJSON = JSON as! [String : Any]
+//            print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++\(completeJSON)")
+            completion(completeJSON)
+        }
     }
     
     
