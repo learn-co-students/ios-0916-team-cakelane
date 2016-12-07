@@ -13,8 +13,39 @@ import Alamofire
 class SlackAPIClient {
     
     static let store = SlackMessageStore.sharedInstance
+    static let teamStore = TeamDataStore.sharedInstance
     
-    // Get User.Info from Slack
+    // MARK: Get user token, then POST user to join the channel specified
+    class func userJoinChannel(with completion: @escaping ([String: Any])->()) {
+        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
+        let channelName = "teem_activitiesa"
+        let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelName)"
+        guard let url = URL(string: urlString) else { return }
+        Alamofire.request(url, method: .post).responseJSON { response in
+            guard let JSON = response.result.value else { return }
+            let completeJSON = JSON as! [String : Any]
+            //            print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++\(completeJSON)")
+            completion(completeJSON)
+        }
+    }
+    
+    // MARK: Get channels.list from Slack
+    class func getChannelsList(with completion: @escaping ([String: Any]?)->()) {
+        // extract slack token & user id from user defaults
+        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
+        
+        let urlString = "https://slack.com/api/channels.list?user=\(userID)&token=\(token)"
+        guard let url = URL(string: urlString) else { return }
+        print(url)
+        Alamofire.request(url).responseJSON { response in
+            guard let JSON = response.result.value else { completion(nil); return }
+            let completeJSON = JSON as! [String : Any]
+            completion(completeJSON)
+        }
+    }
+    
+    
+    // MARK: Get User.Info from Slack
     class func getUserInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
@@ -30,12 +61,10 @@ class SlackAPIClient {
         }
     }
     
-    // Get Team.info from Slack
+    // MARK: Get Team.info from Slack
     class func getTeamInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
-        
-        let teamStore = SlackMessageStore.sharedInstance
         
         let urlString = "https://slack.com/api/team.info?token=\(token)"
         guard let url = URL(string: urlString) else { return }
@@ -43,21 +72,34 @@ class SlackAPIClient {
         Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { completion(nil); return }
             let completeJSON = JSON as! [String : Any]
-            
 //            print("\n\n\nTHIS IS THE getTeamInfo Completion!!! ++++++++++\(completeJSON)")
             completion(completeJSON)
         }
     }
     
-    // Post Slack Notification to webhook URL
+    // MARK: Post set.channelPurpose
+    class func setChannelPurpose(with completion: @escaping ([String: Any])->()) {
+        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
+        let channelID = "Insert Channel ID"
+        let channelPurpose = "A channel for all the cool activities everyone is creating through Teem!\nDownload it here: https://goo.gl/SIAHLa"
+        let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelID)&purpose=\(channelPurpose)"
+        guard let url = URL(string: urlString) else { return }
+        Alamofire.request(url, method: .post).responseJSON { response in
+            guard let JSON = response.result.value else { return }
+            let completeJSON = JSON as! [String : Any]
+            //            print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++\(completeJSON)")
+            completion(completeJSON)
+        }
+    }
+
+    // MARK: Post Slack Notification to webhook URL
     class func postSlackNotification() {
-    
-        let store = SlackMessageStore.sharedInstance
         
         //TODO: Turn this into a model, and include Attachment initialization
         let notificationParameters: [String:Any] = [
             "icon_url": "http://gdurl.com/Ei8e",
             "text": "This was posted by running the app",
+            "channel": "teem_activities",
             "attachments": [store.attachmentDictionary]
         ]
         
@@ -73,19 +115,7 @@ class SlackAPIClient {
         
     }
     
-    // Get user token, then POST user to join the channel specified
-    class func userJoinChannel(with completion: @escaping ([String: Any])->()) {
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
-        let channelName = "teem_activitiesb"
-        let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelName)"
-        guard let url = URL(string: urlString) else { return }
-        Alamofire.request(url, method: .post).responseJSON { response in
-            guard let JSON = response.result.value else { return }
-            let completeJSON = JSON as! [String : Any]
-//            print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++\(completeJSON)")
-            completion(completeJSON)
-        }
-    }
+    
     
     
     class func getAllUsersInfo(with completion: @escaping ([String: Any])->()) {
