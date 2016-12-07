@@ -215,26 +215,48 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
             guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
             let userRef = ref.child(teamID).child("users").child(eachUser)
             userRef.observeSingleEvent(of:.value, with: { (snapshot) in
+                
+                OperationQueue.main.addOperation {
+                
+                
                 let dict = snapshot.value as! [String:Any]
                 // initialize user
                 let user = User(snapShot: dict)
                 self.users.append(user)
                 if self.users.count == 1 {
                     self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
+                        
+                        OperationQueue.main.addOperation {
+                        
                         self.firstProfileImage.image = image
                         arrayOfImages.append(image)
+                            
+                        }
                 })
                 } else if self.users.count == 2 {
                     self.downloadImage(at: self.users[1].image72, completion: { (success, image) in
+                        
+                        OperationQueue.main.addOperation {
+                        
                         self.secondProfileImage.image = image
                         arrayOfImages.append(image)
+                            
+                        }
                     })
-                } else if arrayOfImages.count == 3 {
+                } else if arrayOfImages.count >= 3 {
                     self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
+                        
+                        OperationQueue.main.addOperation {
+                            
                         self.thirdProfileImage.image = image
                         arrayOfImages.append(image)
+                            
+                        }
                     })
                 }
+                    
+                }
+                
             })
             
         }
