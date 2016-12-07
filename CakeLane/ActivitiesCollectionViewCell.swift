@@ -219,7 +219,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
                 // initialize user
                 let user = User(snapShot: dict)
                 self.users.append(user)
-                
                 if self.users.count == 1 {
                     self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
                         self.firstProfileImage.image = image
