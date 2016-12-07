@@ -18,7 +18,7 @@ class SlackAPIClient {
     class func getUserInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
-        guard let userID = UserDefaults.standard.object(forKey: "SlackUser") else { completion(nil); return }
+        guard let userID = UserDefaults.standard.object(forKey: "slackID") else { completion(nil); return }
 
         let urlString = "https://slack.com/api/users.info?user=\(userID)&token=\(token)"
         guard let url = URL(string: urlString) else { return }

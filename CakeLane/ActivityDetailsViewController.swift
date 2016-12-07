@@ -44,6 +44,8 @@ class ActivityDetailsViewController: UIViewController {
         activitiesRef.observeSingleEvent(of: .value, with: { (snapshot) in
             
             self.detailView.selectedActivity = Activity(snapshot: snapshot)
+            print("$$$$$$$$$$$$$$$$")
+            print(self.detailView.selectedActivity)
              self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
             
             if self.detailView.selectedActivity.owner == self.slackID {
