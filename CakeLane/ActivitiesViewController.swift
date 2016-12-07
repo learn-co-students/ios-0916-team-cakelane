@@ -190,8 +190,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         self.selectedActivity = self.activities[indexPath.row]
+        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "activity-details-view-controller") as! ActivityDetailsViewController
+        destination.selectedActivity = self.selectedActivity
         
-        
+        self.present(destination, animated: true, completion: nil)
         
     }
     
