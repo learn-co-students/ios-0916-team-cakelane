@@ -23,9 +23,12 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     
     var userLabels = [String]()
     var userInfo = [String]()
+    var user: User!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         populateUserInfo()
         

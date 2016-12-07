@@ -201,33 +201,28 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        var activity = self.activities[indexPath.row]
-
+        
+        let activity = self.activities[indexPath.row]
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-
+        
         if cell.delegate == nil { cell.delegate = self }
-
+        
         OperationQueue.main.addOperation {
-            cell.updateCell(with: self.activities[indexPath.row])
-            self.activities[indexPath.row].imageview?.image = cell.activityImageView.image
-
-            OperationQueue.main.addOperation {
-                cell.updateCell(with: activity)
-
-
-                self.downloadImage(at: activity.image) { (success, image) in
-                    DispatchQueue.main.async {
-                        cell.activityImageView.image = image
-                        activity.imageview?.image = image
-                        cell.setNeedsLayout()
-                    }
+            cell.updateCell(with: activity)
+            activity.imageview?.image = cell.activityImageView.image
+            
+            
+            self.downloadImage(at: activity.image) { (success, image) in
+                DispatchQueue.main.async {
+                    cell.activityImageView.image = image
+                    activity.imageview?.image = image
+                    cell.setNeedsLayout()
                 }
-
-
             }
+            
             self.activities[indexPath.row].imageview = activity.imageview
-
+            
         }
         return cell
     }

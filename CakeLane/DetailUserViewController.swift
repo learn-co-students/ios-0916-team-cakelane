@@ -10,10 +10,12 @@ import UIKit
 
 class DetailUserViewController: UserInfoViewController {
     
+    
+//    var user: User!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+//        print(user)
     }
 
     
