@@ -216,7 +216,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
             let userRef = ref.child(teamID).child("users").child(eachUser)
             userRef.observeSingleEvent(of:.value, with: { (snapshot) in
                 let dict = snapshot.value as! [String:Any]
-                print(dict)
+                // initialize user
                 let user = User(snapShot: dict)
                 self.users.append(user)
                 
