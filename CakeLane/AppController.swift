@@ -17,7 +17,7 @@ class AppController: UIViewController {
     var token: String?
     let defaults = UserDefaults.standard
     
-    // MARK: View lifecycle
+    // View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class AppController: UIViewController {
         addNotificationObservers()
     }
     
-    // MARK: Set Up
+    // Initial Set Up
     
     private func loadInitialViewController() {
         // access defaults
@@ -45,8 +45,6 @@ class AppController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeLoginVC, object: nil)
         // close activities if user has logged out
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeProfileVC, object: nil)
-        // MARK: Add observer: close activities feed -> show activity details
-        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .showActivityDetailsVC, object: notificationObject)
     }
     
     // MARK: View Controller Handling
@@ -60,24 +58,6 @@ class AppController: UIViewController {
         case .tabBarController:
             let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! UITabBarController
             return vc
-        case .activityDetailsVC:
-            let advc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivityDetailsViewController
-            let activity = notificationObject
-            
-            // TODO: LOAD IMAGE FIRST
-            // reconstruct Activity instance
-            if let activity = activity as? Activity {
-                var newActivity = activity as! Activity
-                newActivity.imageview?.image = UIImage(named: "smallerAppLogo")
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                dump(newActivity as! Activity)
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                advc.detailView.selectedActivity = newActivity
-                return advc
-            }
-            return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! UITabBarController
         default:
             fatalError("ERROR: Unable to find controller with storyboard id: \(id)")
         }
@@ -99,9 +79,6 @@ class AppController: UIViewController {
             switchToViewController(withID: .tabBarController)
         case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
-        case Notification.Name.showActivityDetailsVC:
-            notificationObject = notification.object
-            switchToViewController(withID: .activityDetailsVC)
         default:
             fatalError("ERROR: Unable to match notification name")
         }
