@@ -12,39 +12,35 @@ import Firebase
 import DropDown
 
 class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
-
-    // MARK: UI
+    
+    // UI
     var activitiesCollectionView: UICollectionView!
     var blurEffectView: UIVisualEffectView!
-
+    
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
-
-    // MARK: Filter DropDown
+    
+    // Filter DropDown
     let whenDropDown = DropDown()
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
-
-    // MARK: Data
+    
+    // Data
     let firebaseClient = FirebaseClient.sharedInstance
     let teamID = FirebaseClient.sharedInstance.teamID
     let slackID = FirebaseClient.sharedInstance.slackID
     var activities = [Activity]()
     var selectedActivity: Activity?
-
-    override func viewWillAppear(_ animated: Bool) {
-        viewDidLoad()
-    }
-
+    
     // TODO: Figure out "Feed Refresh" -> Pull Down & RECURSIVE CALL FOR ACTIVITY BATCH OF SIZE (10)
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // TODO1: Use Blur In Segue
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
+        
         // MARK: Navigation Setup
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
@@ -55,37 +51,37 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
-
-        // MARK: REFACTORED -> do we need this?
+        
+        // REFACTORED -> do we need this?
         // let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
         // self.detailView = ActivityDetailsView(frame: frame)
-
-        // MARK: DropDown Setup
+        
+        // DropDown Setup
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
-
+        
         createLayout()
-
+        
         // MARK: Get user info from Slack -> retrieve activities list from Firebase
         SlackAPIClient.storeUserInfo() { success in
-
+            
             FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
                 DispatchQueue.main.async {
-
+                    
                     print("We're here")
-
+                    
                     self.activities = activities
                     self.activitiesCollectionView.reloadData()
                 }
             }
         }
-
-        // MARK: Upload user info to Firebase
+        
+        // Upload user info to Firebase
         FirebaseClient.writeUserInfo()
-
-        // MARK: Filter activities via "Filter" DropDown
+        
+        // Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in
-
+            
             if index == 0 {
                 FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
                     DispatchQueue.main.async {
@@ -94,7 +90,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     }
                 }
             }
-
+            
             if index == 1 {
                 FirebaseClient.retrieveActivities(with: self.filterTodayActivities) { [unowned self] activities in
                     DispatchQueue.main.async {
@@ -103,7 +99,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     }
                 }
             }
-
+            
             if index == 2 {
                 FirebaseClient.retrieveActivities(with: self.filterWeekActivities) { [unowned self] activities in
                     DispatchQueue.main.async {
@@ -112,7 +108,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     }
                 }
             }
-
+            
             if index == 3 {
                 FirebaseClient.retrieveActivities(with: self.filterMonthActivities) { [unowned self] activities in
                     DispatchQueue.main.async {
@@ -122,12 +118,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 }
             }
         }
-
+        
     }
-
-    // MARK: Self-explanatory func
+    
+    // Self-explanatory func
     func createLayout() {
-
+        
         view.backgroundColor = UIColor.black
         view.addSubview(activitiesCollectionView)
         activitiesCollectionView.snp.makeConstraints { (make) in
@@ -136,16 +132,16 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
         }
-
+        
     }
-
-    // MAR: Setup cells
+    
+    // Setup cells
     func setUpActivityCollectionCells() {
-
+        
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
-
+        
         //setup Layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.vertical
@@ -155,147 +151,88 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         activitiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         activitiesCollectionView.dataSource = self
         activitiesCollectionView.delegate = self
-
+        
         activitiesCollectionView.register(ActivitiesCollectionViewCell.self, forCellWithReuseIdentifier: "activityCollectionCell")
         activitiesCollectionView.isUserInteractionEnabled = true
-
+        
     }
-
-    // MARK: Number of cells
+    
+    // Number of cells
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
+        
         return activities.count
-
+        
     }
-
-    // MARK: CellForItemAt
+    
+    // CellForItemAt
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        var activity = self.activities[indexPath.row]
-
+        
+        let activity = self.activities[indexPath.row]
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityCollectionCell", for: indexPath) as! ActivitiesCollectionViewCell
-
+        
+        // set delegate to allow attendee table view access
         if cell.delegate == nil { cell.delegate = self }
-
-        // TODO: REMOVE --> Move cell update to cell
-        OperationQueue.main.addOperation {
-            cell.updateCell(with: activity)
-
-            cell.downloadImage(at: activity.image, completion: { (success, image) in
-                DispatchQueue.main.async {
-                    cell.activityImageView.image = image
-                    activity.imageview?.image = image
-                    cell.setNeedsLayout()
-                }
-            })
-
+        
+        cell.updateCell(with: activity) { (success) in
+            cell.downloadAttendeeImages(activity: activity)
+            cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
         }
+        
         return cell
     }
-
-    // MARK: DidSelectItemAt -> Show take user to ActivityDetails -> Move logic there
+    
+    // DidSelectItemAt -> Show take user to ActivityDetails -> Move logic there
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         self.selectedActivity = self.activities[indexPath.row]
-
-        // TODO: Fix Activity details functionality
-
-        // MARK: Notify App Controller ~ show Activity Details
-        NotificationCenter.default.post(name: .showActivityDetailsVC, object: self.activities[indexPath.row])
-
-        // MARK: REFACTORED -> do we need this? I set up an initial view controller switch from our feed to activity details using notifications (see above)
-        // However, I encountered a few errors when trying to pass the selected activity as a notification object and never got around to finishing it
-
-        // let activitiesRef = ref.child(teamID).child("activities").child((selectedActivity?.id)!)
-        // activitiesRef.observeSingleEvent(of: .value, with: { (snapshot) in
-        //
-        // self.selectedActivity = Activity(snapshot: snapshot)
-        //
-        //     self.detailView.selectedActivity = self.selectedActivity
-        //
-        //     OperationQueue.main.addOperation {
-        //
-        //     if self.detailView.selectedActivity.owner == self.slackID {
-        //
-        //     self.detailView.editButton.isHidden = false
-        //     self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
-        //     self.detailView.joinButton.isHidden = true
-        //
-        //     } else {
-        //
-        //     self.detailView.editButton.isHidden = true
-        //         if self.detailView.selectedActivity.attendees.keys.contains(self.slackID) {
-        //             self.detailView.joinButton.setTitle("Leave", for: .normal)
-        //
-        //
-        //         } else {
-        //
-        //             self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
-        //
-        //         }
-        //         self.detailView.joinButton.addTarget(self, action: #selector(self.joinOrLeaveToActivity), for: .allTouchEvents)
-        //
-        //                 }
-        //
-        //             }
-        //
-        //         })
-        //
-        //     self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
-        //
-        //         self.view.addSubview(self.blurEffectView)
-        //
-        //         self.view.addSubview(self.detailView)
-        //
-        //
-        // self.detailView.alpha = 0
-        // UIView.animate(withDuration: 0.4 , animations: {
-        //     self.detailView.transform = CGAffineTransform(scaleX: 1, y: 1)
-        //     self.detailView.alpha = 1
-        // });
-
+        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "activity-details-view-controller") as! ActivityDetailsViewController
+        destination.selectedActivity = self.selectedActivity
+        
+        self.present(destination, animated: true, completion: nil)
+        
     }
-
-    // MARK: Filter Button ~ show DropDown
+    
+    // Filter Button ~ show DropDown
     @IBAction func filterWhenAction(_ sender: Any) {
         whenDropDown.show()
     }
-
-    // MARK: Setup DropDown
+    
+    // Setup DropDown
     func setUpWhenBarDropDown() {
-
+        
         whenDropDown.anchorView = filterWhenOutlet
         whenDropDown.dataSource = [
-
+            
             "All",
             "Today",
             "This Week",
             "This Month",
-
+            
         ]
-
+        
         whenDropDown.bottomOffset = CGPoint(x: 0, y:(whenDropDown.anchorView?.plainView.bounds.height)!)
         whenDropDown.backgroundColor = UIColor(red: 25/255, green: 15/255, blue: 8/255, alpha: 0.7)
         whenDropDown.textColor = UIColor.white
         whenDropDown.cornerRadius = 10
         whenDropDown.selectionBackgroundColor = UIColor.orange
         whenDropDown.width = 140
-
-
+        
+        
     }
-
-    // MARK: Segue to Add ActivityVC, ActivityDetailsVC
+    
+    // Segue to Add ActivityVC, ActivityDetailsVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editActivity" {
             let dest = segue.destination as! AddActivityController
             dest.selectedActivity = self.selectedActivity
         }
     }
-
-
-
-    // MARK: REFACTORED -> do we need this *here*? I moved this to ActivityDetailsViewController (which reference ActivityDetailsView, which in turn references the .xib)
-
+    
+    
+    
+    // REFACTORED -> do we need this *here*? I moved this to ActivityDetailsViewController (which reference ActivityDetailsView, which in turn references the .xib)
+    
     // func joinOrLeaveToActivity() {
     //
     //     UIView.animate(withDuration: 0.3, animations: {
@@ -329,21 +266,21 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
 // MARK: Activities Delegate ~ Present Attendees VC
 extension ActivitiesViewController: ActivitiesDelegate {
-
+    
     func attendeesTapped(sender: ActivitiesCollectionViewCell) {
-
+        
         guard let indexPathForCell = activitiesCollectionView.indexPath(for: sender) else { return }
         let activity = self.activities[indexPathForCell.row]
         let userTableView = UsersTableViewController()
         userTableView.selectedActivity = activity
         userTableView.userArray = sender.users
-
+        
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
         self.present(navController, animated: true, completion: nil)
-
+        
     }
-
+    
     func dismissController() {
         self.dismiss(animated: false, completion: nil)
     }

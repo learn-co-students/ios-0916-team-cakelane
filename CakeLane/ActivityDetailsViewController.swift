@@ -14,6 +14,7 @@ class ActivityDetailsViewController: UIViewController {
     let firebaseClient = FirebaseClient.sharedInstance
     let slackID = FirebaseClient.sharedInstance.slackID
     let teamID = FirebaseClient.sharedInstance.teamID
+    var selectedActivity: Activity?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,48 +26,48 @@ class ActivityDetailsViewController: UIViewController {
         self.detailView = ActivityDetailsView(frame: frame)
         
         
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.detailView.selectedActivity?.id)!)
-        activitiesRef.observe(.value, with: { (snapshot) in
-            
-            self.detailView.selectedActivity = Activity(snapshot: snapshot)
-            
-            self.detailView.downloadImage(at: (self.detailView.selectedActivity?.image)!, completion: { (success, image) in
-                
-                self.detailView.selectedActivity?.imageview?.image = image
-                
-                OperationQueue.main.addOperation {
-                    if self.detailView.selectedActivity.owner == self.slackID {
-                        self.detailView.editButton.isHidden = false
-                        self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
-                        self.detailView.joinButton.isHidden = true
-                    } else {
-                        
-                        self.detailView.editButton.isHidden = true
-                        if self.detailView.selectedActivity.attendees.keys.contains(self.slackID) {
-                            self.detailView.joinButton.setTitle("Leave", for: .normal)
-                            
-                            
-                        } else {
-                            
-                            self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
-                            
-                        }
-                        self.detailView.joinButton.addTarget(self, action: #selector(self.joinOrLeaveToActivity), for: .allTouchEvents)
-                        
-                    }
-                    
-                }
-                
-            })
+//        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.detailView.selectedActivity?.id)!)
+//        activitiesRef.observe(.value, with: { (snapshot) in
+//            
+//            self.detailView.selectedActivity = Activity(snapshot: snapshot)
+//            
+//            self.detailView.downloadImage(at: (self.detailView.selectedActivity?.image)!, completion: { (success, image) in
+//                
+//                self.detailView.selectedActivity?.imageview?.image = image
+//                
+//                OperationQueue.main.addOperation {
+//                    if self.detailView.selectedActivity.owner == self.slackID {
+//                        self.detailView.editButton.isHidden = false
+//                        self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
+//                        self.detailView.joinButton.isHidden = true
+//                    } else {
+//                        
+//                        self.detailView.editButton.isHidden = true
+//                        if self.detailView.selectedActivity.attendees.keys.contains(self.slackID) {
+//                            self.detailView.joinButton.setTitle("Leave", for: .normal)
+//                            
+//                            
+//                        } else {
+//                            
+//                            self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
+//                            
+//                        }
+//                        self.detailView.joinButton.addTarget(self, action: #selector(self.joinOrLeaveToActivity), for: .allTouchEvents)
+//                        
+//                    }
+//                    
+//                }
+//                
+//            })
             // FIX LINES 62 & 77
 //            self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
             
 //            self.view.addSubview(self.blurEffectView)
             
-            self.view.addSubview(self.detailView)
-            
-        })
         
+            
+//        })
+        self.view.addSubview(self.detailView)
         self.detailView.alpha = 0
         UIView.animate(withDuration: 0.4 , animations: {
             self.detailView.transform = CGAffineTransform(scaleX: 1, y: 1)
