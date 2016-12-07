@@ -205,19 +205,16 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     
     func fillTextFields(with selectedActivity: Activity) {
-
+        self.isEdit = true
         self.activityName.text = selectedActivity.name
         
         self.activityDate.text = selectedActivity.date
         
         self.activityLocation.text = selectedActivity.location
-
-        DispatchQueue.main.async {
-            self.activityImage.image = selectedActivity.imageview?.image
-        }
+        self.activityImage.sd_setImage(with: URL(string: selectedActivity.image))
         self.descriptionTextView.textColor = UIColor.black
         self.descriptionTextView.text = selectedActivity.description
-        self.isEdit = true
+        
 
     }
     

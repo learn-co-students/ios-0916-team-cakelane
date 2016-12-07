@@ -58,7 +58,7 @@ class ActivityDetailsView: UIView {
         self.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.constrainEdges(to: self)
-        contentView.backgroundColor = UIColor(red: 25/255, green: 15/255, blue: 8/255, alpha: 0.5)
+        contentView.backgroundColor = UIColor.black
         setupImageView()
         setupCloseButton()
         setupEditButton()
@@ -104,7 +104,7 @@ class ActivityDetailsView: UIView {
         self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: +5).isActive = true
         self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.06, constant: 0.0).isActive = true
         self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
-        let image = UIImage(named: "Edit2")?.tint(color: .orange)
+        let image = UIImage(named: "Edit1")?.tint(color: .black)
         self.editButton.setImage(image, for: .normal)
 
     }

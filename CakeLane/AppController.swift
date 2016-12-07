@@ -31,7 +31,7 @@ class AppController: UIViewController {
     private func loadInitialViewController() {
         // access defaults
         // NOTE: token is stored as Optional value
-        if defaults.object(forKey: "SlackToken") == nil {
+        if defaults.object(forKey: "slackToken") == nil {
             actingViewController = loadViewController(withID: .loginVC)
         } else {
             actingViewController = loadViewController(withID: .tabBarController)

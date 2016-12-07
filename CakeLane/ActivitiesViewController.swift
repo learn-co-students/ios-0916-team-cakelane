@@ -15,7 +15,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     
     // UI
     var activitiesCollectionView: UICollectionView!
-    var blurEffectView: UIVisualEffectView!
+    
     
     var isAnimating: Bool = false
     var dropDownViewIsDisplayed: Bool = false
@@ -34,13 +34,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     // TODO: Figure out "Feed Refresh" -> Pull Down & RECURSIVE CALL FOR ACTIVITY BATCH OF SIZE (10)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO1: Use Blur In Segue
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+                
         // MARK: Navigation Setup
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
@@ -221,14 +215,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         
     }
     
-    // Segue to Add ActivityVC, ActivityDetailsVC
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "editActivity" {
-            let dest = segue.destination as! AddActivityController
-            dest.selectedActivity = self.selectedActivity
-        }
-    }
-    
+        
     
     
     // REFACTORED -> do we need this *here*? I moved this to ActivityDetailsViewController (which reference ActivityDetailsView, which in turn references the .xib)

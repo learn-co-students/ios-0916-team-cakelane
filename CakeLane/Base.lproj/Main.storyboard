@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -40,7 +40,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="filterWhenOutlet" destination="AxB-uL-Kv7" id="EtY-BS-LCo"/>
-                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="syk-oJ-9ee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -431,6 +430,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="i6y-w7-K20"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vN6-1y-xSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -529,6 +531,6 @@
         <image name="ic_face" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UYe-1B-Ing"/>
+        <segue reference="i6y-w7-K20"/>
     </inferredMetricsTieBreakers>
 </document>
