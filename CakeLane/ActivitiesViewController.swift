@@ -56,10 +56,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 //                }
 
         // TODO1: Use Blur In Segue
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        var blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+//        blurEffect = UIVisualEffectView(effect: blurEffect)
+//        blurEffect.frame = view.bounds
+//        blurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         // MARK: Navigation Setup
         navigationItem.title = "Teem!"
