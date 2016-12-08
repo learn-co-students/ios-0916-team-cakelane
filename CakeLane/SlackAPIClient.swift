@@ -41,22 +41,20 @@ class SlackAPIClient {
         Alamofire.request(url, method: .post).responseJSON { response in
             guard let JSON = response.result.value else { completion(nil); return }
             let completeJSON = JSON as! [String:Any]
-            let channels = completeJSON["channels"] as! [[String:Any]]
-            for (index,value) in channels.enumerated() {
-//                print("\n\n\nThis is the index:\(index) \n& this is the value: \(value)")
-                guard let channelName = value["name"] as? String else { return }
-                guard let channelID = value["id"] as? String else { return }
-                print("\n\n\nThis is the channelName:  \(channelName),\nand this is the ID: \(channelID)")
-                if channelName == "teem_activities" {
-                    teamStore.teamInfo["channelName"] = channelName
-                    teamStore.teamInfo["channelID"] = channelID
-                }
-                            //            for index in value.enumerated() {
-                            //
-                            //            }
-            }
-            print("\n\n\nThis is the TeamStore Dictionary!!:  \(teamStore.teamInfo)")
+//            let channels = completeJSON["channels"] as! [[String:Any]]
+//            for (_,value) in channels.enumerated() {
+//                //                print("\n\n\nThis is the index:\(index) \n& this is the value: \(value)")
+//                guard let channelName = value["name"] as? String else { return }
+//                guard let channelID = value["id"] as? String else { return }
+//                print("\n\n\nThis is the channelName:  \(channelName),\nand this is the ID: \(channelID)")
+//                if channelName == "teem_activities" {
+//                    teamStore.teamInfo["channelName"] = channelName
+//                    teamStore.teamInfo["channelID"] = channelID
+//                }
+//            }
+//            print("\n\n\nThis is the TeamStore Dictionary!!:  \(teamStore.teamInfo)")
 //            print("\n\n\nTHIS IS THE GET CHANNELS LIST API CALL RESPONSE!!! ++++++++++\n\n\(channels)\n\n\n\n")
+            teamStore.getTeemChannel(with: completeJSON)
             completion(completeJSON)
         }
     }

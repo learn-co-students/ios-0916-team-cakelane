@@ -15,21 +15,22 @@ class TeamDataStore {
     fileprivate init() {}
     
     var teamInfo: [String:Any] = [:]
+    var channelListJSON: [[String:Any]] = [[:]]
+    var teemChannelName: String = ""
+    var teemChannelID: String = ""
     
-//    var channelListDict: [[String:Any]] = [[:]]
-    
-    var teemChannel: String = ""
-    
-//    public func getTeemChannel(with dictionary: [[String:Any]]) -> String {
-//        
-//        for (index,value) in dictionary.enumerated() {
-//            print("This is the index:\(index) & this is the \(value)")
-//            //            for index in value.enumerated() {
-//            //
-//            //            }
-//        }
-//        
-//        return ""
-//    }
-    
+    internal func getTeemChannel(with dictionary: [String:Any]) {
+        let channels = dictionary["channels"] as! [[String:Any]]
+        for (_,value) in channels.enumerated() {
+//            print("\n\n\nThis is the index:\(index) \n& this is the value: \(value)")
+            guard let channelName = value["name"] as? String else { return }
+            guard let channelID = value["id"] as? String else { return }
+            print("\n\n\nThis is the channelName:  \(channelName),\nand this is the ID: \(channelID)")
+            if channelName == "teem_activities" {
+                self.teamInfo["channelName"] = channelName
+                self.teamInfo["channelID"] = channelID
+            }
+        }
+        print("\n\n\nThis is the TeamStore Dictionary!!:  \(self.teamInfo)")
+    }
 }

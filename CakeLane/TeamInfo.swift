@@ -17,6 +17,7 @@ struct TeamInfo {
     let emailDomain: String?       // Not sure how to use this right now
     let teemChannel: String?
     let teemChannelID: String?
+    let teemChannelPurpose: String?
     let webhook: String?
     
     init(dictionary: [String: Any]?) {
@@ -26,16 +27,18 @@ struct TeamInfo {
         emailDomain = dictionary?["email_domain"] as? String
         teemChannel = "**No Team Channel Set**"
         teemChannelID = "**No Team Channel ID Set**"
+        teemChannelPurpose = "A channel for all the cool activities everyone is creating through Teem!  Download it here: https://goo.gl/SIAHLa"
         webhook = "**No Team Webhook Set**"
     }
     
-    init(id: String, name: String, domain: String, emailDomain: String, teemChannel: String, teemChannelID: String, webhook: String) {
+    init(id: String, name: String, domain: String, emailDomain: String, teemChannel: String, teemChannelID: String, teemChannelPurpose: String, webhook: String) {
         self.id = id
         self.name = name
         self.domain = domain
         self.emailDomain = emailDomain
         self.teemChannel = teemChannel
         self.teemChannelID = teemChannelID
+        self.teemChannelPurpose = teemChannelPurpose
         self.webhook = webhook
     }
     
@@ -47,6 +50,7 @@ struct TeamInfo {
         teamParameters["emailDomain"] = emailDomain
         teamParameters["teemChannel"] = teemChannel
         teamParameters["teemChannelID"] = teemChannelID
+        teamParameters["teemChannelPurpose"] = teemChannelPurpose
         teamParameters["webhook"] = webhook
         return teamParameters
     }
