@@ -179,11 +179,19 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         if cell.delegate == nil { cell.delegate = self }
         
         cell.updateCell(with: activity) { (success) in
+            
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
+            
             // load attendee images
             cell.downloadAttendeeImages(activity: activity)
-            
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print(cell.arrayOfImages)
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print(cell.users)
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
         }
         
         return cell
@@ -195,6 +203,13 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.selectedActivity = self.activities[indexPath.row]
         let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "activity-details-view-controller") as! ActivityDetailsViewController
         destination.selectedActivity = self.selectedActivity
+        
+        let cell = self.activitiesCollectionView.cellForItem(at: indexPath) as! ActivitiesCollectionViewCell
+        OperationQueue.main.addOperation {
+            // overwrite Firebase data store for selected activity ~ use in activity details, users table view
+            FirebaseUsersDataStore.sharedInstance.users = cell.users
+            FirebaseUsersDataStore.sharedInstance.userImages = cell.arrayOfImages
+        }
         
         self.present(destination, animated: true, completion: nil)
         
@@ -236,39 +251,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    
-    
-    // REFACTORED -> do we need this *here*? I moved this to ActivityDetailsViewController (which reference ActivityDetailsView, which in turn references the .xib)
-    
-    // func joinOrLeaveToActivity() {
-    //
-    //     UIView.animate(withDuration: 0.3, animations: {
-    //         self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-    //
-    //     }, completion: { (success) in
-    //         self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-    //
-    //     })
-    //
-    //
-    //     let key = self.selectedActivity?.id ?? ""
-    //     let date = self.selectedActivity?.date ?? String(describing: Date())
-    //     let newAttendingUser = [slackID:true]
-    //     let newAttendingActivity: [String:String] = [key:date]
-    //
-    //     if self.detailView.joinButton.titleLabel?.text == "Join Us!!!" {
-    //     self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
-    //
-    //         self.ref.child(teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
-    //         self.detailView.joinButton.setTitle("Leave", for: .normal)
-    //     } else {
-    //
-    //     self.ref.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
-    //
-    //         self.ref.child(teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
-    //       //  self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
-    //     }
-    // }
 }
 
 // MARK: Activities Delegate ~ Present Attendees VC
@@ -281,6 +263,12 @@ extension ActivitiesViewController: ActivitiesDelegate {
         let userTableView = UsersTableViewController()
         userTableView.selectedActivity = activity
         userTableView.userArray = sender.users
+        
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print(sender.users)
+        print("\n\n$$$$$$$$$$$$$$$$$$$$$$$$$\n\n")
+        print(userTableView.userArray)
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$")
         
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))

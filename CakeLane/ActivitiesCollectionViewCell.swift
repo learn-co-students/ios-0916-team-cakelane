@@ -29,8 +29,11 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     var secondProfileImage = UIImageView()
     var thirdProfileImage = UIImageView()
     let ref = FIRDatabase.database().reference()
-    var users = [User]()
     var placeholderImage = true
+    
+    // Each cell (activity) has an array of attending users and their corresponding images (same indices for both arrays)
+    var users = [User]()
+    var arrayOfImages = [UIImage]()
     
     var delegate: ActivitiesDelegate?
     
@@ -209,38 +212,23 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     func downloadAttendeeImages(activity: Activity) {
         
-        var arrayOfImages = [UIImage]()
-        
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-            arrayOfImages = images
-            FirebaseUsersDataStore.sharedInstance.users = users
+            self.arrayOfImages = images
+            self.users = users
         }
-        
-        if arrayOfImages.count == 1 {
-            self.firstProfileImage.image = arrayOfImages[0]
-        } else if arrayOfImages.count == 2 {
-            self.firstProfileImage.image = arrayOfImages[0]
-            self.secondProfileImage.image = arrayOfImages[1]
-        } else if arrayOfImages.count >= 3 {
-            self.firstProfileImage.image = arrayOfImages[0]
-            self.secondProfileImage.image = arrayOfImages[1]
-            self.thirdProfileImage.image = arrayOfImages[2]
+        DispatchQueue.main.async {
+            if self.arrayOfImages.count == 1 {
+                self.firstProfileImage.image = self.arrayOfImages[0]
+            } else if self.arrayOfImages.count == 2 {
+                self.firstProfileImage.image = self.arrayOfImages[0]
+                self.secondProfileImage.image = self.arrayOfImages[1]
+            } else if self.arrayOfImages.count >= 3 {
+                self.firstProfileImage.image = self.arrayOfImages[0]
+                self.secondProfileImage.image = self.arrayOfImages[1]
+                self.thirdProfileImage.image = self.arrayOfImages[2]
+            }
         }
         
     }
-    
-//    // download user info & populate users array
-//    func downloadAttendeeInfo(for activity: Activity) {
-//        for eachUser in activity.attendees.keys {
-//            // insert attendee listener here
-//            FirebaseClient.retrieveInfoDictionary(for: eachUser, with: { (dict) in
-//                
-//                // initialize user
-//                let user = User(snapShot: dict)
-//                self.users.append(user)
-//                
-//            })
-//        }
-//    }
     
 }
