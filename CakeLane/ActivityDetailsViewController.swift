@@ -7,107 +7,161 @@
 //
 
 import UIKit
+import Firebase
 
 class ActivityDetailsViewController: UIViewController {
-
+    
     var detailView: ActivityDetailsView!
     let firebaseClient = FirebaseClient.sharedInstance
     let slackID = FirebaseClient.sharedInstance.slackID
     let teamID = FirebaseClient.sharedInstance.teamID
+    var selectedActivity: Activity?
+    var attendies = [String:Bool]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
-        // MARK: Set frame for Activity Details View
-        let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
+        self.detailView = ActivityDetailsView(frame: self.view.frame)
+        self.view.addSubview(self.detailView)
+        detailView.delegate = self
+        checkIfOwner()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
-        // MARK: Instantiate Activity Details View
-        self.detailView = ActivityDetailsView(frame: frame)
+        super.viewWillAppear(true)
+        checkIfOwner()
         
+    }
+    
+    // check if the user is the owner and update the view with the suitable buttons
+    func checkIfOwner() {
         
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.detailView.selectedActivity?.id)!)
+        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
         activitiesRef.observe(.value, with: { (snapshot) in
             
             self.detailView.selectedActivity = Activity(snapshot: snapshot)
+            self.attendies = self.detailView.selectedActivity.attendees
             
-            self.detailView.downloadImage(at: (self.detailView.selectedActivity?.image)!, completion: { (success, image) in
+            if self.detailView.selectedActivity.owner == self.slackID {
+                self.detailView.editButton.isHidden = false
+                self.detailView.joinButton.isHidden = true
+            } else {
                 
-                self.detailView.selectedActivity?.imageview?.image = image
-                
-                OperationQueue.main.addOperation {
-                    if self.detailView.selectedActivity.owner == self.slackID {
-                        self.detailView.editButton.isHidden = false
-                        self.detailView.editButton.addTarget(self, action: #selector(self.editSelectedActivity), for: .allTouchEvents)
-                        self.detailView.joinButton.isHidden = true
-                    } else {
-                        
-                        self.detailView.editButton.isHidden = true
-                        if self.detailView.selectedActivity.attendees.keys.contains(self.slackID) {
-                            self.detailView.joinButton.setTitle("Leave", for: .normal)
-                            
-                            
-                        } else {
-                            
-                            self.detailView.joinButton.setTitle("Join Us!!!", for: .normal)
-                            
-                        }
-                        self.detailView.joinButton.addTarget(self, action: #selector(self.joinOrLeaveToActivity), for: .allTouchEvents)
-                        
-                    }
-                    
-                }
-                
-            })
-            // FIX LINES 62 & 77
-//            self.detailView.closeButton.addTarget(self, action: #selector(self.dismissView), for: .allTouchEvents)
-            
-//            self.view.addSubview(self.blurEffectView)
-            
-            self.view.addSubview(self.detailView)
+                self.detailView.editButton.isHidden = true
+                self.detailView.joinButton.isHidden = false
+            }
             
         })
-        
-        self.detailView.alpha = 0
-        UIView.animate(withDuration: 0.4 , animations: {
-            self.detailView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.detailView.alpha = 1
-        });
     }
-
-//    // MARK: Dismiss View
-//    func dismissView() {
-//        UIView.transition(with: self.activitiesCollectionView, duration: 0.8, options: .transitionCrossDissolve, animations:{
-//            self.blurEffectView.removeFromSuperview()
-//            self.detailView.removeFromSuperview()
-//            self.activitiesCollectionView.alpha = 1
-//        }) { _ in }
-//    }
     
-    // MARK: Edit Button takes user to Edit Activity VC
+    // go to the add activivty VC to edit the activity
     func editSelectedActivity() {
         performSegue(withIdentifier: "editActivity", sender: self)
         
     }
     
-    // MARK: Join/Leave Button
-    func joinOrLeaveToActivity() {
+    // Segue to Add ActivityVC, ActivityDetailsVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editActivity" {
+            let dest = segue.destination as! AddActivityController
+            dest.selectedActivity = self.detailView.selectedActivity
+        }
+    }
+    
+    
+    // Dismiss View
+    func dismissView() {
+        
+        dismiss(animated: true, completion: nil)
+        
+    }
+
+    // Join the user to the activity attendees and update firbase
+    func joinActivity() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            
+        }, completion: { (success) in
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+            
+        })
         
         let key = self.detailView.selectedActivity?.id ?? ""
         let date = self.detailView.selectedActivity?.date ?? String(describing: Date())
         let newAttendingUser = [slackID:true]
         let newAttendingActivity: [String:String] = [key:date]
         
-        if self.detailView.joinButton.titleLabel?.text == "Join Us!!!" {
-            self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity)
+        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity, withCompletionBlock: { error, ref in
             
-            self.firebaseClient.ref.child(firebaseClient.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
-        } else {
+            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
+                
+                self.detailView.adjustButtonTitle(isAttendee: true)
+
+            })
             
-            self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue()
-            
-            self.firebaseClient.ref.child(firebaseClient.teamID).child("activities").child(key).child("attending").child(slackID).removeValue()
-        }
+        })
+        
         
     }
+   
+    // make the user leave the activity and remove it from the firebase
+    func leaveActivity() {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            
+        }, completion: { (success) in
+            self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+            
+        })
+        
+        let key = self.detailView.selectedActivity?.id ?? ""
+        
+        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
+            
+            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
+                
+                self.detailView.adjustButtonTitle(isAttendee: false)
+
+                
+            })
+
+        })
+ 
+    }
+    
+}
+
+// MARK: - ActivityDetailDelegate Methods
+extension ActivityDetailsViewController: ActivityDetailDelegate {
+    
+    func closeButtonTapped(with sender: ActivityDetailsView) {
+        dismissView()
+    }
+    
+    func editButtonTapped(with sender: ActivityDetailsView) {
+        editSelectedActivity()
+        
+    }
+    
+    func joinButtonTapped(with sender: ActivityDetailsView) {
+        
+        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
+        
+        activitiesRef.observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
+            
+            DispatchQueue.main.async {
+                
+                self.joinActivity()
+                
+            }
+        })
+    }
+    
+    func leaveActivity(with sender: ActivityDetailsView) {
+        leaveActivity()
+    }
+    
     
 }

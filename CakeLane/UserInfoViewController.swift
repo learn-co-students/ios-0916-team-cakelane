@@ -23,6 +23,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     
     var userLabels = [String]()
     var userInfo = [String]()
+    var user = User()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         // handle Logout Button
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(promptForConfirmation))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
-        
+
         // check if user is admin ~ present different profile view options
         guard let isPrimaryOwner = defaults.string(forKey: "isPrimaryOwner") else { return }
         
@@ -60,7 +61,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
             settingsButton.isEnabled = true
         // do not show admin settings button
         } else {
-            settingsButton.isEnabled = false
+            self.navigationItem.rightBarButtonItem = nil
         }
         
         // handling profile image

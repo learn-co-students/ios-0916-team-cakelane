@@ -13,11 +13,10 @@ class AppController: UIViewController {
 
     @IBOutlet weak var containerView: UIView!
     var actingViewController: UIViewController!
-    var notificationObject: Any?
     var token: String?
     let defaults = UserDefaults.standard
     
-    // MARK: View lifecycle
+    // View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +25,12 @@ class AppController: UIViewController {
         addNotificationObservers()
     }
     
-    // MARK: Set Up
+    // Initial Set Up
     
     private func loadInitialViewController() {
         // access defaults
         // NOTE: token is stored as Optional value
-        if defaults.object(forKey: "SlackToken") == nil {
+        if defaults.object(forKey: "slackToken") == nil {
             actingViewController = loadViewController(withID: .loginVC)
         } else {
             actingViewController = loadViewController(withID: .tabBarController)
@@ -45,8 +44,6 @@ class AppController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeLoginVC, object: nil)
         // close activities if user has logged out
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeProfileVC, object: nil)
-        // MARK: Add observer: close activities feed -> show activity details
-        NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .showActivityDetailsVC, object: notificationObject)
     }
     
     // MARK: View Controller Handling
@@ -60,24 +57,6 @@ class AppController: UIViewController {
         case .tabBarController:
             let vc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! UITabBarController
             return vc
-        case .activityDetailsVC:
-            let advc = storyboard.instantiateViewController(withIdentifier: id.rawValue) as! ActivityDetailsViewController
-            let activity = notificationObject
-            
-            // TODO: LOAD IMAGE FIRST
-            // reconstruct Activity instance
-            if let activity = activity as? Activity {
-                var newActivity = activity as! Activity
-                newActivity.imageview?.image = UIImage(named: "smallerAppLogo")
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                dump(newActivity as! Activity)
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                advc.detailView.selectedActivity = newActivity
-                return advc
-            }
-            return storyboard.instantiateViewController(withIdentifier: id.rawValue) as! UITabBarController
         default:
             fatalError("ERROR: Unable to find controller with storyboard id: \(id)")
         }
@@ -99,9 +78,6 @@ class AppController: UIViewController {
             switchToViewController(withID: .tabBarController)
         case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
-        case Notification.Name.showActivityDetailsVC:
-            notificationObject = notification.object
-            switchToViewController(withID: .activityDetailsVC)
         default:
             fatalError("ERROR: Unable to match notification name")
         }
@@ -112,18 +88,21 @@ class AppController: UIViewController {
         
         let exitingViewController = actingViewController
         exitingViewController?.willMove(toParentViewController: nil)
-        
         actingViewController = loadViewController(withID: id)
         self.addChildViewController(actingViewController)
         
-        addActing(viewController: actingViewController)
-        actingViewController.view.alpha = 0
+        // REMOVE: call to addActing
+        //        addActing(viewController: actingViewController)
         
+        // TO ADD: add acting view, set frame, layout view
+        containerView.addSubview(actingViewController.view)
+        actingViewController.view.frame = containerView.bounds
+        actingViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        actingViewController.view.alpha = 0
         UIView.animate(withDuration: 0.5, animations: {
-            
             self.actingViewController.view.alpha = 1
             exitingViewController?.view.alpha = 0
-            
         }) { completed in
             exitingViewController?.view.removeFromSuperview()
             exitingViewController?.removeFromParentViewController()

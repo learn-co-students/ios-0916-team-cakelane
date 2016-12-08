@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="B1N-bQ-mRQ">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -40,7 +40,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="filterWhenOutlet" destination="AxB-uL-Kv7" id="EtY-BS-LCo"/>
-                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="syk-oJ-9ee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -325,7 +324,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dpi-tM-KtQ" id="Zkw-5o-Mgd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zp-mI-Up5">
@@ -418,7 +417,27 @@
             </objects>
             <point key="canvasLocation" x="1132" y="901"/>
         </scene>
-
+        <!--Activity Details View Controller-->
+        <scene sceneID="6op-jK-ayH">
+            <objects>
+                <viewController storyboardIdentifier="activity-details-view-controller" id="wtH-Ma-TRC" customClass="ActivityDetailsViewController" customModule="CakeLane" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="veV-oz-7ao"/>
+                        <viewControllerLayoutGuide type="bottom" id="ib0-cj-j9r"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ycE-4H-8ga">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="rBV-dQ-B5z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vN6-1y-xSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2070" y="-736"/>
+        </scene>
         <!--Detail User View Controller-->
         <scene sceneID="O7K-LK-RS7">
             <objects>
@@ -448,7 +467,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4In-OV-Ky3" id="gk2-Kx-gvZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOe-8j-leO">
@@ -502,9 +521,8 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSX-M7-g3N" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2069.5652173913045" y="-719.02173913043487"/>
+            <point key="canvasLocation" x="2977" y="-708"/>
         </scene>
-
     </scenes>
     <resources>
         <image name="appLogo" width="535" height="472"/>
@@ -513,6 +531,6 @@
         <image name="ic_face" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UYe-1B-Ing"/>
+        <segue reference="rBV-dQ-B5z"/>
     </inferredMetricsTieBreakers>
 </document>

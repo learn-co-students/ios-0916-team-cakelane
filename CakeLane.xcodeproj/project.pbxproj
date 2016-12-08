@@ -36,8 +36,8 @@
 		E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */; };
 		E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */; };
 		E5D395E51DF5D2BA00016483 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D395E41DF5D2BA00016483 /* FirebaseClient.swift */; };
-		E5D395E71DF5E8B700016483 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D395E61DF5E8B700016483 /* ActivityDetailsViewController.swift */; };
 		E5D395E91DF604DA00016483 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D395E81DF604DA00016483 /* TabBarController.swift */; };
+		E5DCB2411DF8BD9100E788D4 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCB2401DF8BD9100E788D4 /* ActivityDetailsViewController.swift */; };
 		E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */; };
 		E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */; };
 		EE688E4B4700EA0CCBD857F7 /* Pods_CakeLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */; };
@@ -79,9 +79,9 @@
 		E53B16F21DEE39C2009C84BC /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsView.swift; sourceTree = "<group>"; };
 		E5D395E41DF5D2BA00016483 /* FirebaseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
-		E5D395E61DF5E8B700016483 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		E5D395E81DF604DA00016483 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E5D504021DE353A2008452FB /* CakeLane.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CakeLane.entitlements; sourceTree = "<group>"; };
+		E5DCB2401DF8BD9100E788D4 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E5EE90A51DDE50A300A344A5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,7 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				A2ECAA871DDDED5F000E3CC6 /* Model */,
-				E53B16CC1DECCC55009C84BC /* View */,
+				E53B16CC1DECCC55009C84BC /* Views */,
 				E50D139A1DDF63CB00A3C41C /* Controllers */,
 				E5D395E31DF5D29500016483 /* Networking */,
 				E5D395EB1DF605AB00016483 /* Storage */,
@@ -166,22 +166,22 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		E53B16CC1DECCC55009C84BC /* View */ = {
+		E53B16CC1DECCC55009C84BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				72972BA91DEDD27500D3FA60 /* Main.storyboard */,
 				A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */,
 				E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */,
 			);
-			name = View;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		E53B16ED1DEE09E1009C84BC /* Activities */ = {
 			isa = PBXGroup;
 			children = (
 				A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */,
+				E5DCB2401DF8BD9100E788D4 /* ActivityDetailsViewController.swift */,
 				A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */,
-				E5D395E61DF5E8B700016483 /* ActivityDetailsViewController.swift */,
 				A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */,
 			);
 			name = Activities;
@@ -393,11 +393,11 @@
 				E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */,
 				A2F4B8D41DE4D46F00933A94 /* CoreDataStore.swift in Sources */,
 				75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */,
+				E5DCB2411DF8BD9100E788D4 /* ActivityDetailsViewController.swift in Sources */,
 				1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */,
 				A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */,
 				A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */,
 				75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */,
-				E5D395E71DF5E8B700016483 /* ActivityDetailsViewController.swift in Sources */,
 				75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */,
 				750BAAA41DF89E7D004D2184 /* TeamInfo.swift in Sources */,
 				E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */,
