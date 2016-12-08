@@ -35,6 +35,32 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
+
+        // MARK: test getTeamInfo
+//        SlackAPIClient.getTeamInfo { response in
+//            guard let teamInfoResponse = response?["team"] as? [String:Any] else { return }
+//            print("\n\n\nTHIS IS THE GETTEAMINFO COMPLETION!!! ++++++++++n\n\n\(teamInfoResponse)\n\n\n")
+//            let newTeamInfo = TeamInfo(dictionary: teamInfoResponse)
+//            let teamStore = TeamDataStore.sharedInstance
+////            teamStore.teamInfo.removeAll()
+//            teamStore.teamInfo = newTeamInfo.dictionary
+//            teamStore.teamInfo["teemChannel"] = "teem_activities"
+//            teamStore.teamInfo["webhook"] = "some webhook"
+//            print("\n\n\nTHIS IS THE TEAMSTORE DICTIONARY!!! ++++++++++\n\n\n\(teamStore.teamInfo)\n\n\n")
+//        }
+
+//        MARK: Test location for SlackAPIClient.userJoinChannel
+//                SlackAPIClient.userJoinChannel { response in
+//                    print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++n\n\n\(response)")
+//                }
+
+        // TODO1: Use Blur In Segue
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         // MARK: Navigation Setup
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
@@ -252,7 +278,7 @@ extension ActivitiesViewController: ActivitiesDelegate {
         userTableView.selectedActivity = activity
         userTableView.userArray = sender.users
 
-        
+
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
         self.present(navController, animated: true, completion: nil)
