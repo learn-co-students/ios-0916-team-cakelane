@@ -29,8 +29,19 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
         self.navigationController?.title = "Users"
         
-        createLayout()
-        setUpTableViewCells()
+        guard let activity = selectedActivity else { print("What happened?"); return }
+        
+        self.createLayout()
+        
+        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
+            
+            self.userArray = users
+            self.userImages = images
+            
+            self.usersTableView.reloadData()
+        }
+        
+        self.setUpTableViewCells()
         
     }
     
@@ -38,19 +49,6 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewWillAppear(true)
         print("selected activity")
         print(selectedActivity)
-        guard let activity = selectedActivity else { print("What happened?"); return }
-        
-        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-            
-            DispatchQueue.main.async {
-                
-                self.userArray = users
-                self.userImages = images
-                
-            }
-            
-        }
-        
         print(userImages)
         print(userArray)
     }
@@ -94,10 +92,11 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersCell", for: indexPath) as! UserTableViewCell
 
-        let user = userArray[indexPath.row]
-        
-        cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
-        
+        guard userArray.isEmpty else {
+            let user = userArray[indexPath.row]
+            cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
+            return cell
+        }
         
         return cell
     }
