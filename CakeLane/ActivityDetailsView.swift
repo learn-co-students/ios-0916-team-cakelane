@@ -41,8 +41,6 @@ class ActivityDetailsView: UIView {
         
         didSet {
             OperationQueue.main.addOperation {
-                print("@@@@@@@@@@@@@@@@@@@10")
-
                 self.activityImageView.sd_setImage(with: URL(string:self.selectedActivity.image))
                 self.nameLabel.text = self.selectedActivity.name
                 self.locationLabel.text = "  \(self.selectedActivity.location)"
@@ -75,7 +73,7 @@ class ActivityDetailsView: UIView {
         setupCloseButton()
         setupEditButton()
         setupJoinButton()
-        setupActivityOverLay()
+      //  setupActivityOverLay()
         setupLabel()
         
     }
@@ -183,7 +181,7 @@ class ActivityDetailsView: UIView {
         locationTitlelabel.textColor = UIColor.orange
         locationTitlelabel.translatesAutoresizingMaskIntoConstraints = false
         locationTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        locationTitlelabel.topAnchor.constraint(equalTo: self.activityOverlay.bottomAnchor, constant: 10).isActive = true
+        locationTitlelabel.topAnchor.constraint(equalTo: self.activityImageView.bottomAnchor, constant: 10).isActive = true
         
         
         self.contentView.addSubview(locationLabel)
