@@ -431,7 +431,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="i6y-w7-K20"/>
+
+                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="rBV-dQ-B5z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vN6-1y-xSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -531,6 +532,7 @@
         <image name="ic_face" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="i6y-w7-K20"/>
+
+        <segue reference="rBV-dQ-B5z"/>
     </inferredMetricsTieBreakers>
 </document>

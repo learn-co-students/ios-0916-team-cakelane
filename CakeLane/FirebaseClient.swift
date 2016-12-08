@@ -49,10 +49,96 @@ class FirebaseClient {
                 
                 newActivities.append(item)
             }
-            newActivities = filter(newActivities)
             
+            newActivities = filter(newActivities)
             handler(newActivities)
+            
         })
+        
+    }
+    
+    // MARK: Retreieve dictionary from Firebase for user based on their SlackID (String)
+    class func retrieveInfoDictionary(for userSlackID: String, with completion: @escaping ([String:Any])->()) {
+        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        let userRef = FirebaseClient.sharedInstance.ref.child(teamID).child("users").child(userSlackID)
+        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard let dict = snapshot.value as? [String : Any] else { print("Whats up???????"); return }
+            completion(dict)
+            
+        })
+        
+    }
+    
+    class func downloadAttendeeImagesAndInfo(for activity: Activity, with handler: @escaping ([UIImage], [User])->()) {
+        
+        var arrayOfImages: [UIImage] = []
+        var users = [User]()
+        
+        func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
+            let session = URLSession.shared
+            let newUrl = URL(string: url)
+            if let unwrappedUrl = newUrl {
+                let request = URLRequest(url: unwrappedUrl)
+                let task = session.dataTask(with: request) { (data, response, error) in
+                    guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
+                    
+                    guard let image = UIImage(data: data) else { return }
+                    completion(true, image)
+                }
+                task.resume()
+            }
+        }
+        
+        for (key, _) in activity.attendees {
+            
+            guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+            let userRef = FirebaseClient.sharedInstance.ref.child(teamID).child("users").child(key)
+            
+            retrieveInfoDictionary(for: key, with: { (dict) in
+                
+                userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+//                    print("\n\n")
+                    
+//                    print(snapshot.value.debugDescription)
+                    
+                    
+                    
+                    // initialize user
+                    let user = User(snapShot: dict)
+                    users.append(user)
+                    
+//                    print("\n\n$$$$$$$$$$$$$$$$$$$$")
+//                    print(key)
+//                    print("\n\n$$$$$$$$$$$$$$$$$$$$\n\n")
+//                    print(dict)
+//                    print("\n\n$$$$$$$$$$$$$$$$$$$$")
+                    
+                    guard let url = dict["image72"] as? String else { return }
+                    
+//                    print("\n\n#############################")
+//                    print(url)
+//                    print("\n\n#############################")
+                    
+                    downloadImage(at: url, completion: { (success, image) in
+                        
+                        arrayOfImages.append(image)
+                        
+//                        print("\n\n#############################")
+//                        print(arrayOfImages)
+//                        print("\n\n#############################")
+                        
+                    })
+                    
+                })
+                
+            })
+            
+        }
+        
+        print("We got here.")
+        handler(arrayOfImages, users)
         
     }
     

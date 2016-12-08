@@ -32,7 +32,7 @@ struct User {
     var activitiesCreated = [[String:String]]()
     var attendedActivities = [[String: String]]()
     
-    // MARK: - initializer for activity object
+    // MARK: - initializer for user object
     init(snapShot: [String:Any]) {
         self.slackID = snapShot["slackID"] as! String
         self.teamID = snapShot["teamID"] as! String
@@ -51,6 +51,7 @@ struct User {
 
     }
     
+    // duplicate (?) init
     init(dictionary: [String:Any]) {
         let slackID = dictionary["id"] as! String
         let teamID = dictionary["team_id"] as! String
@@ -98,16 +99,6 @@ struct User {
         self.isPrimaryOwner = false
     }
     
-    // MARK: - creating objects using firbase data
-  //  init(snapshot: FIRDataSnapshot) {
-        
-       // let snapshotValue = snapshot.value as! [String: Any]
-//        name = snapshotValue["name"] as! String
-//        owner = snapshotValue["owner"] as! String
-//        date = snapshotValue["date"] as! String
-        //reference = snapshot.ref
-//    }
-    
     // MARK: - create a dictionary
     func toAnyObject() -> Any {
         
@@ -124,7 +115,6 @@ struct User {
             "timeZoneLabel": timeZoneLabel
         ]
     }
-    
         
 }
 

@@ -16,7 +16,8 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var usersTableView: UITableView!
     let ref = FIRDatabase.database().reference()
     var selectedActivity: Activity?
-    var userArray = [User]()
+    var userArray = FirebaseUsersDataStore.sharedInstance.users
+    var userImages = FirebaseUsersDataStore.sharedInstance.userImages
 
     var firebaseUsersStore = FirebaseUsersDataStore.sharedInstance
     
@@ -31,39 +32,27 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         createLayout()
         setUpTableViewCells()
         
-        
-        //get all users
-//        getUsers {
-//            self.usersTableView.reloadData()
-//        }
     }
-    
-//    func getUsers(completion:()->()){
-//        print("running get users")
-//    
-//        for eachUser in (selectedActivity?.attendees.keys)! {
-//            let teamID = UserDefaults.standard.string(forKey: "teamID")
-//            let userRef = ref.child(teamID!).child("users").child(eachUser)
-//
-//            userRef.observeSingleEvent(of:.value, with: { (snapshot) in
-//                let dictionary = snapshot as! [String:Any]
-//                print(dictionary)
-//            
-//                let user = User(dictionary: dictionary)
-//                print(user)
-//                self.userArray.append(user)
-//                
-//            })
-//        }
-//        completion()
-//        
-//
-//        
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("+++++++++++++++++++++\(selectedActivity)")
+        print("selected activity")
+        print(selectedActivity)
+        guard let activity = selectedActivity else { print("What happened?"); return }
+        
+        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
+            
+            DispatchQueue.main.async {
+                
+                self.userArray = users
+                self.userImages = images
+                
+            }
+            
+        }
+        
+        print(userImages)
+        print(userArray)
     }
     
     func dismissController() {
@@ -92,61 +81,40 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         usersTableView.register(UserTableViewCell.self, forCellReuseIdentifier: "usersCell")
         usersTableView.rowHeight = 65
         
-        
     }
 
-    // MARK: - Table view data source
+    // table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
         return (selectedActivity?.attendees.count)!
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersCell", for: indexPath) as! UserTableViewCell
 
-        
         let user = userArray[indexPath.row]
         
-        downloadImage(at: user.image72) { (success, image) in
-            if success {
-                OperationQueue.main.addOperation {
-                    cell.profileImage.image = image
-                }
-            }
-        }
         cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
         
         
         return cell
     }
+
+    // segue to DetailUserViewController
     
-    
-    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
-        let session = URLSession.shared
-        let newUrl = URL(string: url)
-        if let unwrappedUrl = newUrl {
-            let request = URLRequest(url: unwrappedUrl)
-            let task = session.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
-                
-                guard let image = UIImage(data: data) else { return }
-                completion(true, image)
-            }
-            task.resume()
-        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "user-profile-view-controller") as! UserInfoViewController
+        detailVC.user = self.userArray[indexPath.row]
+        self.present(detailVC, animated: true, completion: nil)
         
     }
-
-    // TODO: Prepare for segue to DetailUserViewController
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        <#code#>
-//    }
-
+    // MARK: Update user table view cell
+    func updateUserTableViewCell() {
+        
+    }
+    
 }
