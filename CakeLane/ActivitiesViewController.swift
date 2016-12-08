@@ -54,9 +54,15 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 //        }
         
 //        MARK: Test location for SlackAPIClient.userJoinChannel
-                SlackAPIClient.userJoinChannel { response in
-                    print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++n\n\n\(response)")
-                }
+//                SlackAPIClient.userJoinChannel { response in
+//                    print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++n\n\n\(response)")
+//                }
+        //MARK: Test get channels.list
+        SlackAPIClient.getChannelsList { response in
+            guard let verifiedResponse = response else { return }
+//            let channels = verifiedResponse["channels"]
+//            print("\n\n\nTHIS IS THE CHANNELS LIST!!! ++++++++++\n\n\n\(verifiedResponse)\n\n\n")
+        }
 
         // TODO1: Use Blur In Segue
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)

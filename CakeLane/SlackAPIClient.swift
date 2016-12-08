@@ -15,7 +15,7 @@ class SlackAPIClient {
     static let store = SlackMessageStore.sharedInstance
     static let teamStore = TeamDataStore.sharedInstance
     
-    // MARK: Get user token, then POST user to join the channel specified
+    // MARK: Get user token, then POST user to join the channel specified - uses channels:write
     class func userJoinChannel(with completion: @escaping ([String: Any])->()) {
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
         let channelName = "teem_activitiesa"
@@ -29,17 +29,20 @@ class SlackAPIClient {
         }
     }
     
-    // MARK: Get channels.list from Slack
+    // MARK: Get channels.list from Slack - uses scope channels:read
     class func getChannelsList(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
+        let excludedArchive = 1 // includes archived channels, else set to 0
         
-        let urlString = "https://slack.com/api/channels.list?user=\(userID)&token=\(token)"
+        let urlString = "https://slack.com/api/channels.list?token=\(token)&excluded_archive=\(excludedArchive)"
         guard let url = URL(string: urlString) else { return }
         print(url)
-        Alamofire.request(url).responseJSON { response in
+        Alamofire.request(url, method: .post).responseJSON { response in
             guard let JSON = response.result.value else { completion(nil); return }
-            let completeJSON = JSON as! [String : Any]
+            let completeJSON = JSON as! [String:Any]
+            let channels = completeJSON["channels"] as! [[String:Any]]
+            print("\n\n\nTHIS IS THE GET CHANNELS LIST API CALL RESPONSE!!! ++++++++++\n\n\(channels)\n\n\n\n")
             completion(completeJSON)
         }
     }
@@ -61,7 +64,7 @@ class SlackAPIClient {
         }
     }
     
-    // MARK: Get Team.info from Slack
+    // MARK: Get Team.info from Slack - uses scope team:read
     class func getTeamInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
@@ -114,9 +117,6 @@ class SlackAPIClient {
         }
         
     }
-    
-    
-    
     
     class func getAllUsersInfo(with completion: @escaping ([String: Any])->()) {
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
