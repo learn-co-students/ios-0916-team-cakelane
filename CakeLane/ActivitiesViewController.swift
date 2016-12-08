@@ -55,12 +55,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 //                    print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++n\n\n\(response)")
 //                }
 
-        // TODO1: Use Blur In Segue
-//        var blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-//        blurEffect = UIVisualEffectView(effect: blurEffect)
-//        blurEffect.frame = view.bounds
-//        blurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
         // MARK: Navigation Setup
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
@@ -71,10 +65,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
-
-        // REFACTORED -> do we need this?
-        // let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
-        // self.detailView = ActivityDetailsView(frame: frame)
 
         // DropDown Setup
         setUpWhenBarDropDown()
@@ -99,9 +89,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 }
             }
         }
-
-        // Upload user info to Firebase
-        //  FirebaseClient.writeUserInfo()
 
         // Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in

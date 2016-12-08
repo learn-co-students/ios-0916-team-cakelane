@@ -47,7 +47,6 @@ struct User {
         self.isAdmin = snapShot["isAdmin"] as! Bool
         self.isOwner = false
         self.isPrimaryOwner = false
-        
 
     }
     

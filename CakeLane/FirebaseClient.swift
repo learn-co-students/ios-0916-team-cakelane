@@ -23,11 +23,6 @@ class FirebaseClient {
         
         // access userProfile from singleton (passed from SlacAPIClient)
         let userProfile = FirebaseUsersDataStore.sharedInstance.primaryUser
-        
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-        print(userProfile)
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-        
         let reference = FirebaseClient.sharedInstance.ref
         
         reference.child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
