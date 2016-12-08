@@ -48,10 +48,6 @@ class ActivityDetailsViewController: UIViewController {
 
             self.detailView.selectedActivity = Activity(snapshot: snapshot)
             self.editedActivity = self.detailView.selectedActivity
-            
-            let activity = snapshot.value as! [String:Any]
-            
-            print("@@@@@@@@@@@@@@@@@@@9 \(activity.count)")
 
             self.attendies = self.detailView.selectedActivity.attendees
 
