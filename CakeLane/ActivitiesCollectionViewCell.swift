@@ -218,8 +218,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
                 
                 OperationQueue.main.addOperation {
                 
-                
+                // CRASHES WHEN YOU ADD A NEW ACTIVITY: MOVE USER INIT TO END OF IF/ELSE CHAIN + DO EXTRA WORK
                 let dict = snapshot.value as! [String:Any]
+                
                 // initialize user
                 let user = User(snapShot: dict)
                 self.users.append(user)
