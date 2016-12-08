@@ -106,12 +106,21 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
                         
         if self.isEdit {
             // 3- if the user is editing the activity we will update the value of the activity with the new info
-            
+                       print("@@@@@@@@@@@@@@@@@@@1")
+            //            print(newactivity)
+
          self.databaseReference.child(self.teamID).child("activities").child((self.selectedActivity?.id!)!).updateChildValues(newActivity.toAnyObject() as! [AnyHashable : Any])
+            let newAttendingUser = [self.slackID:true]
+
+            self.databaseReference.child(self.teamID).child("activities").child((self.selectedActivity?.id!)!).child("attending").updateChildValues(newAttendingUser)
             
+            print("@@@@@@@@@@@@@@@@@@@2")
+
             // 4- if the user is editing the activity we will update the value of the activity created by the user with the new info
 
             self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").updateChildValues([(self.selectedActivity?.id!)!:date])
+            print("@@@@@@@@@@@@@@@@@@@3")
+
                     }
             // 5- if the user not updating the activity and creating a new one
             else {
@@ -145,6 +154,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
             }
         }
         // dismiss the view after saving the activity
+        print("@@@@@@@@@@@@@@@@@@@4")
+
         dismiss(animated: true, completion: nil)
 
     }

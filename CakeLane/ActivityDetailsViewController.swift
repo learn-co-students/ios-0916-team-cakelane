@@ -16,6 +16,7 @@ class ActivityDetailsViewController: UIViewController {
     let slackID = FirebaseClient.sharedInstance.slackID
     let teamID = FirebaseClient.sharedInstance.teamID
     var selectedActivity: Activity?
+    var editedActivity: Activity?
     var attendies = [String:Bool]()
 
     override func viewDidLoad() {
@@ -28,8 +29,11 @@ class ActivityDetailsViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        print("@@@@@@@@@@@@@@@@@@@6")
 
         super.viewWillAppear(true)
+        print("@@@@@@@@@@@@@@@@@@@7")
+
         checkIfOwner()
 
     }
@@ -38,10 +42,17 @@ class ActivityDetailsViewController: UIViewController {
     func checkIfOwner() {
 
         let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
+        print("@@@@@@@@@@@@@@@@@@@8")
 
         activitiesRef.observe(.value, with: { (snapshot) in
 
             self.detailView.selectedActivity = Activity(snapshot: snapshot)
+            self.editedActivity = self.detailView.selectedActivity
+            
+            let activity = snapshot.value as! [String:Any]
+            
+            print("@@@@@@@@@@@@@@@@@@@9 \(activity.count)")
+
             self.attendies = self.detailView.selectedActivity.attendees
 
             if self.detailView.selectedActivity.owner == self.slackID {
@@ -66,7 +77,7 @@ class ActivityDetailsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editActivity" {
             let dest = segue.destination as! AddActivityController
-            dest.selectedActivity = self.detailView.selectedActivity
+            dest.selectedActivity = self.editedActivity
         }
     }
 
@@ -181,35 +192,3 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
 
 }
 
-// MARK: - ActivityDetailDelegate Methods
-extension ActivityDetailsViewController: ActivityDetailDelegate {
-
-    func closeButtonTapped(with sender: ActivityDetailsView) {
-        dismissView()
-    }
-
-    func editButtonTapped(with sender: ActivityDetailsView) {
-        editSelectedActivity()
-
-    }
-
-    func joinButtonTapped(with sender: ActivityDetailsView) {
-
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
-
-        activitiesRef.observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
-
-            DispatchQueue.main.async {
-
-                self.joinActivity()
-
-            }
-        })
-    }
-
-    func leaveActivity(with sender: ActivityDetailsView) {
-        leaveActivity()
-    }
-
-
-}

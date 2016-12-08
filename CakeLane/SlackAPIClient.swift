@@ -42,7 +42,7 @@ class SlackAPIClient {
         //print("\n\n\n\nTHIS IS THE Attachment Dictionary!!! ++++++++++\n\n\(newAttachment.dictionary)")
 
 //        store.attachmentDictionary = newAttachment.dictionary
-        print("\n\n\n\nTHIS IS THE SlackMessageStore Attachment Dictionary!!! ++++++++++\n\n\(store.attachmentDictionary)")
+        
 
         //TODO: Turn this into a model, and include Attachment initialization
         let notificationParameters: [String:Any] = [

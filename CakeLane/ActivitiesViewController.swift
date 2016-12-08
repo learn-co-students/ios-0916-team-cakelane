@@ -179,14 +179,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
             // load attendee images
             cell.downloadAttendeeImages(activity: activity)
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print(cell.arrayOfImages)
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print(cell.users)
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-        }
+                   }
 
         return cell
     }
@@ -259,12 +252,7 @@ extension ActivitiesViewController: ActivitiesDelegate {
         userTableView.selectedActivity = activity
         userTableView.userArray = sender.users
 
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-        print(sender.users)
-        print("\n\n$$$$$$$$$$$$$$$$$$$$$$$$$\n\n")
-        print(userTableView.userArray)
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-
+        
         let navController = UINavigationController(rootViewController: userTableView)
         userTableView.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissController))
         self.present(navController, animated: true, completion: nil)

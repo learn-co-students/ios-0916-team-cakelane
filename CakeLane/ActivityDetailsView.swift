@@ -41,6 +41,8 @@ class ActivityDetailsView: UIView {
         
         didSet {
             OperationQueue.main.addOperation {
+                print("@@@@@@@@@@@@@@@@@@@10")
+
                 self.activityImageView.sd_setImage(with: URL(string:self.selectedActivity.image))
                 self.nameLabel.text = self.selectedActivity.name
                 self.locationLabel.text = "  \(self.selectedActivity.location)"
