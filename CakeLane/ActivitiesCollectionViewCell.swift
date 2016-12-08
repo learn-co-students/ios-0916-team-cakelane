@@ -216,11 +216,13 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
             let userRef = ref.child(teamID).child("users").child(eachUser)
             userRef.observeSingleEvent(of:.value, with: { (snapshot) in
                 
-                OperationQueue.main.addOperation {
+//                OperationQueue.main.addOperation {
                     
                     
                     let dict = snapshot.value as! [String:Any]
-                    
+                
+                    print("Number of users: \(self.users.count)")
+                
                     if self.users.count == 1 {
                         self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
                             
@@ -242,7 +244,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
                             }
                         })
                     } else if arrayOfImages.count >= 3 {
-                        self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
+                        self.downloadImage(at: self.users[2].image72, completion: { (success, image) in
                             
                             OperationQueue.main.addOperation {
                                 
@@ -257,7 +259,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
                     let user = User(snapShot: dict)
                     self.users.append(user)
                     
-                }
+//                }
                 
             })
             
