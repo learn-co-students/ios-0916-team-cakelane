@@ -16,4 +16,20 @@ class TeamDataStore {
     
     var teamInfo: [String:Any] = [:]
     
+//    var channelListDict: [[String:Any]] = [[:]]
+    
+    var teemChannel: String = ""
+    
+//    public func getTeemChannel(with dictionary: [[String:Any]]) -> String {
+//        
+//        for (index,value) in dictionary.enumerated() {
+//            print("This is the index:\(index) & this is the \(value)")
+//            //            for index in value.enumerated() {
+//            //
+//            //            }
+//        }
+//        
+//        return ""
+//    }
+    
 }

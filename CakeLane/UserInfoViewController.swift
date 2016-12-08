@@ -29,6 +29,13 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         
         populateUserInfo()
         
+        //MARK: Test get channels.list
+        SlackAPIClient.getChannelsList { response in
+            guard let verifiedResponse = response else { return }
+            //            let channels = verifiedResponse["channels"]
+            //            print("\n\n\nTHIS IS THE CHANNELS LIST!!! ++++++++++\n\n\n\(verifiedResponse)\n\n\n")
+        }
+        
         // set color scheme
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
