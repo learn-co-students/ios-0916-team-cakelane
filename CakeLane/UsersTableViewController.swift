@@ -37,7 +37,7 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
             
             self.userArray = users
             self.userImages = images
-            
+
             self.usersTableView.reloadData()
         }
         

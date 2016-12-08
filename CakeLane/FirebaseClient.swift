@@ -37,7 +37,6 @@ class FirebaseClient {
     // MARK: Update activities array from Firebase using desired filter
     class func retrieveActivities(with filter: @escaping ([Activity]) -> [Activity], handler: @escaping ([Activity]) -> Void) {
         
-        
         let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
         let activitiesRef = sharedInstance.ref.child(teamID).child("activities")
         var newActivities = [Activity]()
@@ -107,8 +106,6 @@ class FirebaseClient {
                         arrayOfImages.append(image)
                         
                     })
-                    
-                
                 
             })
             

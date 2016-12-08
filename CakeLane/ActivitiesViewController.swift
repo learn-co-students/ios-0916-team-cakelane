@@ -204,6 +204,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             
             // load attendee images
             cell.downloadAttendeeImages(activity: activity)
+            
+            
+            
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
             print(cell.arrayOfImages)
