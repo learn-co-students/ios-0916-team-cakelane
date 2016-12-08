@@ -15,79 +15,70 @@ class SlackAPIClient {
     static let store = SlackMessageStore.sharedInstance
     static let teamStore = TeamDataStore.sharedInstance
     
-    // MARK: Get user token, then POST user to join the channel specified - uses channels:write
+    // MARK: POST channels.join specified on Slack - uses channels:write (Bejan)
     class func userJoinChannel(with completion: @escaping ([String: Any])->()) {
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
-        let channelName = "teem_activitiesa"
+        let channelName = "teem_activities"
         let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelName)"
         guard let url = URL(string: urlString) else { return }
+        print("\n\n\nTHIS IS THE userJoinChannel API REQUEST URL!!! ++++++++++\n\n\(url)\n\n\n\n")
+        
         Alamofire.request(url, method: .post).responseJSON { response in
             guard let JSON = response.result.value else { return }
             let completeJSON = JSON as! [String : Any]
-            //            print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++\(completeJSON)")
+            //            print("\n\n\nTHIS IS THE userJoinChannel COMPLETION!!! ++++++++++\(completeJSON)")
             completion(completeJSON)
         }
     }
     
-    // MARK: Get channels.list from Slack - uses scope channels:read
+    // MARK: GET channels.list from Slack - uses scope channels:read (Bejan)
     class func getChannelsList(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
         let excludedArchive = 1 // includes archived channels, else set to 0
-        
         let urlString = "https://slack.com/api/channels.list?token=\(token)&excluded_archive=\(excludedArchive)"
         guard let url = URL(string: urlString) else { return }
-        print(url)
-        Alamofire.request(url, method: .post).responseJSON { response in
+        print("\n\n\nTHIS IS THE getChannelsList API REQUEST URL!!! ++++++++++\n\n\(url)\n\n\n\n")
+        
+        Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { completion(nil); return }
             let completeJSON = JSON as! [String:Any]
-//            let channels = completeJSON["channels"] as! [[String:Any]]
-//            for (_,value) in channels.enumerated() {
-//                //                print("\n\n\nThis is the index:\(index) \n& this is the value: \(value)")
-//                guard let channelName = value["name"] as? String else { return }
-//                guard let channelID = value["id"] as? String else { return }
-//                print("\n\n\nThis is the channelName:  \(channelName),\nand this is the ID: \(channelID)")
-//                if channelName == "teem_activities" {
-//                    teamStore.teamInfo["channelName"] = channelName
-//                    teamStore.teamInfo["channelID"] = channelID
-//                }
-//            }
-//            print("\n\n\nThis is the TeamStore Dictionary!!:  \(teamStore.teamInfo)")
-//            print("\n\n\nTHIS IS THE GET CHANNELS LIST API CALL RESPONSE!!! ++++++++++\n\n\(channels)\n\n\n\n")
+            //            print("\n\n\nTHIS IS THE getChannelsList API CALL RESPONSE!!! ++++++++++\n\n\(channels)\n\n\n\n")
             teamStore.getTeemChannel(with: completeJSON)
             completion(completeJSON)
         }
     }
     
     
-    // MARK: Get User.Info from Slack
+    // MARK: GET user.Info from Slack - uses scope users:read, users:read.email (read.email as of 1/4/2017 (Bejan)
     class func getUserInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
         guard let userID = UserDefaults.standard.object(forKey: "SlackUser") else { completion(nil); return }
-
         let urlString = "https://slack.com/api/users.info?user=\(userID)&token=\(token)"
         guard let url = URL(string: urlString) else { return }
-        print(url)
+        print("\n\n\nTHIS IS THE getUserInfo API REQUEST URL!!! ++++++++++\n\n\(url)\n\n\n\n")
+        
         Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { completion(nil); return }
             let completeJSON = JSON as! [String : Any]
+            //            print("\n\n\nTHIS IS THE getUserInfo Completion!!! ++++++++++\(completeJSON)")
             completion(completeJSON)
         }
     }
     
-    // MARK: Get Team.info from Slack - uses scope team:read
+    // MARK: Get team.info from Slack - uses scope team:read (Bejan)
     class func getTeamInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
-        
         let urlString = "https://slack.com/api/team.info?token=\(token)"
         guard let url = URL(string: urlString) else { return }
-        print(url)
+        print("\n\n\nTHIS IS THE getTeamInfo API REQUEST URL!!! ++++++++++\n\n\(url)\n\n\n\n")
+        
         Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { completion(nil); return }
             let completeJSON = JSON as! [String : Any]
-//            print("\n\n\nTHIS IS THE getTeamInfo Completion!!! ++++++++++\(completeJSON)")
+            //            print("\n\n\nTHIS IS THE getTeamInfo Completion!!! ++++++++++\(completeJSON)")
             completion(completeJSON)
         }
     }
@@ -95,21 +86,21 @@ class SlackAPIClient {
     // MARK: Post set.channelPurpose
     class func setChannelPurpose(with completion: @escaping ([String: Any])->()) {
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
-        let channelID = "Insert Channel ID"
-        let channelPurpose = "A channel for all the cool activities everyone is creating through Teem!\nDownload it here: https://goo.gl/SIAHLa"
+        let channelID = teamStore.teamInfo["teemChannelID"]
+        let channelPurpose = teamStore.teamInfo["teemChannelPurpose"]
         let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelID)&purpose=\(channelPurpose)"
         guard let url = URL(string: urlString) else { return }
+        
         Alamofire.request(url, method: .post).responseJSON { response in
             guard let JSON = response.result.value else { return }
             let completeJSON = JSON as! [String : Any]
-            //            print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++\(completeJSON)")
+            //            print("\n\n\nTHIS IS THE SET CHANNEL PURPOSE COMPLETION!!! ++++++++++\(completeJSON)")
             completion(completeJSON)
         }
     }
 
-    // MARK: Post Slack Notification to webhook URL
+    // MARK: Post Slack Notification to webhook URL - uses scope channel:write
     class func postSlackNotification() {
-        
         //TODO: Turn this into a model, and include Attachment initialization
         let notificationParameters: [String:Any] = [
             "icon_url": "http://gdurl.com/Ei8e",
@@ -121,11 +112,10 @@ class SlackAPIClient {
         let webhookURL = "https://hooks.slack.com/services/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"
         guard let url = URL(string: webhookURL) else { return }
         // print(url)
+        
         Alamofire.request(url, method: .post, parameters: notificationParameters, encoding: JSONEncoding.default)
         .response { (response) in
-//            print("\n\n\nTHIS IS THE RESPONSE REQUEST!!! ++++++++++\(response.request)")  // original URL request
-//            print("\n\n\n\nTHIS IS THE RESPONSE RESPONSE!!! ++++++++++\(response.response)") // URL response
-//            print("\n\n\n\nTHIS IS THE RESPONSE DATA!!! ++++++++++\(response.data)")     // server data
+        //            print("\n\n\nTHIS IS THE postSlackNotification COMPLETION!!! ++++++++++\(response)")
         }
         
     }
@@ -134,6 +124,7 @@ class SlackAPIClient {
         guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
         let urlString = "https://slack.com/api/users.list?token=\(token)"
         guard let url = URL(string: urlString) else { return }
+        
         Alamofire.request(url).responseJSON { response in
             guard let JSON = response.result.value else { return }
             let completeJSON = JSON as! [String : Any]
