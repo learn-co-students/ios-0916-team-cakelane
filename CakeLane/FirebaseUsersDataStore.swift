@@ -14,6 +14,6 @@ class FirebaseUsersDataStore {
     private init() { }
     
     var primaryUser = User()
-    var users = [User]()
+    var users: [User] = []
     var userImages = [UIImage]()
 }
