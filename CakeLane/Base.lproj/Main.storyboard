@@ -40,7 +40,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="filterWhenOutlet" destination="AxB-uL-Kv7" id="EtY-BS-LCo"/>
-                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="syk-oJ-9ee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O51-gc-1RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -431,6 +430,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="yI5-9V-7wn" kind="presentation" identifier="editActivity" id="rBV-dQ-B5z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vN6-1y-xSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -529,6 +531,6 @@
         <image name="ic_face" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UYe-1B-Ing"/>
+        <segue reference="rBV-dQ-B5z"/>
     </inferredMetricsTieBreakers>
 </document>

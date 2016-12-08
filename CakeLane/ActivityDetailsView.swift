@@ -73,7 +73,7 @@ class ActivityDetailsView: UIView {
         setupCloseButton()
         setupEditButton()
         setupJoinButton()
-       // setupActivityOverLay()
+        setupActivityOverLay()
         setupLabel()
         
     }

@@ -38,7 +38,7 @@ class ActivityDetailsViewController: UIViewController {
     func checkIfOwner() {
         
         let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
-        activitiesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        activitiesRef.observe(.value, with: { (snapshot) in
             
             self.detailView.selectedActivity = Activity(snapshot: snapshot)
             self.attendies = self.detailView.selectedActivity.attendees
@@ -51,6 +51,7 @@ class ActivityDetailsViewController: UIViewController {
                 self.detailView.editButton.isHidden = true
                 self.detailView.joinButton.isHidden = false
             }
+            
         })
     }
     
