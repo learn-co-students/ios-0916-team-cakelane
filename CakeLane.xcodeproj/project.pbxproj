@@ -12,7 +12,6 @@
 		1BDF62461DDD06C500C3D12E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62441DDD06C500C3D12E /* LaunchScreen.storyboard */; };
 		7292DB721DEF2A09009BE840 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */; };
 		7292DB741DEF8A02009BE840 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB731DEF8A02009BE840 /* UserInfoCell.swift */; };
-		72972BAB1DEDD27500D3FA60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72972BA91DEDD27500D3FA60 /* Main.storyboard */; };
 		72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */; };
 		750BAAA41DF89E7D004D2184 /* TeamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750BAAA31DF89E7D004D2184 /* TeamInfo.swift */; };
 		750BAAA61DF8A6B5004D2184 /* TeamDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750BAAA51DF8A6B5004D2184 /* TeamDataStore.swift */; };
@@ -20,6 +19,7 @@
 		75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */; };
 		75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */; };
 		A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */; };
+		A2EBB3C31DF89B8200F48426 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2EBB3C11DF89B8200F48426 /* Main.storyboard */; };
 		A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */; };
 		A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */; };
 		A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */; };
@@ -53,7 +53,6 @@
 		5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CakeLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		7292DB731DEF8A02009BE840 /* UserInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
-		72972BAA1DEDD27500D3FA60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		750BAAA31DF89E7D004D2184 /* TeamInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInfo.swift; sourceTree = "<group>"; };
 		750BAAA51DF8A6B5004D2184 /* TeamDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDataStore.swift; sourceTree = "<group>"; };
@@ -62,6 +61,7 @@
 		75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackMessageStore.swift; sourceTree = "<group>"; };
 		A28C74161DF5CBD20076A023 /* CakeLane-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CakeLane-Bridging-Header.h"; sourceTree = "<group>"; };
 		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailsView.xib; sourceTree = "<group>"; };
+		A2EBB3C21DF89B8200F48426 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityController.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 		E53B16CC1DECCC55009C84BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				72972BA91DEDD27500D3FA60 /* Main.storyboard */,
+				A2EBB3C11DF89B8200F48426 /* Main.storyboard */,
 				A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */,
 				E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */,
 			);
@@ -318,10 +318,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BDF62461DDD06C500C3D12E /* LaunchScreen.storyboard in Resources */,
-				72972BAB1DEDD27500D3FA60 /* Main.storyboard in Resources */,
 				A2ECAA841DDD19F4000E3CC6 /* GoogleService-Info.plist in Resources */,
 				A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */,
 				1BDF62431DDD06C500C3D12E /* Assets.xcassets in Resources */,
+				A2EBB3C31DF89B8200F48426 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,10 +422,10 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		72972BA91DEDD27500D3FA60 /* Main.storyboard */ = {
+		A2EBB3C11DF89B8200F48426 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				72972BAA1DEDD27500D3FA60 /* Base */,
+				A2EBB3C21DF89B8200F48426 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
