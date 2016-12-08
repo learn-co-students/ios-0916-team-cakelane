@@ -56,4 +56,73 @@ class FirebaseClient {
         
     }
     
+    // MARK: Retreieve dictionary from Firebase for user based on their SlackID (String)
+    class func retrieveInfoDictionary(for userSlackID: String, with completion: @escaping ([String:Any])->()) {
+        guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+        let userRef = FirebaseClient.sharedInstance.ref.child(teamID).child("users").child(userSlackID)
+        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            print(snapshot)
+            print(snapshot.value)
+            
+            let dict = snapshot.value as! [String:Any]
+            
+            completion(dict)
+            
+        })
+    }
+    
+    class func downloadAttendeeImages(for activity: Activity, with handler: @escaping ([UIImage])->()) {
+        
+        var arrayOfImages: [UIImage] = []
+        
+        func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
+            let session = URLSession.shared
+            let newUrl = URL(string: url)
+            if let unwrappedUrl = newUrl {
+                let request = URLRequest(url: unwrappedUrl)
+                let task = session.dataTask(with: request) { (data, response, error) in
+                    guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
+                    
+                    guard let image = UIImage(data: data) else { return }
+                    completion(true, image)
+                }
+                task.resume()
+            }
+        }
+        
+        for (key, _) in activity.attendees {
+            
+            retrieveInfoDictionary(for: key, with: { (dict) in
+                
+                print("\n\n$$$$$$$$$$$$$$$$$$$$")
+                print(key)
+                print("\n\n$$$$$$$$$$$$$$$$$$$$\n\n")
+                print(dict)
+                print("\n\n$$$$$$$$$$$$$$$$$$$$")
+                
+                // ERROR WITH URL HERE
+                guard let url = dict["image72"] as? String else { return }
+                
+                print("\n\n#############################")
+                print(url)
+                print("\n\n#############################")
+                
+                downloadImage(at: url, completion: { (success, image) in
+                    arrayOfImages.append(image)
+                    
+                    print("\n\n#############################")
+                    print(arrayOfImages)
+                    print("\n\n#############################")
+                    
+                })
+                
+            })
+            
+        }
+        print("We got here.")
+        handler(arrayOfImages)
+        
+    }
+    
 }

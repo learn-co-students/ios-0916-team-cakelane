@@ -28,8 +28,8 @@ class ActivityDetailsViewController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.view.addSubview(blurEffectView)
-        // Set frame for Activity Details View
-        let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
+//        // Set frame for Activity Details View
+//        let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
         
         // MARK: Instantiate Activity Details View
         self.detailView = ActivityDetailsView(frame: self.view.frame)

@@ -81,7 +81,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         }
         
         // Upload user info to Firebase
-       //  FirebaseClient.writeUserInfo()
+        //  FirebaseClient.writeUserInfo()
         
         // Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in
