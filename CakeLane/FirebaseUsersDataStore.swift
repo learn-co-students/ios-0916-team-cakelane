@@ -15,5 +15,5 @@ class FirebaseUsersDataStore {
     
     var primaryUser = User()
     var users = [User]()
-    var bots = [User]()
+    
 }

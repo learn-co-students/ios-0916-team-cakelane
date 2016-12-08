@@ -88,18 +88,21 @@ class AppController: UIViewController {
         
         let exitingViewController = actingViewController
         exitingViewController?.willMove(toParentViewController: nil)
-        
         actingViewController = loadViewController(withID: id)
         self.addChildViewController(actingViewController)
         
-        addActing(viewController: actingViewController)
-        actingViewController.view.alpha = 0
+        // REMOVE: call to addActing
+        //        addActing(viewController: actingViewController)
         
+        // TO ADD: add acting view, set frame, layout view
+        containerView.addSubview(actingViewController.view)
+        actingViewController.view.frame = containerView.bounds
+        actingViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        actingViewController.view.alpha = 0
         UIView.animate(withDuration: 0.5, animations: {
-            
             self.actingViewController.view.alpha = 1
             exitingViewController?.view.alpha = 0
-            
         }) { completed in
             exitingViewController?.view.removeFromSuperview()
             exitingViewController?.removeFromParentViewController()

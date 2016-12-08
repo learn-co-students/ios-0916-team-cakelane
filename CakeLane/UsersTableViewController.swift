@@ -141,12 +141,12 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // TODO: Prepare for segue to DetailUserViewController
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        <#code#>
-//    }
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "user-profile-view-controller") as! UserInfoViewController
+        detailVC.user = self.userArray[indexPath.row]
+        self.present(detailVC, animated: true, completion: nil)
+        
+    }
+    
 }

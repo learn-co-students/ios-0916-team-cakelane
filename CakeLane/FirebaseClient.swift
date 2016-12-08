@@ -49,9 +49,10 @@ class FirebaseClient {
                 
                 newActivities.append(item)
             }
-            newActivities = filter(newActivities)
             
+            newActivities = filter(newActivities)
             handler(newActivities)
+            
         })
         
     }
@@ -62,19 +63,17 @@ class FirebaseClient {
         let userRef = FirebaseClient.sharedInstance.ref.child(teamID).child("users").child(userSlackID)
         userRef.observeSingleEvent(of: .value, with: { (snapshot) in
             
-            print(snapshot)
-            print(snapshot.value)
-            
-            let dict = snapshot.value as! [String:Any]
-            
+            guard let dict = snapshot.value as? [String : Any] else { print("Whats up???????"); return }
             completion(dict)
             
         })
+        
     }
     
-    class func downloadAttendeeImages(for activity: Activity, with handler: @escaping ([UIImage])->()) {
+    class func downloadAttendeeImagesAndInfo(for activity: Activity, with handler: @escaping ([UIImage], [User])->()) {
         
         var arrayOfImages: [UIImage] = []
+        var users = [User]()
         
         func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
             let session = URLSession.shared
@@ -93,35 +92,53 @@ class FirebaseClient {
         
         for (key, _) in activity.attendees {
             
+            guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
+            let userRef = FirebaseClient.sharedInstance.ref.child(teamID).child("users").child(key)
+            
             retrieveInfoDictionary(for: key, with: { (dict) in
                 
-                print("\n\n$$$$$$$$$$$$$$$$$$$$")
-                print(key)
-                print("\n\n$$$$$$$$$$$$$$$$$$$$\n\n")
-                print(dict)
-                print("\n\n$$$$$$$$$$$$$$$$$$$$")
-                
-                // ERROR WITH URL HERE
-                guard let url = dict["image72"] as? String else { return }
-                
-                print("\n\n#############################")
-                print(url)
-                print("\n\n#############################")
-                
-                downloadImage(at: url, completion: { (success, image) in
-                    arrayOfImages.append(image)
+                userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    print("\n\n#############################")
-                    print(arrayOfImages)
-                    print("\n\n#############################")
+//                    print("\n\n")
+                    
+//                    print(snapshot.value.debugDescription)
+                    
+                    
+                    
+                    // initialize user
+                    let user = User(snapShot: dict)
+                    users.append(user)
+                    
+//                    print("\n\n$$$$$$$$$$$$$$$$$$$$")
+//                    print(key)
+//                    print("\n\n$$$$$$$$$$$$$$$$$$$$\n\n")
+//                    print(dict)
+//                    print("\n\n$$$$$$$$$$$$$$$$$$$$")
+                    
+                    guard let url = dict["image72"] as? String else { return }
+                    
+//                    print("\n\n#############################")
+//                    print(url)
+//                    print("\n\n#############################")
+                    
+                    downloadImage(at: url, completion: { (success, image) in
+                        
+                        arrayOfImages.append(image)
+                        
+//                        print("\n\n#############################")
+//                        print(arrayOfImages)
+//                        print("\n\n#############################")
+                        
+                    })
                     
                 })
                 
             })
             
         }
+        
         print("We got here.")
-        handler(arrayOfImages)
+        handler(arrayOfImages, users)
         
     }
     

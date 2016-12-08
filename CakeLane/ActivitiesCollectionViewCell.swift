@@ -210,8 +210,10 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     func downloadAttendeeImages(activity: Activity) {
         
         var arrayOfImages = [UIImage]()
-        FirebaseClient.downloadAttendeeImages(for: activity) { (images) in
+        
+        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
             arrayOfImages = images
+            FirebaseUsersDataStore.sharedInstance.users = users
         }
         
         if arrayOfImages.count == 1 {
@@ -227,18 +229,18 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         
     }
     
-    // download user info & populate users array
-    func downloadAttendeeInfo(for activity: Activity) {
-        for eachUser in activity.attendees.keys {
-            // insert attendee listener here
-            FirebaseClient.retrieveInfoDictionary(for: eachUser, with: { (dict) in
-                
-                // initialize user
-                let user = User(snapShot: dict)
-                self.users.append(user)
-                
-            })
-        }
-    }
+//    // download user info & populate users array
+//    func downloadAttendeeInfo(for activity: Activity) {
+//        for eachUser in activity.attendees.keys {
+//            // insert attendee listener here
+//            FirebaseClient.retrieveInfoDictionary(for: eachUser, with: { (dict) in
+//                
+//                // initialize user
+//                let user = User(snapShot: dict)
+//                self.users.append(user)
+//                
+//            })
+//        }
+//    }
     
 }
