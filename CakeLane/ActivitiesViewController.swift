@@ -68,7 +68,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     self.activitiesCollectionView.reloadData()
                     
                     // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                    //FirebaseClient.writeUserInfo()
+                    // FirebaseClient.writeUserInfo()
 
                 }
             }

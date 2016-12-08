@@ -217,43 +217,45 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
             userRef.observeSingleEvent(of:.value, with: { (snapshot) in
                 
                 OperationQueue.main.addOperation {
-                
-                
-                let dict = snapshot.value as! [String:Any]
-                // initialize user
-                let user = User(snapShot: dict)
-                self.users.append(user)
-                if self.users.count == 1 {
-                    self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
-                        
-                        OperationQueue.main.addOperation {
-                        
-                        self.firstProfileImage.image = image
-                        arrayOfImages.append(image)
+                    
+                    
+                    let dict = snapshot.value as! [String:Any]
+                    
+                    if self.users.count == 1 {
+                        self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
                             
-                        }
-                })
-                } else if self.users.count == 2 {
-                    self.downloadImage(at: self.users[1].image72, completion: { (success, image) in
-                        
-                        OperationQueue.main.addOperation {
-                        
-                        self.secondProfileImage.image = image
-                        arrayOfImages.append(image)
+                            OperationQueue.main.addOperation {
+                                
+                                self.firstProfileImage.image = image
+                                arrayOfImages.append(image)
+                                
+                            }
+                        })
+                    } else if self.users.count == 2 {
+                        self.downloadImage(at: self.users[1].image72, completion: { (success, image) in
                             
-                        }
-                    })
-                } else if arrayOfImages.count >= 3 {
-                    self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
-                        
-                        OperationQueue.main.addOperation {
+                            OperationQueue.main.addOperation {
+                                
+                                self.secondProfileImage.image = image
+                                arrayOfImages.append(image)
+                                
+                            }
+                        })
+                    } else if arrayOfImages.count >= 3 {
+                        self.downloadImage(at: self.users[0].image72, completion: { (success, image) in
                             
-                        self.thirdProfileImage.image = image
-                        arrayOfImages.append(image)
-                            
-                        }
-                    })
-                }
+                            OperationQueue.main.addOperation {
+                                
+                                self.thirdProfileImage.image = image
+                                arrayOfImages.append(image)
+                                
+                            }
+                        })
+                    }
+                    
+                    // initialize user
+                    let user = User(snapShot: dict)
+                    self.users.append(user)
                     
                 }
                 

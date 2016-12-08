@@ -130,7 +130,11 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
             
         self.databaseReference.child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser)
             // 12- add the activity to the activity created dic for the user
-    self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
+    
+//            print("@@@@@@@@@@@@@@@@@@@")
+//            print(newactivity)
+            
+            self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").updateChildValues(newactivity)
             // 13- add the activity to the activity attending dic for the user
 
             self.databaseReference.child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesAttending").updateChildValues(newactivity)
