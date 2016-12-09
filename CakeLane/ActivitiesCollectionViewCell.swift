@@ -40,6 +40,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        ////////////////////////////////////////// does the data print out correctly??
+        
         contentView.addSubview(activityImageView)
         activityImageView.backgroundColor = UIColor.black
         activityImageView.layer.borderWidth = 1
@@ -214,8 +216,26 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
 
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
+            
+            
+            ///////////////////////////////////
+            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
+
+            print(images)
+            print("\n\n\n\nPRINTING IMAGES AND USERS INSIDE ACTIVITIES COLLECTION VIEW CELL\n\n\n\n")
+            print(users)
+            
+            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
+
             self.arrayOfImages = images
             self.users = users
+            
+            
+            
+            
+            
+            
+            
         }
         DispatchQueue.main.async {
             if self.arrayOfImages.count == 1 {

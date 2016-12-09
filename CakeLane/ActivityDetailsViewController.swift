@@ -12,9 +12,9 @@ import Firebase
 class ActivityDetailsViewController: UIViewController {
 
     var detailView: ActivityDetailsView!
-    let firebaseClient = FirebaseClient.sharedInstance
-    let slackID = FirebaseClient.sharedInstance.slackID
-    let teamID = FirebaseClient.sharedInstance.teamID
+    let firebaseClient = FIRDatabase.database().reference()
+    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
     var selectedActivity: Activity?
     var editedActivity: Activity?
     var attendies = [String:Bool]()
@@ -100,10 +100,10 @@ class ActivityDetailsViewController: UIViewController {
         let newAttendingUser = [slackID:true]
         let newAttendingActivity: [String:String] = [key:date]
 
-        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity, withCompletionBlock: { error, ref in
+        self.firebaseClient.ref.child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity, withCompletionBlock: { error, ref in
 
 
-            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
+            self.firebaseClient.ref.child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: true)
 
@@ -127,9 +127,9 @@ class ActivityDetailsViewController: UIViewController {
 
         let key = self.detailView.selectedActivity?.id ?? ""
 
-        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
+        self.firebaseClient.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
 
-            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
+            self.firebaseClient.ref.child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: false)
 
@@ -154,9 +154,9 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
         
         let key = self.detailView.selectedActivity?.id ?? ""
 
-        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
+        self.firebaseClient.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
 
-            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
+            self.firebaseClient.child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: false)
 

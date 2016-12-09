@@ -25,9 +25,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
     // Data
-    let firebaseClient = FirebaseClient.sharedInstance
-    let teamID = FirebaseClient.sharedInstance.teamID
-    let slackID = FirebaseClient.sharedInstance.slackID
+    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
     var activities = [Activity]()
     var selectedActivity: Activity?
 
@@ -80,6 +79,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
                     print("We're here")
 
+                    //////////////////////////////////////////////////////////////
+                    
+                    print("**********))))))))**********\n\n")
+                    print(activities)
+                    print("**********))))))))**********\n\n")
+                    
                     self.activities = activities
                     self.activitiesCollectionView.reloadData()
 
@@ -190,15 +195,19 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
+            
+            ///////////////////////////// pass info from actvities; try it in this file's viewDidLoad
+            
+            
             // load attendee images
             cell.downloadAttendeeImages(activity: activity)
 
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print("$$$$$$$$PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$$$")
             print(cell.arrayOfImages)
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print("$$$$$$$$$$DONE PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$")
             print(cell.users)
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print("$$$$$$$$$$DONE PRINTING USERS$$$$$$$$$$$$$$$")
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
         }
 
