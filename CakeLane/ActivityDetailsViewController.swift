@@ -13,7 +13,6 @@ class ActivityDetailsViewController: UIViewController {
 
     var detailView: ActivityDetailsView!
     
- //     let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
     let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
 //    let firebaseClient = FirebaseClient.sharedInstance
    let slackID = FirebaseClient.sharedInstance.slackID
@@ -32,10 +31,8 @@ class ActivityDetailsViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        print("@@@@@@@@@@@@@@@@@@@6")
 
         super.viewWillAppear(true)
-        print("@@@@@@@@@@@@@@@@@@@7")
 
         checkIfOwner()
 
@@ -45,7 +42,6 @@ class ActivityDetailsViewController: UIViewController {
     func checkIfOwner() {
 
         let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
-        print("@@@@@@@@@@@@@@@@@@@8")
 
         activitiesRef.observe(.value, with: { (snapshot) in
 

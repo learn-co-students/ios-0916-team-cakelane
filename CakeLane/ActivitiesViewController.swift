@@ -99,11 +99,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     newActivities.append(item)
                 }
                 
-              //  newActivities = filter(newActivities)
                 DispatchQueue.main.async {
-                self.activities = newActivities
-            
-                
+                    self.activities = self.sortedActivities(newActivities)
                 self.activitiesCollectionView.reloadData()
                     print("The numbers of activties inside the view did load")
                     print(self.activities.count)
