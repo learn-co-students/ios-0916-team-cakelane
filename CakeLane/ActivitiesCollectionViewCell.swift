@@ -189,6 +189,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     }
 
+    //////////////////////////////////
+    
     func updateCell(with activity: Activity, handler: @escaping (Bool) -> ()) {
 
         self.activityLabel.text = activity.name
@@ -207,23 +209,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     }
 
-    // MARK: Attendee image handling
-    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
-        let session = URLSession.shared
-        let newUrl = URL(string: url)
-        if let unwrappedUrl = newUrl {
-            let request = URLRequest(url: unwrappedUrl)
-            let task = session.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
-
-                guard let image = UIImage(data: data) else { return }
-                completion(true, image)
-            }
-            task.resume()
-        }
-
-    }
-
+    // download images
     func downloadAttendeeImages(activity: Activity) {
 
 
@@ -241,12 +227,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
             self.arrayOfImages = images
             self.users = users
-            
-            
-            
-            
-            
-            
             
         }
         DispatchQueue.main.async {
