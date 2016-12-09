@@ -47,7 +47,7 @@ struct User {
         self.isAdmin = snapShot["isAdmin"] as! Bool
         self.isOwner = false
         self.isPrimaryOwner = false
-        self.activities = snapShot["activities"] as! [String:Any]
+        self.activities = snapShot["activities"] as? [String:Any] ?? [:]
     }
     
     // Slack initializer

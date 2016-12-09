@@ -94,6 +94,7 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
         guard userArray.isEmpty else {
             let user = userArray[indexPath.row]
+            cell.profileImage.image = userImages[indexPath.row]
             cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
             return cell
         }

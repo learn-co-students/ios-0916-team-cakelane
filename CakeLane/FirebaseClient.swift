@@ -128,7 +128,11 @@ class FirebaseClient {
                     
                     arrayOfImages.append(image)
                     print("We got here.")
+                    print("\n**********************")
+                    print(image)
+                    print("\n**********************")
                     handler(arrayOfImages, users)
+                    
                 })
                 
             })
