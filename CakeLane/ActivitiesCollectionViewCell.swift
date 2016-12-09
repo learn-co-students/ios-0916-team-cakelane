@@ -200,6 +200,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         self.numberOfAttendeesLabel.text = ("\(String(activity.attendees.count)) attending   >")
 
         // update cell with local placeholder image
+        
+         //cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
+        
         if activity.image == " " {
             self.activityImageView.image = UIImage(named: "appLogo-black")
             self.placeholderImage = true
