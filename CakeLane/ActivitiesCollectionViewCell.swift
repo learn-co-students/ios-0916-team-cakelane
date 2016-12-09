@@ -68,6 +68,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(activityLabel)
         activityLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        activityLabel.shadowColor = UIColor.black
+        activityLabel.shadowOffset.height = 3
+        activityLabel.shadowOffset.width = 3
         activityLabel.textColor = UIColor.white
         activityLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -77,6 +80,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(locationLabel)
         locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        locationLabel.shadowColor = UIColor.black
+        locationLabel.shadowOffset.height = 3
+        locationLabel.shadowOffset.width = 3
         locationLabel.textColor = UIColor.white
         locationLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -85,6 +91,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(dateLabel)
         dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        dateLabel.shadowColor = UIColor.black
+        dateLabel.shadowOffset.height = 3
+        dateLabel.shadowOffset.width = 3
         dateLabel.textColor = UIColor.white
         dateLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -94,6 +103,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(timeLabel)
         timeLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        timeLabel.shadowColor = UIColor.black
+        timeLabel.shadowOffset.height = 3
+        timeLabel.shadowOffset.width = 3
         timeLabel.textColor = UIColor.white
         timeLabel.snp.makeConstraints { (make) in
             make.left.equalTo(dateLabel.snp.right).offset(5)
@@ -187,7 +199,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         // update cell with local placeholder image
         if activity.image == " " {
-            self.activityImageView.image = UIImage(named: "smallerAppLogo")
+            self.activityImageView.image = UIImage(named: "appLogo-black")
             self.placeholderImage = true
         }
 

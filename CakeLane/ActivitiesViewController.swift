@@ -34,7 +34,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+      print("we are in the view did load 3452637485967089p42q4539w69e0750r68tpy79")
 
         // MARK: test getTeamInfo
 //        SlackAPIClient.getTeamInfo { response in
@@ -73,26 +73,59 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         // MARK: Get user info from Slack -> retrieve activities list from Firebase
         SlackAPIClient.storeUserInfo() { success in
+            let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+            let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities")
 
-            FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
+
+            activitiesRef.observe(.value, with: { (snapshot) in
+                var newActivities = [Activity]()
+
+                for activity in snapshot.children {
+
+
+                    let item = Activity(snapshot: activity as! FIRDataSnapshot)
+
+                    newActivities.append(item)
+                }
+
                 DispatchQueue.main.async {
 
                     print("We're here")
 
                     //////////////////////////////////////////////////////////////
-                    
+
                     print("**********))))))))**********\n\n")
-                    print(activities)
+                    print(self.activities)
                     print("**********))))))))**********\n\n")
-                    
-                    self.activities = activities
+
+                    self.activities = newActivities
+                    // self.activities = self.sortedActivities(newActivities)
                     self.activitiesCollectionView.reloadData()
+                    print("The numbers of activties inside the view did load")
+                    print(self.activities.count)
 
                     // WARNING: THIS CAUSES INTENSE LOADING TIMES
                     // FirebaseClient.writeUserInfo()
 
                 }
-            }
+            })
+
+//            FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
+//                DispatchQueue.main.async {
+//
+//                    print("We're here")
+//
+//                    self.activities = activities
+//                    print("The numbers of activties inside the view did load")
+//                    print(self.activities.count)
+//
+//                    self.activitiesCollectionView.reloadData()
+//
+//                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
+//                    // FirebaseClient.writeUserInfo()
+//
+//                }
+//            }
         }
 
         // Filter activities via "Filter" DropDown
@@ -135,6 +168,12 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             }
         }
 
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.activitiesCollectionView.reloadData()
     }
 
     // Self-explanatory func
@@ -195,10 +234,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
-            
+
             ///////////////////////////// pass info from actvities; try it in this file's viewDidLoad
-            
-            
+
+
             // load attendee images
             cell.downloadAttendeeImages(activity: activity)
 

@@ -12,9 +12,11 @@ import Firebase
 class ActivityDetailsViewController: UIViewController {
 
     var detailView: ActivityDetailsView!
+
     let firebaseClient = FIRDatabase.database().reference()
     let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
     let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+
     var selectedActivity: Activity?
     var editedActivity: Activity?
     var attendies = [String:Bool]()
@@ -29,10 +31,8 @@ class ActivityDetailsViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        print("@@@@@@@@@@@@@@@@@@@6")
 
         super.viewWillAppear(true)
-        print("@@@@@@@@@@@@@@@@@@@7")
 
         checkIfOwner()
 
@@ -41,8 +41,7 @@ class ActivityDetailsViewController: UIViewController {
     // check if the user is the owner and update the view with the suitable buttons
     func checkIfOwner() {
 
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
-        print("@@@@@@@@@@@@@@@@@@@8")
+        let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
 
         activitiesRef.observe(.value, with: { (snapshot) in
 
@@ -50,6 +49,13 @@ class ActivityDetailsViewController: UIViewController {
             self.editedActivity = self.detailView.selectedActivity
 
             self.attendies = self.detailView.selectedActivity.attendees
+            if self.attendies.keys.contains(self.slackID){
+                self.detailView.adjustButtonTitle(isAttendee: true)
+
+            } else {
+                self.detailView.adjustButtonTitle(isAttendee: false)
+
+            }
 
             if self.detailView.selectedActivity.owner == self.slackID {
                 self.detailView.editButton.isHidden = false
@@ -57,6 +63,8 @@ class ActivityDetailsViewController: UIViewController {
             } else {
 
                 self.detailView.editButton.isHidden = true
+
+
                 self.detailView.joinButton.isHidden = false
             }
 
@@ -105,6 +113,7 @@ class ActivityDetailsViewController: UIViewController {
 
             self.firebaseClient.ref.child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
 
+
                 self.detailView.adjustButtonTitle(isAttendee: true)
 
             })
@@ -131,6 +140,7 @@ class ActivityDetailsViewController: UIViewController {
 
             self.firebaseClient.ref.child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
 
+
                 self.detailView.adjustButtonTitle(isAttendee: false)
 
 
@@ -151,12 +161,13 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
 
     func editButtonTapped(with sender: ActivityDetailsView) {
         editSelectedActivity()
-        
+
         let key = self.detailView.selectedActivity?.id ?? ""
 
         self.firebaseClient.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
 
             self.firebaseClient.child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
+
 
                 self.detailView.adjustButtonTitle(isAttendee: false)
 
@@ -169,7 +180,7 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
 
     func joinButtonTapped(with sender: ActivityDetailsView) {
 
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
+        let activitiesRef = FIRDatabase.database().reference().child(self.teamID).child("activities").child((self.selectedActivity?.id)!)
 
         activitiesRef.observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
 
@@ -187,4 +198,3 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
 
 
 }
-

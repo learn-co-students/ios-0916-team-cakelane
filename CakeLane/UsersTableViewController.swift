@@ -16,10 +16,10 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var usersTableView: UITableView!
     let ref = FIRDatabase.database().reference()
     var selectedActivity: Activity?
+    
+    var firebaseUsersStore = FirebaseUsersDataStore.sharedInstance
     var userArray = FirebaseUsersDataStore.sharedInstance.users
     var userImages = FirebaseUsersDataStore.sharedInstance.userImages
-
-    var firebaseUsersStore = FirebaseUsersDataStore.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +33,13 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.createLayout()
         
-        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-            
-            self.userArray = users
-            self.userImages = images
-
-            self.usersTableView.reloadData()
-        }
+//        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
+//            
+//            self.userArray = users
+//            self.userImages = images
+//
+//            self.usersTableView.reloadData()
+//        }
         
         self.setUpTableViewCells()
         
@@ -91,17 +91,40 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersCell", for: indexPath) as! UserTableViewCell
-
-        guard userArray.isEmpty else {
-            let user = userArray[indexPath.row]
-            cell.profileImage.image = userImages[indexPath.row]
-            cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
-            return cell
+        
+        
+        let user = userArray[indexPath.row]
+        
+        downloadImage(at: user.image72) { (success, image) in
+            if success {
+                OperationQueue.main.addOperation {
+                    cell.profileImage.image = image
+                }
+            }
         }
+        cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
+        
         
         return cell
     }
-
+    
+    
+    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
+        let session = URLSession.shared
+        let newUrl = URL(string: url)
+        if let unwrappedUrl = newUrl {
+            let request = URLRequest(url: unwrappedUrl)
+            let task = session.dataTask(with: request) { (data, response, error) in
+                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
+                
+                guard let image = UIImage(data: data) else { return }
+                completion(true, image)
+            }
+            task.resume()
+        }
+        
+    }
+    
     // segue to DetailUserViewController
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
