@@ -24,10 +24,10 @@ struct Activity {
     var attendees: [String:Bool] = [:]
     var imageview: UIImageView?
     let reference : FIRDatabaseReference?
-
+    var imageNameFirebaseStorage: String?
     // Mark: - initializer for activity object
 
-    init(owner: String, name: String, date: String, image: String, location: String, description: String) {
+    init(owner: String, name: String, date: String, image: String, location: String, description: String, imageNameFirebaseStorage: String) {
 
         self.name = name
         self.owner = owner
@@ -35,6 +35,7 @@ struct Activity {
         self.image = image
         self.location = location
         self.description = description
+        self.imageNameFirebaseStorage = imageNameFirebaseStorage
         self.reference = nil
     }
 
@@ -51,6 +52,7 @@ struct Activity {
         description = snapshotValue["description"] as? String ?? "No description"
         attendees = snapshotValue["attending"] as? [String:Bool] ?? ["No attending":false]
         reference = snapshot.ref
+        imageNameFirebaseStorage = snapshotValue["imageNameFirebaseStorage"] as? String ?? "No image"
         id = snapshot.key
     }
 
@@ -65,7 +67,9 @@ struct Activity {
            "image":image,
            "location":location,
            "description":description,
-           "attending": attendees
+           "attending": attendees,
+            "imageNameFirebaseStorage": imageNameFirebaseStorage
+            
         ]
     }
 

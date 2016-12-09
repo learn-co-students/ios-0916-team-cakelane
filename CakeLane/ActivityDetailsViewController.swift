@@ -219,7 +219,6 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
         print("attempting to delete activity")
         
         let key = self.detailView.selectedActivity?.id ?? ""
-        
         let activitiesRef = FIRDatabase.database().reference().child(self.teamID).child("activities").child((self.selectedActivity?.id)!)
         
         activitiesRef.removeValue()
@@ -233,10 +232,20 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
         usersActivityRef.removeValue { (error, ref) in
             self.dismissView()
         }
-        
-        //  FirebaseClient.deleteImageFromFirebaseStorage(ref: <#T##FIRStorageReference#>) { (success) in
-        // handle success/failure
-        //  }
+      //  print(self.detailView.selectedActivity.imageFirebaseStoragename)
+        if let imageStorageName = self.detailView.selectedActivity.imageNameFirebaseStorage {
+
+        let storageImageStorageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("activityImages").child("\(imageStorageName).png")
+            print(imageStorageName)
+            storageImageStorageRef.delete { (error) -> Void in
+                if (error != nil) {
+                    print("error")
+                } else {
+                    print("success")
+                }
+            }
+            
+        }
     }
     
 }

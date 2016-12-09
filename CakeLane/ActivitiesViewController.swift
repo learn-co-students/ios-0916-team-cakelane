@@ -92,45 +92,19 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 var newActivities = [Activity]()
                 
                 for activity in snapshot.children {
-
-                    print("creating a new activity")
                     
                     let item = Activity(snapshot: activity as! FIRDataSnapshot)
-                    
-                    print("\(item.name)")
-                    
+        
                     newActivities.append(item)
                 }
                 
                 DispatchQueue.main.async {
                     self.activities = self.sortedActivities(newActivities)
                 self.activitiesCollectionView.reloadData()
-                    print("The numbers of activties inside the view did load")
-                    print(self.activities.count)
-
-                }
+            }
             })
 
-//            FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
-//                DispatchQueue.main.async {
-//
-//                    print("We're here")
-//
-//                    self.activities = activities
-//                    print("The numbers of activties inside the view did load")
-//                    print(self.activities.count)
-//
-//                    self.activitiesCollectionView.reloadData()
-//
-//                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
-//                    // FirebaseClient.writeUserInfo()
-//
-//                }
-//            }
         }
-
-        // Upload user info to Firebase
-        //  FirebaseClient.writeUserInfo()
 
         // Filter activities via "Filter" DropDown
         whenDropDown.selectionAction = { [unowned self] (index,item) in

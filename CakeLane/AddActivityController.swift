@@ -94,7 +94,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         // upload the activity to Firebase 
             
             // 1- create an instance of activity by the textField info
-        let newActivity = Activity(owner: self.slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description)
+            var newActivity = Activity(owner: self.slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description, imageNameFirebaseStorage: imageName)
+            
 
                         // Create an attachment for the notification
                         
@@ -149,7 +150,6 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
             }
         }
         // dismiss the view after saving the activity
-        print("@@@@@@@@@@@@@@@@@@@4")
 
         dismiss(animated: true, completion: nil)
 
