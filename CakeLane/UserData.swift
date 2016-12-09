@@ -28,11 +28,11 @@ struct User {
     var isOwner: Bool
     var isPrimaryOwner: Bool
     
-    // TODO: Integrate activities using Firebase
-    var activitiesCreated = [[String:String]]()
-    var attendedActivities = [[String: String]]()
+    // Integrate activities using Firebase of array pf dictionary of strings has 2 elements: attending activities & created ones
+    // Key = AcitivityID, Value = Formatted Date
+    var activities: [String:Any]
     
-    // MARK: - initializer for user object
+    // MARK: - Firebase initializer for user object
     init(snapShot: [String:Any]) {
         self.slackID = snapShot["slackID"] as! String
         self.teamID = snapShot["teamID"] as! String
@@ -47,11 +47,10 @@ struct User {
         self.isAdmin = snapShot["isAdmin"] as! Bool
         self.isOwner = false
         self.isPrimaryOwner = false
-        
-
+        self.activities = snapShot["activities"] as? [String:Any] ?? [:]
     }
     
-    // duplicate (?) init
+    // Slack initializer
     init(dictionary: [String:Any]) {
         let slackID = dictionary["id"] as! String
         let teamID = dictionary["team_id"] as! String
@@ -81,6 +80,9 @@ struct User {
         self.isAdmin = isAdmin
         self.isOwner = isOwner
         self.isPrimaryOwner = isPrimaryOwner
+        
+        self.activities = [:]
+        
     }
     
     init() {
@@ -97,6 +99,8 @@ struct User {
         self.isAdmin = false
         self.isOwner = false
         self.isPrimaryOwner = false
+        
+        self.activities = [:]
     }
     
     // MARK: - create a dictionary

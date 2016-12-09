@@ -40,6 +40,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        ////////////////////////////////////////// does the data print out correctly??
+
         contentView.addSubview(activityImageView)
         activityImageView.backgroundColor = UIColor.black
         activityImageView.layer.borderWidth = 1
@@ -66,6 +68,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(activityLabel)
         activityLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        activityLabel.shadowColor = UIColor.black
+        activityLabel.shadowOffset.height = 3
+        activityLabel.shadowOffset.width = 3
         activityLabel.textColor = UIColor.white
         activityLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -75,6 +80,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(locationLabel)
         locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        locationLabel.shadowColor = UIColor.black
+        locationLabel.shadowOffset.height = 3
+        locationLabel.shadowOffset.width = 3
         locationLabel.textColor = UIColor.white
         locationLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -83,6 +91,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(dateLabel)
         dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        dateLabel.shadowColor = UIColor.black
+        dateLabel.shadowOffset.height = 3
+        dateLabel.shadowOffset.width = 3
         dateLabel.textColor = UIColor.white
         dateLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -92,6 +103,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
         activityImageView.addSubview(timeLabel)
         timeLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        timeLabel.shadowColor = UIColor.black
+        timeLabel.shadowOffset.height = 3
+        timeLabel.shadowOffset.width = 3
         timeLabel.textColor = UIColor.white
         timeLabel.snp.makeConstraints { (make) in
             make.left.equalTo(dateLabel.snp.right).offset(5)
@@ -175,6 +189,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     }
 
+    //////////////////////////////////
+
     func updateCell(with activity: Activity, handler: @escaping (Bool) -> ()) {
 
         self.activityLabel.text = activity.name
@@ -184,8 +200,11 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         self.numberOfAttendeesLabel.text = ("\(String(activity.attendees.count)) attending   >")
 
         // update cell with local placeholder image
+
+         //cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
+
         if activity.image == " " {
-            self.activityImageView.image = UIImage(named: "smallerAppLogo")
+            self.activityImageView.image = UIImage(named: "appLogo-black")
             self.placeholderImage = true
         }
 
@@ -193,33 +212,26 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     }
 
-    // MARK: Attendee image handling
-    func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
-        
-        print("in the cell about to download image at \(url)")
-        
-        let session = URLSession.shared
-        let newUrl = URL(string: url)
-        if let unwrappedUrl = newUrl {
-            let request = URLRequest(url: unwrappedUrl)
-            let task = session.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { fatalError("Unable to get data \(error?.localizedDescription)") }
-
-                guard let image = UIImage(data: data) else { return }
-                completion(true, image)
-            }
-            task.resume()
-        }
-
-    }
-
+    // download images
     func downloadAttendeeImages(activity: Activity) {
 
         print("in the cell about to download attendee images for activity: \(activity.name)")
-        
+
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
+
+
+            ///////////////////////////////////
+            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
+
+            print(images)
+            print("\n\n\n\nPRINTING IMAGES AND USERS INSIDE ACTIVITIES COLLECTION VIEW CELL\n\n\n\n")
+            print(users)
+
+            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
+
             self.arrayOfImages = images
             self.users = users
+
         }
         DispatchQueue.main.async {
             if self.arrayOfImages.count == 1 {

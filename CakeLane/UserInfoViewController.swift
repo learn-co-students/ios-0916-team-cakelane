@@ -174,7 +174,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         userLabels.append("First Name")
         userLabels.append("Last Name")
         userLabels.append("Email")
-        userLabels.append("Time Zone Label")
+        userLabels.append("Time Zone")
     }
     
     // MARK: show alert, confirm user intention to nuke his profile

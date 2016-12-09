@@ -25,9 +25,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     @IBOutlet weak var filterWhenOutlet: UIBarButtonItem!
 
     // Data
-    let firebaseClient = FirebaseClient.sharedInstance
-    let teamID = FirebaseClient.sharedInstance.teamID
-    let slackID = FirebaseClient.sharedInstance.slackID
+    let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
     var activities = [Activity]()
     var selectedActivity: Activity?
 
@@ -55,12 +54,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 //                    print("\n\n\nTHIS IS THE USER JOIN CHANNEL COMPLETION!!! ++++++++++n\n\n\(response)")
 //                }
 
-        // TODO1: Use Blur In Segue
-//        var blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-//        blurEffect = UIVisualEffectView(effect: blurEffect)
-//        blurEffect.frame = view.bounds
-//        blurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
         // MARK: Navigation Setup
         navigationItem.title = "Teem!"
         UIApplication.shared.statusBarStyle = .lightContent
@@ -72,10 +65,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
 
-        // REFACTORED -> do we need this?
-        // let frame = CGRect(x: 0.02*self.view.frame.maxX, y: 0.02*self.view.frame.maxY, width: self.view.frame.width*0.95, height: self.view.frame.height*0.96)
-        // self.detailView = ActivityDetailsView(frame: frame)
-
         // DropDown Setup
         setUpWhenBarDropDown()
         setUpActivityCollectionCells()
@@ -86,22 +75,39 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         SlackAPIClient.storeUserInfo() { success in
             let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
             let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities")
-            
-            
+
+
             activitiesRef.observe(.value, with: { (snapshot) in
                 var newActivities = [Activity]()
-                
+
                 for activity in snapshot.children {
-                    
+
                     let item = Activity(snapshot: activity as! FIRDataSnapshot)
-        
+
+
                     newActivities.append(item)
                 }
-                
+
                 DispatchQueue.main.async {
-                    self.activities = self.sortedActivities(newActivities)
-                self.activitiesCollectionView.reloadData()
-            }
+
+                    print("We're here")
+
+                    //////////////////////////////////////////////////////////////
+
+                    print("**********))))))))**********\n\n")
+                    print(self.activities)
+                    print("**********))))))))**********\n\n")
+
+                    self.activities = newActivities
+                    //self.activities = self.sortedActivities(newActivities)
+                    self.activitiesCollectionView.reloadData()
+                    print("The numbers of activties inside the view did load")
+                    print(self.activities.count)
+
+                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                    // FirebaseClient.writeUserInfo()
+
+                }
             })
 
         }
@@ -145,10 +151,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 }
             }
         }
-        
-       
+
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.activitiesCollectionView.reloadData()
@@ -212,9 +218,21 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
+
+            ///////////////////////////// pass info from actvities; try it in this file's viewDidLoad
+
+
             // load attendee images
             cell.downloadAttendeeImages(activity: activity)
-                   }
+
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+            print("$$$$$$$$PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$$$")
+            print(cell.arrayOfImages)
+            print("$$$$$$$$$$DONE PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$")
+            print(cell.users)
+            print("$$$$$$$$$$DONE PRINTING USERS$$$$$$$$$$$$$$$")
+            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
+        }
 
         return cell
     }

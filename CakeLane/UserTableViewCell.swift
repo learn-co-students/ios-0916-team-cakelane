@@ -63,7 +63,7 @@ class UserTableViewCell: UITableViewCell {
     }
     
     
-    
+    // FIX: USER TABLE VIEW CELL NOT UPDATED
     func updateCell(with activity: Activity) {
        nameLabel.text = activity.name
         
