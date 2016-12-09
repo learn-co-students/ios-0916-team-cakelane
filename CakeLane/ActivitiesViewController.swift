@@ -35,7 +35,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+      print("we are in the view did load 3452637485967089p42q4539w69e0750r68tpy79")
 
         // MARK: test getTeamInfo
 //        SlackAPIClient.getTeamInfo { response in
@@ -84,20 +84,49 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
         // MARK: Get user info from Slack -> retrieve activities list from Firebase
         SlackAPIClient.storeUserInfo() { success in
+            let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+            let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities")
+            
+            
+            activitiesRef.observe(.value, with: { (snapshot) in
+                var newActivities = [Activity]()
+                
+                for activity in snapshot.children {
 
-            FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
+                    
+                    let item = Activity(snapshot: activity as! FIRDataSnapshot)
+                    
+                    newActivities.append(item)
+                }
+                
+              //  newActivities = filter(newActivities)
                 DispatchQueue.main.async {
-
-                    print("We're here")
-
-                    self.activities = activities
-                    self.activitiesCollectionView.reloadData()
-
-                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                    // FirebaseClient.writeUserInfo()
+                self.activities = newActivities
+            
+                
+                self.activitiesCollectionView.reloadData()
+                    print("The numbers of activties inside the view did load")
+                    print(self.activities.count)
 
                 }
-            }
+            })
+
+//            FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
+//                DispatchQueue.main.async {
+//
+//                    print("We're here")
+//
+//                    self.activities = activities
+//                    print("The numbers of activties inside the view did load")
+//                    print(self.activities.count)
+//
+//                    self.activitiesCollectionView.reloadData()
+//
+//                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
+//                    // FirebaseClient.writeUserInfo()
+//
+//                }
+//            }
         }
 
         // Upload user info to Firebase
@@ -142,7 +171,13 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 }
             }
         }
-
+        
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.activitiesCollectionView.reloadData()
     }
 
     // Self-explanatory func

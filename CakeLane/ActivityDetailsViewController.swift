@@ -12,9 +12,12 @@ import Firebase
 class ActivityDetailsViewController: UIViewController {
 
     var detailView: ActivityDetailsView!
-    let firebaseClient = FirebaseClient.sharedInstance
-    let slackID = FirebaseClient.sharedInstance.slackID
-    let teamID = FirebaseClient.sharedInstance.teamID
+    
+ //     let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
+    let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
+//    let firebaseClient = FirebaseClient.sharedInstance
+   let slackID = FirebaseClient.sharedInstance.slackID
+//    let teamID = FirebaseClient.sharedInstance.teamID
     var selectedActivity: Activity?
     var editedActivity: Activity?
     var attendies = [String:Bool]()
@@ -41,7 +44,7 @@ class ActivityDetailsViewController: UIViewController {
     // check if the user is the owner and update the view with the suitable buttons
     func checkIfOwner() {
 
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
+        let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
         print("@@@@@@@@@@@@@@@@@@@8")
 
         activitiesRef.observe(.value, with: { (snapshot) in
@@ -50,6 +53,13 @@ class ActivityDetailsViewController: UIViewController {
             self.editedActivity = self.detailView.selectedActivity
 
             self.attendies = self.detailView.selectedActivity.attendees
+            if self.attendies.keys.contains(self.slackID){
+                self.detailView.adjustButtonTitle(isAttendee: true)
+ 
+            } else {
+                self.detailView.adjustButtonTitle(isAttendee: false)
+
+            }
 
             if self.detailView.selectedActivity.owner == self.slackID {
                 self.detailView.editButton.isHidden = false
@@ -57,6 +67,8 @@ class ActivityDetailsViewController: UIViewController {
             } else {
 
                 self.detailView.editButton.isHidden = true
+                
+                
                 self.detailView.joinButton.isHidden = false
             }
 
@@ -100,10 +112,10 @@ class ActivityDetailsViewController: UIViewController {
         let newAttendingUser = [slackID:true]
         let newAttendingActivity: [String:String] = [key:date]
 
-        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity, withCompletionBlock: { error, ref in
+        FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity, withCompletionBlock: { error, ref in
 
 
-            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
+            FIRDatabase.database().reference().child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: true)
 
@@ -127,9 +139,9 @@ class ActivityDetailsViewController: UIViewController {
 
         let key = self.detailView.selectedActivity?.id ?? ""
 
-        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
+        FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
 
-            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
+            FIRDatabase.database().reference().child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: false)
 
@@ -154,9 +166,9 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
         
         let key = self.detailView.selectedActivity?.id ?? ""
 
-        self.firebaseClient.ref.child(firebaseClient.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
+        FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
 
-            self.firebaseClient.ref.child(self.firebaseClient.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
+            FIRDatabase.database().reference().child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: false)
 
@@ -169,7 +181,7 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
 
     func joinButtonTapped(with sender: ActivityDetailsView) {
 
-        let activitiesRef = firebaseClient.ref.child(teamID).child("activities").child((self.selectedActivity?.id)!)
+        let activitiesRef = FIRDatabase.database().reference().child(self.teamID).child("activities").child((self.selectedActivity?.id)!)
 
         activitiesRef.observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
 
