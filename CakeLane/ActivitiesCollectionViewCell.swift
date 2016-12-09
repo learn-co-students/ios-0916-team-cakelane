@@ -195,6 +195,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     // MARK: Attendee image handling
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
+        
+        print("in the cell about to download image at \(url)")
+        
         let session = URLSession.shared
         let newUrl = URL(string: url)
         if let unwrappedUrl = newUrl {
@@ -212,7 +215,8 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     func downloadAttendeeImages(activity: Activity) {
 
-
+        print("in the cell about to download attendee images for activity: \(activity.name)")
+        
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
             self.arrayOfImages = images
             self.users = users

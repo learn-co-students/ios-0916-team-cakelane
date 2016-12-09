@@ -93,8 +93,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 
                 for activity in snapshot.children {
 
+                    print("creating a new activity")
                     
                     let item = Activity(snapshot: activity as! FIRDataSnapshot)
+                    
+                    print("\(item.name)")
                     
                     newActivities.append(item)
                 }

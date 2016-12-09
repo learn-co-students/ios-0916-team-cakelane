@@ -101,15 +101,26 @@ class FirebaseClient {
                         arrayOfImages.append(image)
                         
                     })
-                    
-                
-                
             })
             
         }
         
-        print("We got here.")
+        print("downloading images and info")
         handler(arrayOfImages, users)
+        
+    }
+    
+    class func deleteImageFromFirebaseStorage(ref: FIRStorageReference, completion: @escaping (Bool)->()) {
+        
+        // Delete the file
+        ref.delete { (error) -> Void in
+            if (error != nil) {
+                // Uh-oh, an error occurred!
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
         
     }
     
