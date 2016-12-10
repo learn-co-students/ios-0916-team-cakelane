@@ -99,6 +99,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     print("**********))))))))**********\n\n")
 
                     self.activities = newActivities
+                    
+                    // debug from other version: creates duplicates
                     // self.activities = self.sortedActivities(newActivities)
                     self.activitiesCollectionView.reloadData()
                     print("The numbers of activties inside the view did load")
@@ -110,22 +112,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 }
             })
 
-//            FirebaseClient.retrieveActivities(with: self.sortedActivities) { [unowned self] activities in
-//                DispatchQueue.main.async {
-//
-//                    print("We're here")
-//
-//                    self.activities = activities
-//                    print("The numbers of activties inside the view did load")
-//                    print(self.activities.count)
-//
-//                    self.activitiesCollectionView.reloadData()
-//
-//                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
-//                    // FirebaseClient.writeUserInfo()
-//
-//                }
-//            }
         }
 
         // Filter activities via "Filter" DropDown
@@ -234,12 +220,16 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
-
             ///////////////////////////// pass info from actvities; try it in this file's viewDidLoad
 
 
             // load attendee images
-            cell.downloadAttendeeImages(activity: activity)
+            
+            // FUCK
+            
+            OperationQueue.main.addOperation {
+                cell.downloadAttendeeImages(activity: activity)
+            }
 
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
             print("$$$$$$$$PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$$$")
