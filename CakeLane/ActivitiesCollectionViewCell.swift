@@ -41,7 +41,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         super.init(frame: frame)
 
         ////////////////////////////////////////// does the data print out correctly??
-        
+
         contentView.addSubview(activityImageView)
         activityImageView.backgroundColor = UIColor.black
         activityImageView.layer.borderWidth = 1
@@ -190,7 +190,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     }
 
     //////////////////////////////////
-    
+
     func updateCell(with activity: Activity, handler: @escaping (Bool) -> ()) {
 
         self.activityLabel.text = activity.name
@@ -200,9 +200,9 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         self.numberOfAttendeesLabel.text = ("\(String(activity.attendees.count)) attending   >")
 
         // update cell with local placeholder image
-        
+
          //cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
-        
+
         if activity.image == " " {
             self.activityImageView.image = UIImage(named: "appLogo-black")
             self.placeholderImage = true
@@ -215,22 +215,23 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     // download images
     func downloadAttendeeImages(activity: Activity) {
 
+        print("in the cell about to download attendee images for activity: \(activity.name)")
 
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-            
-            
+
+
             ///////////////////////////////////
             print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
 
             print(images)
             print("\n\n\n\nPRINTING IMAGES AND USERS INSIDE ACTIVITIES COLLECTION VIEW CELL\n\n\n\n")
             print(users)
-            
+
             print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
 
             self.arrayOfImages = images
             self.users = users
-            
+
         }
         DispatchQueue.main.async {
             if self.arrayOfImages.count == 1 {

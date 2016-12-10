@@ -27,7 +27,8 @@ class ActivityDetailsViewController: UIViewController {
         self.detailView = ActivityDetailsView(frame: self.view.frame)
         self.view.addSubview(self.detailView)
         detailView.delegate = self
-        checkIfOwner()
+
+        print("in the viewDidLoad of the activitiesDetailVC")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,31 +42,46 @@ class ActivityDetailsViewController: UIViewController {
     // check if the user is the owner and update the view with the suitable buttons
     func checkIfOwner() {
 
-        let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
+        print("in checkIfOwner of the activitiesDetailVC")
 
-        activitiesRef.observe(.value, with: { (snapshot) in
+        let activityRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
 
-            self.detailView.selectedActivity = Activity(snapshot: snapshot)
-            self.editedActivity = self.detailView.selectedActivity
+        activityRef.observe(.value, with: { (snapshot) in
 
-            self.attendies = self.detailView.selectedActivity.attendees
-            if self.attendies.keys.contains(self.slackID){
-                self.detailView.adjustButtonTitle(isAttendee: true)
-
-            } else {
-                self.detailView.adjustButtonTitle(isAttendee: false)
-
-            }
-
-            if self.detailView.selectedActivity.owner == self.slackID {
-                self.detailView.editButton.isHidden = false
-                self.detailView.joinButton.isHidden = true
-            } else {
-
-                self.detailView.editButton.isHidden = true
+            print("in the activity observer of the activitiesDetailVC")
 
 
-                self.detailView.joinButton.isHidden = false
+            // Check that we have a value before attempting to create an Activity
+//            guard (snapshot.value != nil) else { print("snapshot is nil"); return }
+            if let _ = snapshot.value as? [String: Any] {
+
+                print("they say we've got deets")
+                dump(snapshot)
+
+                self.detailView.selectedActivity = Activity(snapshot: snapshot)
+                self.editedActivity = self.detailView.selectedActivity
+
+                self.attendies = self.detailView.selectedActivity.attendees
+                if self.attendies.keys.contains(self.slackID){
+                    self.detailView.adjustButtonTitle(isAttendee: true)
+
+                } else {
+                    self.detailView.adjustButtonTitle(isAttendee: false)
+
+                }
+
+                if self.detailView.selectedActivity.owner == self.slackID {
+                    self.detailView.editButton.isHidden = false
+                    self.detailView.deleteButton.isHidden = false
+
+                    self.detailView.joinButton.isHidden = true
+                } else {
+
+                    self.detailView.editButton.isHidden = true
+                    self.detailView.deleteButton.isHidden = true
+                    self.detailView.joinButton.isHidden = false
+                }
+
             }
 
         })
@@ -89,6 +105,12 @@ class ActivityDetailsViewController: UIViewController {
     // Dismiss View
     func dismissView() {
 
+        print("about to dismiss details")
+
+        let activityRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
+
+        activityRef.removeAllObservers()
+
         dismiss(animated: true, completion: nil)
 
     }
@@ -108,10 +130,10 @@ class ActivityDetailsViewController: UIViewController {
         let newAttendingUser = [slackID:true]
         let newAttendingActivity: [String:String] = [key:date]
 
-        self.firebaseClient.ref.child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity, withCompletionBlock: { error, ref in
+        FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").updateChildValues(newAttendingActivity, withCompletionBlock: { error, ref in
 
 
-            self.firebaseClient.ref.child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
+            FIRDatabase.database().reference().child(self.teamID).child("activities").child(key).child("attending").updateChildValues(newAttendingUser, withCompletionBlock: { [unowned self] error, ref in
 
 
                 self.detailView.adjustButtonTitle(isAttendee: true)
@@ -136,13 +158,11 @@ class ActivityDetailsViewController: UIViewController {
 
         let key = self.detailView.selectedActivity?.id ?? ""
 
-        self.firebaseClient.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
+        FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
 
-            self.firebaseClient.ref.child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
-
+            FIRDatabase.database().reference().child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: false)
-
 
             })
 
@@ -164,13 +184,11 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
 
         let key = self.detailView.selectedActivity?.id ?? ""
 
-        self.firebaseClient.child(teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
+        FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key).removeValue(completionBlock: { [unowned self] error, ref in
 
-            self.firebaseClient.child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
-
+            FIRDatabase.database().reference().child(self.teamID).child("activities").child(key).child("attending").child(self.slackID).removeValue(completionBlock: { [unowned self] error, ref in
 
                 self.detailView.adjustButtonTitle(isAttendee: false)
-
 
             })
 
@@ -196,5 +214,47 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
         leaveActivity()
     }
 
+    func deleteActivity(with sender: ActivityDetailsView) {
 
+        let alert = UIAlertController(title: "Delete Activity", message: "Are you sure you want to delete this activity?", preferredStyle: .alert)
+        
+         alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { [unowned self] (action: UIAlertAction!) in
+            
+            let key = self.detailView.selectedActivity?.id ?? ""
+            let activitiesRef = FIRDatabase.database().reference().child(self.teamID).child("activities").child((self.selectedActivity?.id)!)
+            
+            activitiesRef.removeValue()
+            
+            let selectedActivityRef = FIRDatabase.database().reference().child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesAttending").child(key)
+            
+            selectedActivityRef.removeValue()
+            
+            let usersActivityRef = FIRDatabase.database().reference().child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").child(key)
+            
+            usersActivityRef.removeValue { (error, ref) in
+                self.dismissView()
+            }
+            
+            if let imageStorageName = self.detailView.selectedActivity.imageNameFirebaseStorage {
+                
+                let storageImageStorageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("activityImages").child("\(imageStorageName).png")
+                print(imageStorageName)
+                storageImageStorageRef.delete { (error) -> Void in
+                    if (error != nil) {
+                        print("error")
+                    } else {
+                        print("success")
+                    }
+                }
+                
+            }
+          })
+
+     
+      alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
+
+    
 }

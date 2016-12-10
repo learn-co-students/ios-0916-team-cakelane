@@ -13,6 +13,7 @@ protocol ActivityDetailDelegate: class {
     func editButtonTapped(with sender: ActivityDetailsView)
     func joinButtonTapped(with sender: ActivityDetailsView)
     func leaveActivity(with sender: ActivityDetailsView)
+    func deleteActivity(with sender: ActivityDetailsView)
 }
 
 class ActivityDetailsView: UIView {
@@ -22,6 +23,7 @@ class ActivityDetailsView: UIView {
     var closeButton = UIButton()
     var editButton =  UIButton()
     var joinButton = UIButton()
+    var deleteButton = UIButton()
     var nameLabel = UILabel()
     var activityOverlay = UIView()
     var numberOfAttendeesLabel = UILabel()
@@ -73,6 +75,7 @@ class ActivityDetailsView: UIView {
         setupCloseButton()
         setupEditButton()
         setupJoinButton()
+        setupDeleteButton()
       //  setupActivityOverLay()
         setupLabel()
         
@@ -85,7 +88,7 @@ class ActivityDetailsView: UIView {
         self.activityImageView.translatesAutoresizingMaskIntoConstraints = false
         self.activityImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
         self.activityImageView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor).isActive = true
-        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.45).isActive = true
+        self.activityImageView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.4).isActive = true
         self.activityImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         self.activityImageView.backgroundColor = UIColor.clear
         self.activityImageView.contentMode = .scaleAspectFill
@@ -107,9 +110,6 @@ class ActivityDetailsView: UIView {
     }
     
     func close() {
-        print("\n")
-        print(#function)
-        print("\n")
         delegate?.closeButtonTapped(with: self)
     }
     
@@ -132,9 +132,6 @@ class ActivityDetailsView: UIView {
     }
     
     func edit() {
-        print("\n")
-        print(#function)
-        print("\n")
         delegate?.editButtonTapped(with: self)
     }
     
@@ -154,6 +151,27 @@ class ActivityDetailsView: UIView {
         self.joinButton.backgroundColor = UIColor.orange
         joinButton.addTarget(self, action: #selector(join), for: .touchUpInside)
     }
+    
+    func setupDeleteButton(){
+        
+        self.contentView.addSubview(deleteButton)
+        self.deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        self.deleteButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-30.0).isActive = true
+        self.deleteButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.25).isActive = true
+        self.deleteButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
+        self.deleteButton.setTitle("Delete", for: .normal)
+        self.deleteButton.setTitleColor(UIColor.darkGray, for: .normal)
+        self.deleteButton.layer.borderWidth = 1
+        self.deleteButton.clipsToBounds = true
+        self.deleteButton.layer.cornerRadius = 10
+        self.deleteButton.backgroundColor = UIColor.orange
+        deleteButton.addTarget(self, action: #selector(deleteActivityfromFirebase), for: .touchUpInside)
+    }
+    
+    func deleteActivityfromFirebase() {
+        delegate?.deleteActivity(with: self)
+    }
+
     
     func join() {
         
@@ -226,15 +244,15 @@ class ActivityDetailsView: UIView {
         descriptionTitlelabel.textColor = UIColor.orange
         descriptionTitlelabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 10).isActive = true
+        descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 5).isActive = true
         
         self.contentView.addSubview(descriptionTextView)
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextView.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        descriptionTextView.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor).isActive = true
+        descriptionTextView.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor, constant: 10).isActive = true
         descriptionTextView.backgroundColor = UIColor.white
         descriptionTextView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
-        descriptionTextView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        descriptionTextView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         descriptionTextView.clipsToBounds = true
         descriptionTextView.layer.cornerRadius = 5

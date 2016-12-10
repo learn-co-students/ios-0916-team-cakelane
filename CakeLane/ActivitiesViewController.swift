@@ -82,8 +82,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
                 for activity in snapshot.children {
 
-
                     let item = Activity(snapshot: activity as! FIRDataSnapshot)
+
 
                     newActivities.append(item)
                 }
@@ -99,9 +99,10 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     print("**********))))))))**********\n\n")
 
                     self.activities = newActivities
-                    
+
                     // debug from other version: creates duplicates
                     // self.activities = self.sortedActivities(newActivities)
+
                     self.activitiesCollectionView.reloadData()
                     print("The numbers of activties inside the view did load")
                     print(self.activities.count)
@@ -224,9 +225,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
 
             // load attendee images
-            
+
             // FUCK
-            
+
             OperationQueue.main.addOperation {
                 cell.downloadAttendeeImages(activity: activity)
             }

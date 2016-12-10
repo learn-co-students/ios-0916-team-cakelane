@@ -15,7 +15,7 @@ class FirebaseClient {
     class func writeUserInfo() {
 
         ///////////////////////// CAN BE IMPROVED
-        
+
         // access userProfile from singleton (passed from SlacAPIClient)
         let userProfile = FirebaseUsersDataStore.sharedInstance.primaryUser
         FIRDatabase.database().reference().child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
@@ -160,6 +160,23 @@ class FirebaseClient {
 
         }
 
+        print("downloading images and info")
+        handler(arrayOfImages, users)
+
     }
 
+    class func deleteImageFromFirebaseStorage(ref: FIRStorageReference, completion: @escaping (Bool)->()) {
+
+        // Delete the file
+        ref.delete { (error) -> Void in
+            if (error != nil) {
+                // Uh-oh, an error occurred!
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+
+    }
+    
 }
