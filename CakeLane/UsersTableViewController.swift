@@ -132,7 +132,6 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "user-profile-view-controller") as! UserInfoViewController
         detailVC.user = self.userArray[indexPath.row]
         self.present(detailVC, animated: true, completion: nil)
-        
     }
     
     // MARK: Update user table view cell

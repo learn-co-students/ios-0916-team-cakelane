@@ -228,9 +228,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
             // FUCK
 
-            OperationQueue.main.addOperation {
+//            OperationQueue.main.addOperation {
                 cell.downloadAttendeeImages(activity: activity)
-            }
+//            }
 
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
             print("$$$$$$$$PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$$$")

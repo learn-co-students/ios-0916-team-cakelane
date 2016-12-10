@@ -233,7 +233,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
             self.users = users
 
         }
-        DispatchQueue.main.async {
+        OperationQueue.main.addOperation {
             if self.arrayOfImages.count == 1 {
                 self.firstProfileImage.image = self.arrayOfImages[0]
             } else if self.arrayOfImages.count == 2 {
