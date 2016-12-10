@@ -216,36 +216,45 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
 
     func deleteActivity(with sender: ActivityDetailsView) {
 
-        print("attempting to delete activity")
-
-        let key = self.detailView.selectedActivity?.id ?? ""
-        let activitiesRef = FIRDatabase.database().reference().child(self.teamID).child("activities").child((self.selectedActivity?.id)!)
-
-        activitiesRef.removeValue()
-
-        let selectedActivityRef = FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesAttending").child(key)
-
-        selectedActivityRef.removeValue()
-
-        let usersActivityRef = FIRDatabase.database().reference().child(self.teamID).child("users").child(slackID).child("activities").child("activitiesCreated").child(key)
-
-        usersActivityRef.removeValue { (error, ref) in
-            self.dismissView()
-        }
-      //  print(self.detailView.selectedActivity.imageFirebaseStoragename)
-        if let imageStorageName = self.detailView.selectedActivity.imageNameFirebaseStorage {
-
-        let storageImageStorageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("activityImages").child("\(imageStorageName).png")
-            print(imageStorageName)
-            storageImageStorageRef.delete { (error) -> Void in
-                if (error != nil) {
-                    print("error")
-                } else {
-                    print("success")
-                }
+        let alert = UIAlertController(title: "Delete Activity", message: "Are you sure you want to delete this activity?", preferredStyle: .alert)
+        
+         alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { [unowned self] (action: UIAlertAction!) in
+            
+            let key = self.detailView.selectedActivity?.id ?? ""
+            let activitiesRef = FIRDatabase.database().reference().child(self.teamID).child("activities").child((self.selectedActivity?.id)!)
+            
+            activitiesRef.removeValue()
+            
+            let selectedActivityRef = FIRDatabase.database().reference().child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesAttending").child(key)
+            
+            selectedActivityRef.removeValue()
+            
+            let usersActivityRef = FIRDatabase.database().reference().child(self.teamID).child("users").child(self.slackID).child("activities").child("activitiesCreated").child(key)
+            
+            usersActivityRef.removeValue { (error, ref) in
+                self.dismissView()
             }
+            
+            if let imageStorageName = self.detailView.selectedActivity.imageNameFirebaseStorage {
+                
+                let storageImageStorageRef = FIRStorage.storage().reference(forURL: "gs://cakelane-cea9c.appspot.com").child("activityImages").child("\(imageStorageName).png")
+                print(imageStorageName)
+                storageImageStorageRef.delete { (error) -> Void in
+                    if (error != nil) {
+                        print("error")
+                    } else {
+                        print("success")
+                    }
+                }
+                
+            }
+          })
 
-        }
+     
+      alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        present(alert, animated: true)
     }
+    
 
+    
 }
