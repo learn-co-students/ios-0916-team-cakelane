@@ -221,24 +221,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
-            ///////////////////////////// pass info from actvities; try it in this file's viewDidLoad
+            cell.downloadAttendeeImages(activity: activity)
 
-
-            // load attendee images
-
-            // FUCK
-
-//            OperationQueue.main.addOperation {
-                cell.downloadAttendeeImages(activity: activity)
-//            }
-
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print("$$$$$$$$PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$$$")
-            print(cell.arrayOfImages)
-            print("$$$$$$$$$$DONE PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$")
-            print(cell.users)
-            print("$$$$$$$$$$DONE PRINTING USERS$$$$$$$$$$$$$$$")
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
         }
 
         return cell

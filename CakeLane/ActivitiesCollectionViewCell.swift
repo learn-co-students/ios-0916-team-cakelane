@@ -215,34 +215,23 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     // download images
     func downloadAttendeeImages(activity: Activity) {
 
-        print("in the cell about to download attendee images for activity: \(activity.name)")
 
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-
-
-            ///////////////////////////////////
-            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
-
-            print(images)
-            print("\n\n\n\nPRINTING IMAGES AND USERS INSIDE ACTIVITIES COLLECTION VIEW CELL\n\n\n\n")
-            print(users)
-
-            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
 
             self.arrayOfImages = images
             self.users = users
 
-        }
-        OperationQueue.main.addOperation {
-            if self.arrayOfImages.count == 1 {
-                self.firstProfileImage.image = self.arrayOfImages[0]
-            } else if self.arrayOfImages.count == 2 {
-                self.firstProfileImage.image = self.arrayOfImages[0]
-                self.secondProfileImage.image = self.arrayOfImages[1]
-            } else if self.arrayOfImages.count >= 3 {
-                self.firstProfileImage.image = self.arrayOfImages[0]
-                self.secondProfileImage.image = self.arrayOfImages[1]
-                self.thirdProfileImage.image = self.arrayOfImages[2]
+            OperationQueue.main.addOperation {
+                if self.arrayOfImages.count == 1 {
+                    self.firstProfileImage.image = self.arrayOfImages[0]
+                } else if self.arrayOfImages.count == 2 {
+                    self.firstProfileImage.image = self.arrayOfImages[0]
+                    self.secondProfileImage.image = self.arrayOfImages[1]
+                } else if self.arrayOfImages.count >= 3 {
+                    self.firstProfileImage.image = self.arrayOfImages[0]
+                    self.secondProfileImage.image = self.arrayOfImages[1]
+                    self.thirdProfileImage.image = self.arrayOfImages[2]
+                }
             }
         }
 
