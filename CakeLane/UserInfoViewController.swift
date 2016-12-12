@@ -28,8 +28,6 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        populateUserInfo()
-        
         //MARK: Test get channels.list
         SlackAPIClient.getChannelsList { response in
             guard let verifiedResponse = response else { return }
@@ -37,53 +35,12 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
             //            print("\n\n\nTHIS IS THE CHANNELS LIST!!! ++++++++++\n\n\n\(verifiedResponse)\n\n\n")
         }
         
-        // set color scheme
-        navigationItem.title = "Teem!"
-        UIApplication.shared.statusBarStyle = .lightContent
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
-        self.navigationController?.navigationBar.barTintColor = UIColor.black
-        self.tabBarController?.tabBar.barTintColor = UIColor.black
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
-        
-        // access user defaults
-        let defaults = UserDefaults.standard
-
-        // handle Logout Button
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(promptForConfirmation))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
-
-        // check if user is admin ~ present different profile view options
-        guard let isPrimaryOwner = defaults.string(forKey: "isPrimaryOwner") else { return }
-        
-        // show admin settings button
-        if isPrimaryOwner != "0" {
-            settingsButton.isEnabled = true
-        // do not show admin settings button
+        // show appropriate user info
+        if user.slackID == "" {
+            loadPrimaryUserView()
         } else {
-            self.navigationItem.rightBarButtonItem = nil
+            loadOtherUserView()
         }
-        
-        // handling profile image
-        
-        // retrieve slack profile image url string from user defaults
-        guard let image512UrlString = defaults.string(forKey: "image512") else { return }
-        // set user profile image
-        if let url = URL(string: image512UrlString) {
-            downloadImage(url: url)
-        }
-        
-        // make user profile image circular
-        profileImage.layer.cornerRadius = profileImage.bounds.width / 2
-        profileImage.layer.borderColor = UIColor.black.cgColor
-        profileImage.layer.borderWidth = 2
-        profileImage.layer.masksToBounds = true
-        
-        userInfoTableView.delegate = self
-        userInfoTableView.dataSource = self
-        
-        // set user's full name
-        fullNameLabel.text = "\(userInfo[1]) \(userInfo[2])"
     }
     
     // MARK: Table View Methods
@@ -177,6 +134,59 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         userLabels.append("Time Zone")
     }
     
+    // MARK: 
+    
+    func loadPrimaryUserView() {
+        populateUserInfo()
+        
+        // set color scheme
+        navigationItem.title = "Teem!"
+        UIApplication.shared.statusBarStyle = .lightContent
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.tabBarController?.tabBar.barTintColor = UIColor.black
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
+        
+        // access user defaults
+        let defaults = UserDefaults.standard
+        
+        // handle Logout Button
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(promptForConfirmation))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
+        
+        // check if user is admin ~ present different profile view options
+        guard let isPrimaryOwner = defaults.string(forKey: "isPrimaryOwner") else { return }
+        
+        // show admin settings button
+        if isPrimaryOwner != "0" {
+            settingsButton.isEnabled = true
+            // do not show admin settings button
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+        
+        // handling profile image
+        
+        // retrieve slack profile image url string from user defaults
+        guard let image512UrlString = defaults.string(forKey: "image512") else { return }
+        // set user profile image
+        if let url = URL(string: image512UrlString) {
+            downloadImage(url: url)
+        }
+        
+        // make user profile image circular
+        profileImage.layer.cornerRadius = profileImage.bounds.width / 2
+        profileImage.layer.borderColor = UIColor.black.cgColor
+        profileImage.layer.borderWidth = 2
+        profileImage.layer.masksToBounds = true
+        
+        userInfoTableView.delegate = self
+        userInfoTableView.dataSource = self
+        
+        // set user's full name
+        fullNameLabel.text = "\(userInfo[1]) \(userInfo[2])"
+    }
+    
     // MARK: show alert, confirm user intention to nuke his profile
     func promptForConfirmation() {
         let ac = UIAlertController(title: "Logout", message: "Are you sure you wish to logout?", preferredStyle: .alert)
@@ -205,6 +215,77 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         ac.addAction(cancelAction)
         
         present(ac, animated: true)
+    }
+    
+    func populateOtherUserInfo() {
+        let username = user.username
+        let firstName = user.firstName
+        let lastName = user.lastName
+        let email = user.email
+        let timeZoneLabel = user.timeZoneLabel
+        
+        userInfo.append(username)
+        userInfo.append(firstName)
+        userInfo.append(lastName)
+        userInfo.append(email)
+        userInfo.append(timeZoneLabel)
+        
+        userLabels.append("Slack Handle")
+        userLabels.append("First Name")
+        userLabels.append("Last Name")
+        userLabels.append("Email")
+        userLabels.append("Time Zone")
+    }
+    
+    // MARK: Load other user profile view (attendee)
+    func loadOtherUserView() {
+        populateOtherUserInfo()
+    
+        /////////////////////////
+        
+        // create & setup navigation bar
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height:64))
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Teem!"
+        UIApplication.shared.statusBarStyle = .lightContent
+        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
+        navigationBar.barTintColor = UIColor.black
+        
+        // handle Logout Button
+        let leftButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(returnToUserTableView))
+        leftButton.tintColor = UIColor.orange
+        
+        navigationItem.leftBarButtonItem = leftButton
+        navigationBar.items = [navigationItem]
+        self.view.addSubview(navigationBar)
+        
+        // constrain image view to navigation bar
+        blurredProfileImage.translatesAutoresizingMaskIntoConstraints = false
+        blurredProfileImage.topAnchor.constraint(equalTo: topLayoutGuide.topAnchor, constant: 64).isActive = true
+        
+        
+        // handling profile image
+        
+        // set user profile image
+        if let url = URL(string: user.image512) {
+            downloadImage(url: url)
+        }
+        
+        // make user profile image circular
+        profileImage.layer.cornerRadius = profileImage.bounds.width / 2
+        profileImage.layer.borderColor = UIColor.black.cgColor
+        profileImage.layer.borderWidth = 2
+        profileImage.layer.masksToBounds = true
+        
+        userInfoTableView.delegate = self
+        userInfoTableView.dataSource = self
+        
+        // set user's full name
+        fullNameLabel.text = "\(userInfo[1]) \(userInfo[2])"
+    }
+    
+    func returnToUserTableView() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

@@ -32,19 +32,16 @@ class UserTableViewCell: UITableViewCell {
         
         contentView.addSubview(profileImage)
         profileImage.backgroundColor = UIColor.green
-//        profileImage.layer.masksToBounds = true
         profileImage.layer.borderColor = UIColor.black.cgColor
-        profileImage.layer.cornerRadius = 23
+        
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        profileImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.9).isActive = true
+        profileImage.widthAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.9).isActive = true
+        profileImage.layer.cornerRadius = contentView.frame.height / 1.5
         profileImage.clipsToBounds = true
         profileImage.layer.masksToBounds = true
-        profileImage.snp.makeConstraints { (make) in
-            make.left.equalTo(contentView.snp.left).offset(10)
-            make.centerY.equalTo(contentView.snp.centerY)
-            make.width.equalTo(contentView.snp.width).dividedBy(9)
-            make.width.equalTo(contentView.snp.width)
-            make.height.equalTo(contentView.snp.height).dividedBy(1.4)
-
-        }
         
         contentView.addSubview(nameLabel)
         nameLabel.text = ""

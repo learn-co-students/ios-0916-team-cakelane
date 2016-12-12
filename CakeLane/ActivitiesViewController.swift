@@ -88,8 +88,24 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
                 DispatchQueue.main.async {
 
-                self.activities = newActivities
-                self.activitiesCollectionView.reloadData()
+
+                    print("We're here")
+
+                    //////////////////////////////////////////////////////////////
+
+                    print("**********))))))))**********\n\n")
+                    print(self.activities)
+                    print("**********))))))))**********\n\n")
+
+                    self.activities = newActivities
+
+                    // debug from other version: creates duplicates
+                    // self.activities = self.sortedActivities(newActivities)
+
+                    self.activitiesCollectionView.reloadData()
+                    print("The numbers of activties inside the view did load")
+                    print(self.activities.count)
+
                     // WARNING: THIS CAUSES INTENSE LOADING TIMES
                     // FirebaseClient.writeUserInfo()
 
@@ -205,8 +221,14 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
 
+
             // load attendee images
-            cell.downloadAttendeeImages(activity: activity)
+
+          
+
+//            OperationQueue.main.addOperation {
+                cell.downloadAttendeeImages(activity: activity)
+//            }
 
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
             print("$$$$$$$$PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$$$")
