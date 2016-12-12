@@ -175,7 +175,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         // make user profile image circular
-        profileImage.layer.cornerRadius = profileImage.bounds.width / 2
+        profileImage.layer.cornerRadius = profileImage.frame.width / 2
         profileImage.layer.borderColor = UIColor.black.cgColor
         profileImage.layer.borderWidth = 2
         profileImage.layer.masksToBounds = true

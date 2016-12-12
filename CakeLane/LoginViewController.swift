@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     var safariViewController: SFSafariViewController!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         UIApplication.shared.statusBarStyle = .lightContent
@@ -23,6 +24,7 @@ class LoginViewController: UIViewController {
         self.signInButton.setTitleColor(UIColor.orange, for: .normal)
         
         NotificationCenter.default.addObserver(self, selector: #selector(redirectFromSlack(_:)), name: .closeSafariVC, object: nil)
+        
     }
 
     @IBAction func signInWithSlackButtonTapped(_ sender: UIButton) {
@@ -78,21 +80,52 @@ class LoginViewController: UIViewController {
                 
                 defaults.synchronize()
                 
-                // MARK: Check if currently registering Slack user is part of Teem's Database on Firebase
-                FIRDatabase.database().reference().child(teamID).child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+                // MARK:
+                var slackTeamExistsInTeamDatabase = false
+                FIRDatabase.database().reference().observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     let value = snapshot.value as! [String:Any]
-                    let user = value["\(slackID)"] as? [String:Any] ?? nil
                     
-                    print("THIS IS THE USER THIS IS THE USER!!!!!\n\n")
-                    print(user)
-                    print(value)
-                    
-                    // write to Firebase if there is no user
-                    if user == nil {
+                    for key in value.keys {
+                        
+                        // check if currently registering Slack user is part of Teem's Database on Firebase
+                        if key == teamID {
+                            
+                            // indicate that slack team is part of Teem database: toggle flag
+                            slackTeamExistsInTeamDatabase = true
+                            
+                            let users = value["users"] as! [String:Any]
+                            let user = users["\(slackID)"] as? [String:Any] ?? nil
+                            
+                            // write to Firebase if there is no user
+                            if user == nil {
+                                
+                                SlackAPIClient.storeUserInfo(handler: { (success) in
+                                    
+                                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                                    FirebaseClient.writeUserInfo()
+                                    
+                                })
+                                
+                                break
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    // if there is no entry for a given slack team in Teem's Firebase, create it
+                    if slackTeamExistsInTeamDatabase == false {
+                        
+                        // create users entry
+                        FIRDatabase.database().reference().child(teamID).setValue(["users": slackID])
+                        
+                        // write user info to Firebase
                         SlackAPIClient.storeUserInfo(handler: { (success) in
+                            
                             // WARNING: THIS CAUSES INTENSE LOADING TIMES
                             FirebaseClient.writeUserInfo()
+                            
                         })
                     }
                     
@@ -101,7 +134,9 @@ class LoginViewController: UIViewController {
                 })
                 
             }.resume()
+            
             self.safariViewController.dismiss(animated: true, completion: nil)
+            
         }
         
     }
