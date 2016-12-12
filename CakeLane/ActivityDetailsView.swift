@@ -14,6 +14,7 @@ protocol ActivityDetailDelegate: class {
     func joinButtonTapped(with sender: ActivityDetailsView)
     func leaveActivity(with sender: ActivityDetailsView)
     func deleteActivity(with sender: ActivityDetailsView)
+    func reportButtonTapped(with sender: ActivityDetailsView)
 }
 
 class ActivityDetailsView: UIView {
@@ -24,6 +25,7 @@ class ActivityDetailsView: UIView {
     var editButton =  UIButton()
     var joinButton = UIButton()
     var deleteButton = UIButton()
+    var reportButton = UIButton()
     var nameLabel = UILabel()
     var activityOverlay = UIView()
     var numberOfAttendeesLabel = UILabel()
@@ -76,6 +78,7 @@ class ActivityDetailsView: UIView {
         setupEditButton()
         setupJoinButton()
         setupDeleteButton()
+        setupreportButton()
       //  setupActivityOverLay()
         setupLabel()
         
@@ -99,11 +102,11 @@ class ActivityDetailsView: UIView {
         
         self.contentView.addSubview(closeButton)
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
-        self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:10.0).isActive = true
+        self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
         self.closeButton.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor).isActive = true
         self.closeButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
         self.closeButton.heightAnchor.constraint(equalTo: self.closeButton.widthAnchor).isActive = true
-        let image = UIImage(named: "exit")
+        let image = UIImage(named: "close")?.tint(color: .white)
         self.closeButton.setImage(image, for: .normal)
         self.closeButton.backgroundColor = UIColor.clear
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -133,6 +136,29 @@ class ActivityDetailsView: UIView {
     
     func edit() {
         delegate?.editButtonTapped(with: self)
+    }
+    
+    
+    func setupreportButton() {
+        
+        self.contentView.addSubview(reportButton)
+        self.reportButton.translatesAutoresizingMaskIntoConstraints = false
+        self.reportButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
+        self.reportButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: 0).isActive = true
+        self.reportButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
+        self.reportButton.heightAnchor.constraint(equalTo: self.reportButton.widthAnchor).isActive = true
+        //self.reportButton.setTitle("?", for: .normal)
+        let image = UIImage(named: "report")?.tint(color: .white)
+        
+       self.reportButton.setImage(image, for: .normal)
+        
+        reportButton.addTarget(self, action: #selector(report), for: .touchUpInside)
+    }
+    
+    func report() {
+      
+        delegate?.reportButtonTapped(with: self)
+
     }
     
     func setupJoinButton(){
@@ -252,7 +278,7 @@ class ActivityDetailsView: UIView {
         descriptionTextView.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor, constant: 10).isActive = true
         descriptionTextView.backgroundColor = UIColor.white
         descriptionTextView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
-        descriptionTextView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        descriptionTextView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.15).isActive = true
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         descriptionTextView.clipsToBounds = true
         descriptionTextView.layer.cornerRadius = 5

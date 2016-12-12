@@ -34,9 +34,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-      print("we are in the view did load 3452637485967089p42q4539w69e0750r68tpy79")
-
-        // MARK: test getTeamInfo
+    // MARK: test getTeamInfo
 //        SlackAPIClient.getTeamInfo { response in
 //            guard let teamInfoResponse = response?["team"] as? [String:Any] else { return }
 //            print("\n\n\nTHIS IS THE GETTEAMINFO COMPLETION!!! ++++++++++n\n\n\(teamInfoResponse)\n\n\n")
@@ -89,8 +87,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
                 DispatchQueue.main.async {
 
+
                     print("We're here")
-                    
+
                     //////////////////////////////////////////////////////////////
 
                     print("**********))))))))**********\n\n")
@@ -105,6 +104,9 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     self.activitiesCollectionView.reloadData()
                     print("The numbers of activties inside the view did load")
                     print(self.activities.count)
+
+
+
 
                 }
             })
@@ -217,10 +219,11 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
+
             cell.downloadAttendeeImages(activity: activity)
 
         }
-        
+
         return cell
     }
 
