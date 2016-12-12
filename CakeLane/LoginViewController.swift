@@ -93,8 +93,13 @@ class LoginViewController: UIViewController {
                             
                             // indicate that slack team is part of Teem database: toggle flag
                             slackTeamExistsInTeamDatabase = true
+                            print(value)
                             
-                            let users = value["users"] as! [String:Any]
+                            let teamJSONContents = value["\(teamID)"] as! [String:Any]
+                            let users = teamJSONContents["users"] as! [String:Any]
+                            
+                            print(users)
+                            
                             let user = users["\(slackID)"] as? [String:Any] ?? nil
                             
                             // write to Firebase if there is no user
