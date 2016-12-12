@@ -40,8 +40,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        ////////////////////////////////////////// does the data print out correctly??
-
         contentView.addSubview(activityImageView)
         activityImageView.backgroundColor = UIColor.black
         activityImageView.layer.borderWidth = 1
@@ -188,8 +186,6 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         delegate?.attendeesTapped(sender: self)
 
     }
-
-    //////////////////////////////////
 
     func updateCell(with activity: Activity, handler: @escaping (Bool) -> ()) {
 
