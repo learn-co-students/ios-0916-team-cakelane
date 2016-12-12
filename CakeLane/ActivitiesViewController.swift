@@ -107,9 +107,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     print("The numbers of activties inside the view did load")
                     print(self.activities.count)
 
-                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                    FirebaseClient.writeUserInfo()
-
                 }
             })
 

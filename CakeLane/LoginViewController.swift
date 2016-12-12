@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import SafariServices
 
 class LoginViewController: UIViewController {
@@ -79,7 +80,11 @@ class LoginViewController: UIViewController {
                 
                 // check Firebase for user id
                 
-                
+//                let userAlreadyExists = FIRDatabase.database().reference().child(teamID).child(userID)
+//                print("THIS IS THE USER THIS IS THE USER!!!!!\n\n")
+//                print(userAlreadyExists)
+//                // WARNING: THIS CAUSES INTENSE LOADING TIMES
+//                FirebaseClient.writeUserInfo()
                 
                 NotificationCenter.default.post(name: .closeLoginVC, object: self)
             }.resume()
