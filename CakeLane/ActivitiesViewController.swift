@@ -76,7 +76,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
             let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities")
 
-
             activitiesRef.observe(.value, with: { (snapshot) in
                 var newActivities = [Activity]()
 
@@ -91,7 +90,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                 DispatchQueue.main.async {
 
                     print("We're here")
-
+                    
                     //////////////////////////////////////////////////////////////
 
                     print("**********))))))))**********\n\n")

@@ -65,28 +65,41 @@ class LoginViewController: UIViewController {
 //                print("+++++++++++++++*********++++++++++")
 
                 let token = json["access_token"] as! String
-                let userID = json["user_id"] as! String
+                let slackID = json["user_id"] as! String
                 let teamID = json["team_id"] as! String
                 let teamName = json["team_name"] as! String
                 
                 // save slack account token, team name using UserDefaults
                 let defaults = UserDefaults.standard
                 defaults.setValue(token, forKey: "slackToken")
-                defaults.setValue(userID, forKey: "slackID")
+                defaults.setValue(slackID, forKey: "slackID")
                 defaults.setValue(teamID, forKey: "teamID")
                 defaults.set(teamName, forKey: "teamName")
                 
                 defaults.synchronize()
                 
-                // check Firebase for user id
+                // MARK: Check if currently registering Slack user is part of Teem's Database on Firebase
+                FIRDatabase.database().reference().child(teamID).child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    let value = snapshot.value as! [String:Any]
+                    let user = value["\(slackID)"] as? [String:Any] ?? nil
+                    
+                    print("THIS IS THE USER THIS IS THE USER!!!!!\n\n")
+                    print(user)
+                    print(value)
+                    
+                    // write to Firebase if there is no user
+                    if user == nil {
+                        SlackAPIClient.storeUserInfo(handler: { (success) in
+                            // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                            FirebaseClient.writeUserInfo()
+                        })
+                    }
+                    
+                    NotificationCenter.default.post(name: .closeLoginVC, object: self)
+                    
+                })
                 
-//                let userAlreadyExists = FIRDatabase.database().reference().child(teamID).child(userID)
-//                print("THIS IS THE USER THIS IS THE USER!!!!!\n\n")
-//                print(userAlreadyExists)
-//                // WARNING: THIS CAUSES INTENSE LOADING TIMES
-//                FirebaseClient.writeUserInfo()
-                
-                NotificationCenter.default.post(name: .closeLoginVC, object: self)
             }.resume()
             self.safariViewController.dismiss(animated: true, completion: nil)
         }
