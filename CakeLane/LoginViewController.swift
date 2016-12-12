@@ -28,22 +28,22 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func signInWithSlackButtonTapped(_ sender: UIButton) {
-
+        
         // NOTE: Direct user to Slack for authentication
         let baseURL = "https://slack.com/oauth/"
         let path = "authorize"
-
+        
         // NOTE: set up initial scopes so that user doesn't have to go through authorization multiple times
         // let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,incoming-webhook,bot"
         let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,channels:read,channels:write,team:read"
-
+        
         let urlString = baseURL + path + query
-
+        
         let url = URL(string: urlString)!
-
-          self.safariViewController = SFSafariViewController(url: url)
-            present(self.safariViewController, animated: true, completion: nil)
-
+        
+        self.safariViewController = SFSafariViewController(url: url)
+        present(self.safariViewController, animated: true, completion: nil)
+        
     }
 
     func redirectFromSlack(_ notification: Notification) {
@@ -119,8 +119,21 @@ class LoginViewController: UIViewController {
                         }
                         
                     }
+                    
                     // if there is no entry for a given slack team in Teem's Firebase, create it
                     if slackTeamExistsInTeamDatabase == false {
+                        
+                        /////////////////////////////////////////////
+                        
+                        // create webhook
+                        SlackAPIClient.userJoinChannel(with: { (channelJSON) in
+                            
+                            print(channelJSON)
+                            
+                            
+                        })
+                        
+                        /////////////////////////////////////////////
                         
                         // create users entry
                         FIRDatabase.database().reference().child(teamID).setValue(["users": slackID])
