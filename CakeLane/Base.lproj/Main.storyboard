@@ -60,6 +60,7 @@
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appLogo-black" translatesAutoresizingMaskIntoConstraints="NO" id="eNB-Kh-et4">
                                 <rect key="frame" x="32" y="17.5" width="256" height="221"/>
+
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
@@ -75,6 +76,7 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-YP-MVE">
                                         <rect key="frame" x="0.0" y="0.0" width="256" height="45"/>
+
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="wbt-UR-rWi"/>
@@ -85,6 +87,7 @@
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ygd-60-I9W">
                                         <rect key="frame" x="0.0" y="54" width="256" height="45"/>
+
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="Osq-GH-d2x"/>
@@ -98,6 +101,7 @@
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hmB-89-M0e">
                                         <rect key="frame" x="0.0" y="108" width="256" height="45"/>
+
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="ywr-GB-bQh"/>
@@ -108,6 +112,7 @@
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TMj-oL-IlS">
                                         <rect key="frame" x="0.0" y="162" width="256" height="65"/>
+
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -292,6 +297,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FIh-zt-JhS">
                                             <rect key="frame" x="114" y="148" width="95" height="25"/>
+
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -313,12 +319,14 @@
                             </visualEffectView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f2y-Nc-58S">
                                 <rect key="frame" x="98" y="74" width="124" height="124"/>
+
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="f2y-Nc-58S" secondAttribute="height" multiplier="1:1" id="Gdm-oT-Qsx"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uht-Mn-SBa">
                                 <rect key="frame" x="0.0" y="276" width="320" height="277"/>
+
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userInfoCell" rowHeight="45" id="Dpi-tM-KtQ" customClass="UserInfoCell" customModule="CakeLane" customModuleProvider="target">
@@ -326,6 +334,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dpi-tM-KtQ" id="Zkw-5o-Mgd">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zp-mI-Up5">
@@ -361,7 +370,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="uht-Mn-SBa" firstAttribute="top" secondItem="Ak6-89-IDH" secondAttribute="bottom" constant="41.333333333333314" id="27k-wl-3p0"/>
-                            <constraint firstItem="f2y-Nc-58S" firstAttribute="height" secondItem="Ak6-89-IDH" secondAttribute="height" multiplier="0.5" constant="39" id="3GO-st-6X6"/>
+                            <constraint firstItem="f2y-Nc-58S" firstAttribute="height" secondItem="Ak6-89-IDH" secondAttribute="height" multiplier="0.6" id="3GO-st-6X6"/>
                             <constraint firstItem="uht-Mn-SBa" firstAttribute="width" secondItem="q8f-15-AxW" secondAttribute="width" id="6yC-FZ-NTX"/>
                             <constraint firstItem="Ak6-89-IDH" firstAttribute="width" secondItem="q8f-15-AxW" secondAttribute="width" id="Bd8-8J-bcZ"/>
                             <constraint firstItem="FIh-zt-JhS" firstAttribute="top" secondItem="f2y-Nc-58S" secondAttribute="bottom" constant="14.666666666666629" id="Bxs-Zz-Ft0"/>

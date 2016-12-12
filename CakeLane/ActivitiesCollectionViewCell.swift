@@ -112,11 +112,11 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityOverlay.addSubview(firstProfileImage)
-        firstProfileImage.contentMode = UIViewContentMode.scaleToFill
-        firstProfileImage.layer.masksToBounds = true
-        firstProfileImage.layer.borderColor = UIColor.black.cgColor
-        firstProfileImage.layer.cornerRadius = 18
+        firstProfileImage.layer.cornerRadius = contentView.frame.height / 21
         firstProfileImage.clipsToBounds = true
+        firstProfileImage.layer.masksToBounds = true
+        firstProfileImage.contentMode = UIViewContentMode.scaleToFill
+        
         firstProfileImage.snp.makeConstraints { (make) in
             make.left.equalTo(activityOverlay.snp.left).offset(10)
             make.top.equalTo(activityOverlay.snp.top).offset(1)
@@ -128,7 +128,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         secondProfileImage.contentMode = UIViewContentMode.scaleToFill
         secondProfileImage.layer.masksToBounds = true
         secondProfileImage.layer.borderColor = UIColor.black.cgColor
-        secondProfileImage.layer.cornerRadius = 18
+        secondProfileImage.layer.cornerRadius = contentView.frame.height / 21
         secondProfileImage.clipsToBounds = true
         secondProfileImage.snp.makeConstraints { (make) in
             make.left.equalTo(firstProfileImage.snp.right).offset(3)
@@ -141,7 +141,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         thirdProfileImage.contentMode = UIViewContentMode.scaleToFill
         thirdProfileImage.layer.masksToBounds = true
         thirdProfileImage.layer.borderColor = UIColor.black.cgColor
-        thirdProfileImage.layer.cornerRadius = 18
+        thirdProfileImage.layer.cornerRadius = contentView.frame.height / 21
         thirdProfileImage.clipsToBounds = true
         thirdProfileImage.snp.makeConstraints { (make) in
             make.left.equalTo(secondProfileImage.snp.right).offset(3)
@@ -233,34 +233,23 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     // download images
     func downloadAttendeeImages(activity: Activity) {
 
-        print("in the cell about to download attendee images for activity: \(activity.name)")
 
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-
-
-            ///////////////////////////////////
-            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
-
-            print(images)
-            print("\n\n\n\nPRINTING IMAGES AND USERS INSIDE ACTIVITIES COLLECTION VIEW CELL\n\n\n\n")
-            print(users)
-
-            print("\n\n\n\nBOSS SUGGESTED I TEST THIS\n\n\n\n")
 
             self.arrayOfImages = images
             self.users = users
 
-        }
-        OperationQueue.main.addOperation {
-            if self.arrayOfImages.count == 1 {
-                self.firstProfileImage.image = self.arrayOfImages[0]
-            } else if self.arrayOfImages.count == 2 {
-                self.firstProfileImage.image = self.arrayOfImages[0]
-                self.secondProfileImage.image = self.arrayOfImages[1]
-            } else if self.arrayOfImages.count >= 3 {
-                self.firstProfileImage.image = self.arrayOfImages[0]
-                self.secondProfileImage.image = self.arrayOfImages[1]
-                self.thirdProfileImage.image = self.arrayOfImages[2]
+            OperationQueue.main.addOperation {
+                if self.arrayOfImages.count == 1 {
+                    self.firstProfileImage.image = self.arrayOfImages[0]
+                } else if self.arrayOfImages.count == 2 {
+                    self.firstProfileImage.image = self.arrayOfImages[0]
+                    self.secondProfileImage.image = self.arrayOfImages[1]
+                } else if self.arrayOfImages.count >= 3 {
+                    self.firstProfileImage.image = self.arrayOfImages[0]
+                    self.secondProfileImage.image = self.arrayOfImages[1]
+                    self.thirdProfileImage.image = self.arrayOfImages[2]
+                }
             }
         }
 

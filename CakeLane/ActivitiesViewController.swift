@@ -74,7 +74,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
             let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities")
 
-
             activitiesRef.observe(.value, with: { (snapshot) in
                 var newActivities = [Activity]()
 
@@ -106,8 +105,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     print("The numbers of activties inside the view did load")
                     print(self.activities.count)
 
-                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                     FirebaseClient.writeUserInfo()
+
+
 
                 }
             })
@@ -221,22 +220,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
 
+            cell.downloadAttendeeImages(activity: activity)
 
-            // load attendee images
-
-          
-
-//            OperationQueue.main.addOperation {
-            //    cell.downloadAttendeeImages(activity: activity)
-//            }
-
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
-            print("$$$$$$$$PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$$$")
-            print(cell.arrayOfImages)
-            print("$$$$$$$$$$DONE PRINTING ARRAY OF IMAGES$$$$$$$$$$$$$$$")
-            print(cell.users)
-            print("$$$$$$$$$$DONE PRINTING USERS$$$$$$$$$$$$$$$")
-            print("$$$$$$$$$$$$$$$$$$$$$$$$$")
         }
 
         return cell

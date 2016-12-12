@@ -10,13 +10,11 @@ import Foundation
 import Firebase
 
 class FirebaseClient {
-
+    
     // MARK: Write current user's info to Firebase
     class func writeUserInfo() {
 
-        ///////////////////////// CAN BE IMPROVED
-
-        // access userProfile from singleton (passed from SlacAPIClient)
+        // access userProfile from singleton (passed from SlacAPIClient.storeUserInfo)
         let userProfile = FirebaseUsersDataStore.sharedInstance.primaryUser
         FIRDatabase.database().reference().child(userProfile.teamID).child("users").child(userProfile.slackID).setValue(userProfile.toAnyObject())
 
