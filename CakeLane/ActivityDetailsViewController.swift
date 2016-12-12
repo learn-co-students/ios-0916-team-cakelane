@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import MessageUI
 
-class ActivityDetailsViewController: UIViewController {
+class ActivityDetailsViewController: UIViewController, MFMailComposeViewControllerDelegate  {
 
     var detailView: ActivityDetailsView!
 
@@ -72,6 +73,7 @@ class ActivityDetailsViewController: UIViewController {
 
                 if self.detailView.selectedActivity.owner == self.slackID {
                     self.detailView.editButton.isHidden = false
+                    self.detailView.reportButton.isHidden = true
                     self.detailView.deleteButton.isHidden = false
 
                     self.detailView.joinButton.isHidden = true
@@ -80,6 +82,7 @@ class ActivityDetailsViewController: UIViewController {
                     self.detailView.editButton.isHidden = true
                     self.detailView.deleteButton.isHidden = true
                     self.detailView.joinButton.isHidden = false
+                    self.detailView.reportButton.isHidden = false
                 }
 
             }
@@ -255,6 +258,47 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
         present(alert, animated: true)
     }
     
-
+    func reportButtonTapped(with sender: ActivityDetailsView) {
+        
+        let alert = UIAlertController(title: "Report Activity", message: "Are you sure you want to report this activity?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { (action: UIAlertAction!) in
+            
+            if !MFMailComposeViewController.canSendMail() {
+                
+                self.showSendMailErrorAlert()
+            }
+            let composeMail = MFMailComposeViewController()
+            
+            composeMail.mailComposeDelegate = self
+            
+            composeMail.setToRecipients(["cakelane.flatiron@gmail.com"])
+            composeMail.setSubject("Feedback for Activity")
+            composeMail.setMessageBody("Tell us your thoughts about this activity", isHTML: false)
+            
+            self.present(composeMail, animated: true, completion: nil)
+        
+        })
+        
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController,didFinishWith result: MFMailComposeResult, error: Error?) {
+        let alertController = UIAlertController(title: nil, message: "Thanks for the Feedback", preferredStyle: UIAlertControllerStyle.alert)
+        let thanks = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default)         
+        alertController.addAction(thanks)
+        controller.dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     
 }

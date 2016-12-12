@@ -203,6 +203,28 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
             self.activityImageView.image = UIImage(named: "appLogo-black")
             self.placeholderImage = true
         }
+        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
+            
+            
+            self.arrayOfImages = images
+            self.users = users
+            
+       
+        OperationQueue.main.addOperation {
+            if self.arrayOfImages.count == 1 {
+                self.firstProfileImage.image = self.arrayOfImages[0]
+            } else if self.arrayOfImages.count == 2 {
+                self.firstProfileImage.image = self.arrayOfImages[0]
+                self.secondProfileImage.image = self.arrayOfImages[1]
+            } else if self.arrayOfImages.count >= 3 {
+                self.firstProfileImage.image = self.arrayOfImages[0]
+                self.secondProfileImage.image = self.arrayOfImages[1]
+                self.thirdProfileImage.image = self.arrayOfImages[2]
+            }
+        }
+        
+    }
+
 
         handler(true)
 

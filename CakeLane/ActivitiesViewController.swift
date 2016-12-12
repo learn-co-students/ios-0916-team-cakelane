@@ -227,7 +227,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
           
 
 //            OperationQueue.main.addOperation {
-                cell.downloadAttendeeImages(activity: activity)
+            //    cell.downloadAttendeeImages(activity: activity)
 //            }
 
             print("$$$$$$$$$$$$$$$$$$$$$$$$$")
