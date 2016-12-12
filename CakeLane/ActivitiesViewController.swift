@@ -108,7 +108,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     print(self.activities.count)
 
                     // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                    // FirebaseClient.writeUserInfo()
+                    FirebaseClient.writeUserInfo()
 
                 }
             })
@@ -224,7 +224,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             cell.downloadAttendeeImages(activity: activity)
 
         }
-
+        
         return cell
     }
 

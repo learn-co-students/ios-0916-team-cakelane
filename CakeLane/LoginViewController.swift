@@ -77,6 +77,10 @@ class LoginViewController: UIViewController {
                 
                 defaults.synchronize()
                 
+                // check Firebase for user id
+                
+                
+                
                 NotificationCenter.default.post(name: .closeLoginVC, object: self)
             }.resume()
             self.safariViewController.dismiss(animated: true, completion: nil)

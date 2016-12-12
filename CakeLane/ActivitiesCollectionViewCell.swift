@@ -114,11 +114,11 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityOverlay.addSubview(firstProfileImage)
-        firstProfileImage.contentMode = UIViewContentMode.scaleToFill
-        firstProfileImage.layer.masksToBounds = true
-        firstProfileImage.layer.borderColor = UIColor.black.cgColor
-        firstProfileImage.layer.cornerRadius = 18
+        firstProfileImage.layer.cornerRadius = contentView.frame.height / 21
         firstProfileImage.clipsToBounds = true
+        firstProfileImage.layer.masksToBounds = true
+        firstProfileImage.contentMode = UIViewContentMode.scaleToFill
+        
         firstProfileImage.snp.makeConstraints { (make) in
             make.left.equalTo(activityOverlay.snp.left).offset(10)
             make.top.equalTo(activityOverlay.snp.top).offset(1)
@@ -130,7 +130,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         secondProfileImage.contentMode = UIViewContentMode.scaleToFill
         secondProfileImage.layer.masksToBounds = true
         secondProfileImage.layer.borderColor = UIColor.black.cgColor
-        secondProfileImage.layer.cornerRadius = 18
+        secondProfileImage.layer.cornerRadius = contentView.frame.height / 21
         secondProfileImage.clipsToBounds = true
         secondProfileImage.snp.makeConstraints { (make) in
             make.left.equalTo(firstProfileImage.snp.right).offset(3)
@@ -143,7 +143,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         thirdProfileImage.contentMode = UIViewContentMode.scaleToFill
         thirdProfileImage.layer.masksToBounds = true
         thirdProfileImage.layer.borderColor = UIColor.black.cgColor
-        thirdProfileImage.layer.cornerRadius = 18
+        thirdProfileImage.layer.cornerRadius = contentView.frame.height / 21
         thirdProfileImage.clipsToBounds = true
         thirdProfileImage.snp.makeConstraints { (make) in
             make.left.equalTo(secondProfileImage.snp.right).offset(3)
