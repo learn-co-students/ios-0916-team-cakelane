@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import MessageUI
 
 // TODO: add pull to refresh user info from Slack functionality
 
-class UserInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class UserInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , MFMailComposeViewControllerDelegate{
     
     // UI elements
     @IBOutlet weak var blurredProfileImage: UIImageView!
@@ -106,10 +107,50 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // MARK: Button Functionality Methods
-    
-    @IBAction func settingsButtonTapped(_ sender: Any) {
+    @IBAction func feedbackButton(_ sender: Any) {
+           
+        let alert = UIAlertController(title: "Report Activity", message: "Are you sure you want to send feedback to the developers?", preferredStyle: .alert)
         
+        alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { (action: UIAlertAction!) in
+            
+            if !MFMailComposeViewController.canSendMail() {
+                
+                self.showSendMailErrorAlert()
+            }
+            let composeMail = MFMailComposeViewController()
+            
+            composeMail.mailComposeDelegate = self
+            
+            composeMail.setToRecipients(["cakelane.flatiron@gmail.com"])
+            composeMail.setSubject("General Feedback")
+            composeMail.setMessageBody("Tell us your thoughts about the app", isHTML: false)
+            
+            self.present(composeMail, animated: true, completion: nil)
+            
+        })
+        
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        present(alert, animated: true)
     }
+    
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController,didFinishWith result: MFMailComposeResult, error: Error?) {
+        let alertController = UIAlertController(title: nil, message: "Thanks for the Feedback!", preferredStyle: UIAlertControllerStyle.alert)
+        let thanks = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default)
+        alertController.addAction(thanks)
+        controller.dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    
+    
     
     // MARK: Helper Methods
     
@@ -145,7 +186,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
         self.tabBarController?.tabBar.barTintColor = UIColor.black
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
+      //  self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
         
         // access user defaults
         let defaults = UserDefaults.standard
@@ -155,15 +196,15 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
         
         // check if user is admin ~ present different profile view options
-        guard let isPrimaryOwner = defaults.string(forKey: "isPrimaryOwner") else { return }
-        
-        // show admin settings button
-        if isPrimaryOwner != "0" {
-            settingsButton.isEnabled = true
-            // do not show admin settings button
-        } else {
-            self.navigationItem.rightBarButtonItem = nil
-        }
+//        guard let isPrimaryOwner = defaults.string(forKey: "isPrimaryOwner") else { return }
+//        
+//        // show admin settings button
+//        if isPrimaryOwner != "0" {
+//            settingsButton.isEnabled = true
+//            // do not show admin settings button
+//        } else {
+//            self.navigationItem.rightBarButtonItem = nil
+//        }
         
         // handling profile image
         

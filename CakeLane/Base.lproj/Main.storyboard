@@ -282,16 +282,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ak6-89-IDH">
-                                <rect key="frame" x="0.0" y="64" width="320" height="170.5"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="171"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9a-cf-bYb">
-                                <rect key="frame" x="-4" y="64" width="324" height="224.5"/>
+                                <rect key="frame" x="-4" y="64" width="324" height="225"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="1pD-bJ-jcV">
                                     <rect key="frame" x="0.0" y="0.0" width="324" height="225"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FIh-zt-JhS">
-                                            <rect key="frame" x="114.5" y="148" width="95" height="25"/>
+                                            <rect key="frame" x="114" y="148" width="95" height="25"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -312,20 +312,20 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f2y-Nc-58S">
-                                <rect key="frame" x="98.5" y="74" width="124" height="123.5"/>
+                                <rect key="frame" x="98" y="74" width="124" height="124"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="f2y-Nc-58S" secondAttribute="height" multiplier="1:1" id="Gdm-oT-Qsx"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uht-Mn-SBa">
-                                <rect key="frame" x="0.0" y="275.5" width="320" height="277"/>
+                                <rect key="frame" x="0.0" y="276" width="320" height="277"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userInfoCell" rowHeight="45" id="Dpi-tM-KtQ" customClass="UserInfoCell" customModule="CakeLane" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dpi-tM-KtQ" id="Zkw-5o-Mgd">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zp-mI-Up5">
@@ -382,9 +382,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vhQ-iu-XQt">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="vt5-Bu-cLE">
+                        <barButtonItem key="rightBarButtonItem" title="Feedback" id="C3e-qb-R7P">
+                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="settingsButtonTapped:" destination="wWW-8o-xfa" id="h9b-bp-Iz8"/>
+                                <action selector="feedbackButton:" destination="wWW-8o-xfa" id="qWy-Aj-wVn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -394,7 +395,6 @@
                         <outlet property="fullNameLabel" destination="FIh-zt-JhS" id="JjS-HK-fEE"/>
                         <outlet property="navigationItem" destination="vhQ-iu-XQt" id="jtX-9v-vTr"/>
                         <outlet property="profileImage" destination="f2y-Nc-58S" id="yiM-Od-wZI"/>
-                        <outlet property="settingsButton" destination="vt5-Bu-cLE" id="YYa-XW-WhD"/>
                         <outlet property="userInfoTableView" destination="uht-Mn-SBa" id="6j3-I1-59k"/>
                     </connections>
                 </viewController>
