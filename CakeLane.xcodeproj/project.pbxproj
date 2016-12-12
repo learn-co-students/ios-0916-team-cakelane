@@ -280,7 +280,7 @@
 				TargetAttributes = {
 					1BDF62341DDD06C400C3D12E = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = KXY9EDFTF5;
+						DevelopmentTeam = LQ8JCXM85J;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -533,7 +533,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = KXY9EDFTF5;
+				DEVELOPMENT_TEAM = LQ8JCXM85J;
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -555,7 +555,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = KXY9EDFTF5;
+				DEVELOPMENT_TEAM = LQ8JCXM85J;
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
