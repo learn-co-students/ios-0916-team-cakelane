@@ -109,7 +109,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: Button Functionality Methods
     @IBAction func feedbackButton(_ sender: Any) {
            
-        let alert = UIAlertController(title: "Report Activity", message: "Are you sure you want to send feedback to the developers?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "General Feedback", message: "Are you sure you want to send feedback to the developers?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { (action: UIAlertAction!) in
             
