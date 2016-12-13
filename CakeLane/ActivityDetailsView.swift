@@ -170,10 +170,12 @@ class ActivityDetailsView: UIView {
         self.joinButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.25).isActive = true
         self.joinButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.joinButton.setTitle("Join", for: .normal)
-        self.joinButton.setTitleColor(UIColor.darkGray, for: .normal)
+        self.joinButton.setTitleColor(UIColor.white, for: .normal)
         self.joinButton.layer.borderWidth = 1
         self.joinButton.clipsToBounds = true
-        self.joinButton.layer.cornerRadius = 10
+        self.joinButton.layer.cornerRadius = 17
+        self.joinButton.layer.borderWidth = 2
+        self.joinButton.layer.borderColor = UIColor.orange.cgColor
         self.joinButton.backgroundColor = UIColor.orange
         joinButton.addTarget(self, action: #selector(join), for: .touchUpInside)
     }
