@@ -34,8 +34,8 @@ extension ActivitiesViewController {
         let sortedArray = array.sorted { (a, b) -> Bool in
             var result = false
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
+            dateFormatter.dateStyle = DateFormatter.Style.medium
+            dateFormatter.timeStyle = .short
             if let aDate = dateFormatter.date(from: a.date){
                 if let bDate = dateFormatter.date(from: b.date){
                     if aDate < bDate {
@@ -54,8 +54,8 @@ extension ActivitiesViewController {
             var result = false
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
+            dateFormatter.dateStyle = DateFormatter.Style.medium
+            dateFormatter.timeStyle = .short
             if let aDate = dateFormatter.date(from: a.date) {
                 if calendar.isDateInToday(aDate){
                     result = true
@@ -72,8 +72,8 @@ extension ActivitiesViewController {
             var result = false
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
+            dateFormatter.dateStyle = DateFormatter.Style.medium
+            dateFormatter.timeStyle = .short
             
             let currentDate = Date()
             let currentWeek = calendar.component(.weekOfMonth, from: currentDate)
@@ -95,8 +95,8 @@ extension ActivitiesViewController {
             var result = false
             let calendar = NSCalendar.current
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.long
-            dateFormatter.timeStyle = .long
+            dateFormatter.dateStyle = DateFormatter.Style.medium
+            dateFormatter.timeStyle = .short
             
             let currentDate = Date()
             let currentMonth = calendar.component(.month, from: currentDate)
