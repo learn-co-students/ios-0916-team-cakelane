@@ -21,11 +21,11 @@ class ActivityDetailsView: UIView {
     
     @IBOutlet var contentView: UIView!
     var activityImageView: UIImageView!
-    var closeButton = UIButton()
-    var editButton =  UIButton()
+    var closeButton = CloseButton()
+    var editButton =  EditButton()
     var joinButton = UIButton()
     var deleteButton = UIButton()
-    var reportButton = UIButton()
+    var reportButton = ReportButton()
     var nameLabel = UILabel()
     var activityOverlay = UIView()
     var numberOfAttendeesLabel = UILabel()
@@ -104,11 +104,11 @@ class ActivityDetailsView: UIView {
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
         self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
         self.closeButton.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor).isActive = true
-        self.closeButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
+        self.closeButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.15, constant: 0.0).isActive = true
         self.closeButton.heightAnchor.constraint(equalTo: self.closeButton.widthAnchor).isActive = true
-        let image = UIImage(named: "close")?.tint(color: .white)
-        self.closeButton.setImage(image, for: .normal)
-        self.closeButton.backgroundColor = UIColor.clear
+       // let image = UIImage(named: "close")?.tint(color: .white)
+       // self.closeButton.setImage(image, for: .normal)
+       // self.closeButton.backgroundColor = UIColor.clear
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
     }
     
@@ -120,14 +120,14 @@ class ActivityDetailsView: UIView {
         
         self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
-        self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:10.0).isActive = true
+        self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
         self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: 0).isActive = true
-        self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
+        self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.15, constant: 0.0).isActive = true
         self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
         
-        let image = UIImage(named: "pencil")
+        //let image = UIImage(named: "pencil")
         
-        self.editButton.setImage(image, for: .normal)
+        //self.editButton.setImage(image, for: .normal)
         
         editButton.addTarget(self, action: #selector(edit), for: .touchUpInside)
         
@@ -148,9 +148,9 @@ class ActivityDetailsView: UIView {
         self.reportButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.1, constant: 0.0).isActive = true
         self.reportButton.heightAnchor.constraint(equalTo: self.reportButton.widthAnchor).isActive = true
         //self.reportButton.setTitle("?", for: .normal)
-        let image = UIImage(named: "report")?.tint(color: .white)
+       // let image = UIImage(named: "report")?.tint(color: .white)
         
-       self.reportButton.setImage(image, for: .normal)
+       //self.reportButton.setImage(image, for: .normal)
         
         reportButton.addTarget(self, action: #selector(report), for: .touchUpInside)
     }
