@@ -22,7 +22,7 @@ class ActivityDetailsView: UIView {
     @IBOutlet var contentView: UIView!
     var activityImageView: UIImageView!
     var closeButton = CloseButton()
-    var editButton =  EditButton()
+    var editButton =  UIButton()
     var joinButton = UIButton()
     var deleteButton = UIButton()
     var reportButton = ReportButton()
@@ -103,7 +103,7 @@ class ActivityDetailsView: UIView {
         self.contentView.addSubview(closeButton)
         self.closeButton.translatesAutoresizingMaskIntoConstraints = false
         self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
-        self.closeButton.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor).isActive = true
+        self.closeButton.rightAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.rightAnchor).isActive = true
         self.closeButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.14, constant: 0.0).isActive = true
         self.closeButton.heightAnchor.constraint(equalTo: self.closeButton.widthAnchor).isActive = true
        // let image = UIImage(named: "close")?.tint(color: .white)
@@ -120,10 +120,28 @@ class ActivityDetailsView: UIView {
         
         self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
-        self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
-        self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: 0).isActive = true
-        self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.14, constant: 0.0).isActive = true
-        self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
+        
+        self.editButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-70).isActive = true
+        self.editButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.8).isActive = true
+        self.editButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
+        
+        self.editButton.setTitle("EDIT", for: .normal)
+        self.editButton.titleLabel?.font = UIFont(name: "Futura-Medium", size: 17)
+        self.editButton.setTitleColor(UIColor.white, for: .normal)
+        self.editButton.layer.borderWidth = 1
+        self.editButton.clipsToBounds = true
+        self.editButton.layer.cornerRadius = 17
+        self.editButton.layer.borderWidth = 2
+        self.editButton.layer.borderColor = UIColor(red: 244/255.0, green: 88/255.0, blue: 53/255.0, alpha: 1.0).cgColor
+        
+        
+        self.editButton.backgroundColor = UIColor.clear
+
+        
+//        self.editButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
+//        self.editButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: 0).isActive = true
+//        self.editButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.14, constant: 0.0).isActive = true
+      //  self.editButton.heightAnchor.constraint(equalTo: self.editButton.widthAnchor).isActive = true
         
         //let image = UIImage(named: "pencil")
         
@@ -283,12 +301,12 @@ class ActivityDetailsView: UIView {
 
         descriptionTitlelabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 10).isActive = true
+        descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 20).isActive = true
         
         self.contentView.addSubview(descriptionTextView)
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextView.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        descriptionTextView.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor, constant: 10).isActive = true
+        descriptionTextView.topAnchor.constraint(equalTo: self.descriptionTitlelabel.bottomAnchor, constant: 0).isActive = true
         descriptionTextView.backgroundColor = UIColor.white
         descriptionTextView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20).isActive = true
         descriptionTextView.heightAnchor.constraint(equalTo: self.contentView.heightAnchor, multiplier: 0.15).isActive = true
