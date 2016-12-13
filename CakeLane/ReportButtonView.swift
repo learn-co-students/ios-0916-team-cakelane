@@ -23,7 +23,8 @@ public class ReportButtonView : NSObject {
         //// Color Declarations
 //        let color = UIColor(red: 0.858, green: 0.464, blue: 0.299, alpha: 1.000)
         let color = UIColor.orange
-        let color2 = UIColor(red: 0.289, green: 0.255, blue: 0.249, alpha: 1.000)
+//        let color2 = UIColor(red: 0.289, green: 0.255, blue: 0.249, alpha: 1.000)
+        let color2 = UIColor.black
         //// Oval Drawing
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: 32.5, y: 29.5, width: 136, height: 138))
         color2.setFill()
