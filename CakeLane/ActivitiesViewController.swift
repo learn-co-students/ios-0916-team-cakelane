@@ -99,7 +99,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
                     self.activities = newActivities
 
                     // debug from other version: creates duplicates
-                    // self.activities = self.sortedActivities(newActivities)
+                     self.activities = self.sortedActivities(newActivities)
 
                     self.activitiesCollectionView.reloadData()
                     print("The numbers of activties inside the view did load")
@@ -128,7 +128,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             if index == 1 {
                 FirebaseClient.retrieveActivities(with: self.filterTodayActivities) { [unowned self] activities in
                     DispatchQueue.main.async {
-                        self.activities = activities
+                        self.activities = self.sortedActivities(activities)
                         self.activitiesCollectionView.reloadData()
                     }
                 }
@@ -137,7 +137,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             if index == 2 {
                 FirebaseClient.retrieveActivities(with: self.filterWeekActivities) { [unowned self] activities in
                     DispatchQueue.main.async {
-                        self.activities = activities
+                        self.activities = self.sortedActivities(activities)
                         self.activitiesCollectionView.reloadData()
                     }
                 }
@@ -146,7 +146,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             if index == 3 {
                 FirebaseClient.retrieveActivities(with: self.filterMonthActivities) { [unowned self] activities in
                     DispatchQueue.main.async {
-                        self.activities = activities
+                        self.activities = self.sortedActivities(activities)
                         self.activitiesCollectionView.reloadData()
                     }
                 }
