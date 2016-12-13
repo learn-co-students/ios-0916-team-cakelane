@@ -65,7 +65,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
 
         activityImageView.addSubview(activityLabel)
-        activityLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        activityLabel.font = UIFont.futuraFont(with: 16)
         activityLabel.shadowColor = UIColor.black
         activityLabel.shadowOffset.height = 3
         activityLabel.shadowOffset.width = 3
@@ -77,7 +77,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
 
         activityImageView.addSubview(locationLabel)
-        locationLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        locationLabel.font = UIFont.futuraFont(with: 16)
         locationLabel.shadowColor = UIColor.black
         locationLabel.shadowOffset.height = 3
         locationLabel.shadowOffset.width = 3
@@ -88,7 +88,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityImageView.addSubview(dateLabel)
-        dateLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        dateLabel.font = UIFont.futuraFont(with: 16)
         dateLabel.shadowColor = UIColor.black
         dateLabel.shadowOffset.height = 3
         dateLabel.shadowOffset.width = 3
@@ -100,7 +100,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
 
         activityImageView.addSubview(timeLabel)
-        timeLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 16)
+        timeLabel.font = UIFont.futuraFont(with: 16)
         timeLabel.shadowColor = UIColor.black
         timeLabel.shadowOffset.height = 3
         timeLabel.shadowOffset.width = 3
@@ -151,8 +151,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityOverlay.addSubview(numberOfAttendeesLabel)
-        numberOfAttendeesLabel.text = "10 Attending"
-        numberOfAttendeesLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 12)
+        numberOfAttendeesLabel.font = UIFont.futuraFont(with: 11)
         numberOfAttendeesLabel.textColor = UIColor.black
         numberOfAttendeesLabel.snp.makeConstraints { (make) in
             make.right.equalTo(activityOverlay.snp.right).offset(-20)
@@ -186,9 +185,23 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         delegate?.attendeesTapped(sender: self)
 
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        numberOfAttendeesLabel.text = nil
+        activityLabel.text = nil
+        locationLabel.text = nil
+        timeLabel.text = nil
+        dateLabel.text = nil
+        activityImageView.image = nil
+        firstProfileImage.image = nil
+        secondProfileImage.image = nil
+        thirdProfileImage.image = nil
+    }
 
     func updateCell(with activity: Activity, handler: @escaping (Bool) -> ()) {
-
+        
         self.activityLabel.text = activity.name
         self.dateLabel.text = activity.date
         self.locationLabel.text = activity.location
@@ -205,8 +218,12 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
             
+            print("&&&&&&&&&&&&&&&&&\n\(activity.attendees.count)\n&&&&&&&&&&&&&&&&&&&&&&")
             
+            print("%%%%%%%%%%%%%%%%%\n\(activity.name)\n%%%%%%%%%%%%")
+
             self.arrayOfImages = images
+            print("@@@@@@@@@@@@@@@@@@@\n\(self.arrayOfImages.count)\n@@@@@@@@@@@@@@@@@@@@@@@@")
             self.users = users
             
        
@@ -232,10 +249,14 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
     // download images
     func downloadAttendeeImages(activity: Activity) {
-
+        
+        
 
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-
+            
+            self.arrayOfImages.removeAll()
+            
+            
             self.arrayOfImages = images
             self.users = users
 

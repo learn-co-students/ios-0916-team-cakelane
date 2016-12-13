@@ -220,7 +220,8 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
 
-            cell.downloadAttendeeImages(activity: activity)
+//            cell.downloadAttendeeImages(activity: activity)
+            
 
         }
 
@@ -233,7 +234,7 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
         self.selectedActivity = self.activities[indexPath.row]
         let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "activity-details-view-controller") as! ActivityDetailsViewController
         destination.selectedActivity = self.selectedActivity
-
+        
         let cell = self.activitiesCollectionView.cellForItem(at: indexPath) as! ActivitiesCollectionViewCell
         OperationQueue.main.addOperation {
             // overwrite Firebase data store for selected activity ~ use in activity details, users table view
