@@ -188,7 +188,7 @@ class ActivityDetailsView: UIView {
         self.deleteButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.25).isActive = true
         self.deleteButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.deleteButton.setTitle("Delete", for: .normal)
-        self.deleteButton.setTitleColor(UIColor.darkGray, for: .normal)
+        self.deleteButton.setTitleColor(UIColor.white, for: .normal)
         self.deleteButton.layer.borderWidth = 1
         self.deleteButton.clipsToBounds = true
         self.deleteButton.layer.cornerRadius = 10
