@@ -62,17 +62,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     // first authentication
                     NotificationCenter.default.post(name: .closeSafariVC, object: code)
                     
-                }
-                
-                // only if there is no webhook for a given slack team do we perform second auth (sole purpose := create webhook)
-                if TeamDataStore.sharedInstance.webhook != nil {
+                } else {
                     
-                    // second  authentication
-                    NotificationCenter.default.post(name: .finishSecondAuth, object: code)
+                    // only if there is no webhook for a given slack team do we perform second auth (sole purpose := create webhook)
+                    
+                    if TeamDataStore.sharedInstance.webhook == nil {
+                        
+                        // second  authentication
+                        NotificationCenter.default.post(name: .finishSecondAuth, object: code)
+                        
+                    }
                     
                 }
                 
                 return true
+                
             }
             
         }

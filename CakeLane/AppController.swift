@@ -180,7 +180,7 @@ class AppController: UIViewController {
                 let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
                 
                 print("+++++++++++++++*********++++++++++")
-                dump(json)
+                print(json)
                 print("+++++++++++++++*********++++++++++")
                 
                 let token = json["access_token"] as! String
@@ -188,7 +188,7 @@ class AppController: UIViewController {
                 let teamID = json["team_id"] as! String
                 let teamName = json["team_name"] as! String
                 
-                if let webhook = json["incoming-webhook"] as? [String:Any], let webhookURL = webhook["url"] as? String {
+                if let webhook = json["incoming_webhook"] as? [String:Any], let webhookURL = webhook["url"] as? String {
                     
                     print(webhook)
                     print(webhookURL)
@@ -211,9 +211,6 @@ class AppController: UIViewController {
                     FirebaseClient.writeUserInfo()
                     
                 })
-                
-                NotificationCenter.default.post(name: .closeLoginVC, object: self)
-                
                 
                 }.resume()
             

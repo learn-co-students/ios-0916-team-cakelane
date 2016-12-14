@@ -85,16 +85,14 @@ class LoginViewController: UIViewController {
                     let firebaseTeemSnapshot = snapshot.value as! [String:Any]
                     
                     print(firebaseTeemSnapshot)
-                    print
+                    print(snapshot)
                     
+                    // does not execute if there is no team -> perform all firebase writing in AppController's secondAuthRedirect
                     if let teamJSONContents = firebaseTeemSnapshot["\(teamID)"] as? [String:Any] {
                         
                         // try to get webhook value: nil if slack team does not have a webhook, toggle flag for second auth
                         let webhook = teamJSONContents["webhook"] as? [String:String]
                         TeamDataStore.sharedInstance.webhook =  webhook
-                        
-                        // indicate that we performed initial authorization, prompt to (potentially) perform second
-                        TeamDataStore.sharedInstance.performedFirstAuth = true
                         
                         let users = teamJSONContents["users"] as! [String:Any]
                         
@@ -116,6 +114,9 @@ class LoginViewController: UIViewController {
                         }
                         
                     }
+                    
+                    // indicate that we performed initial authorization, prompt to (potentially) perform second
+                    TeamDataStore.sharedInstance.performedFirstAuth = true
                     
                     NotificationCenter.default.post(name: .closeLoginVC, object: self)
                     
