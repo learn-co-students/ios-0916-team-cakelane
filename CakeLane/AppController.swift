@@ -179,9 +179,9 @@ class AppController: UIViewController {
                 
                 let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
                 
-                print("+++++++++++++++*********++++++++++")
-                print(json)
-                print("+++++++++++++++*********++++++++++")
+//                print("+++++++++++++++*********++++++++++")
+//                print(json)
+//                print("+++++++++++++++*********++++++++++")
                 
                 let token = json["access_token"] as! String
                 let slackID = json["user_id"] as! String
@@ -190,10 +190,14 @@ class AppController: UIViewController {
                 
                 if let webhook = json["incoming_webhook"] as? [String:Any], let webhookURL = webhook["url"] as? String {
                     
-                    print(webhook)
-                    print(webhookURL)
+//                    print(webhook)
+//                    print(webhookURL)
                     
-                    // MARK: actually write the webhook to Firebase
+                    // MARK: Storing webhook in User Defaults under "webhook" key
+                    UserDefaults.standard.set(webhookURL, forKey: "webhook")
+                    UserDefaults.standard.synchronize()
+                    
+                    // Actually write the webhook to Firebase
                     FIRDatabase.database().reference().child(teamID).setValue([
                         "webhook": webhookURL,
                         "users": slackID
@@ -215,7 +219,6 @@ class AppController: UIViewController {
                 }.resume()
             
             self.safariViewController.dismiss(animated: true, completion: nil)
-            
             
         }
         

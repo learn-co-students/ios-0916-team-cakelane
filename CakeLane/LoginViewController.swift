@@ -15,6 +15,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     var safariViewController: SFSafariViewController!
 
+    let teamStore = TeamDataStore.sharedInstance
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -91,8 +93,15 @@ class LoginViewController: UIViewController {
                     if let teamJSONContents = firebaseTeemSnapshot["\(teamID)"] as? [String:Any] {
                         
                         // try to get webhook value: nil if slack team does not have a webhook, toggle flag for second auth
-                        let webhook = teamJSONContents["webhook"] as? [String:String]
-                        TeamDataStore.sharedInstance.webhook =  webhook
+                        if let webhookURL = teamJSONContents["webhook"] as? String {
+                            
+                            self.teamStore.webhook =  webhookURL
+                            
+                            // storing webhook in User Defaults under "webhook" key (for not first user, i.e. someone already created a team in Firebase)
+                            UserDefaults.standard.set(webhookURL, forKey: "webhook")
+                            UserDefaults.standard.synchronize()
+                            
+                        }
                         
                         let users = teamJSONContents["users"] as! [String:Any]
                         
@@ -109,7 +118,6 @@ class LoginViewController: UIViewController {
                                 FirebaseClient.writeUserInfo()
                                 
                             })
-                            
                             
                         }
                         

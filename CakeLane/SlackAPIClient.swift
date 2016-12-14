@@ -71,6 +71,7 @@ class SlackAPIClient {
             completion(completeJSON)
         }
     }
+    
     // Post Slack Notification to webhook URL
 //    class func postSlackNotification() {
 //
@@ -83,7 +84,6 @@ class SlackAPIClient {
 ////        store.attachmentDictionary = newAttachment.dictionary
 //
 //    }
-
 
     // MARK: Get team.info from Slack - uses scope team:read (Bejan)
     class func getTeamInfo(with completion: @escaping ([String: Any]?)->()) {
@@ -103,6 +103,7 @@ class SlackAPIClient {
 
     // MARK: Post set.channelPurpose
     class func setChannelPurpose(with completion: @escaping ([String: Any])->()) {
+        
         guard let token = UserDefaults.standard.object(forKey: "slackToken") else { return }
         let channelID = teamStore.teamInfo["teemChannelID"]
         let channelPurpose = teamStore.teamInfo["teemChannelPurpose"]
@@ -115,10 +116,12 @@ class SlackAPIClient {
             //            print("\n\n\nTHIS IS THE SET CHANNEL PURPOSE COMPLETION!!! ++++++++++\(completeJSON)")
             completion(completeJSON)
         }
+        
     }
 
     // MARK: Post Slack Notification to webhook URL - uses scope channel:write
     class func postSlackNotification() {
+        
         //TODO: Turn this into a model, and include Attachment initialization
         let notificationParameters: [String:Any] = [
             "icon_url": "http://gdurl.com/Ei8e",
@@ -127,7 +130,10 @@ class SlackAPIClient {
             "attachments": [store.attachmentDictionary]
         ]
 
-        let webhookURL = "https://hooks.slack.com/services/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"
+        // NOTE: we're assuming webhook exists
+        guard let webhook = UserDefaults.standard.string(forKey: "webhook") else { return }
+        let webhookURL = webhook
+        
         guard let url = URL(string: webhookURL) else { return }
         // print(url)
 
