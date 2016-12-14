@@ -74,32 +74,6 @@ class UserTableViewCell: UITableViewCell {
     }
     
     
-    // FIX: USER TABLE VIEW CELL NOT UPDATED
-    func updateCell(with activity: Activity) {
-       nameLabel.text = activity.name
-        
-        
-//        var arrayOfImages: [UIImage] = []
-//        for eachUser in activity.attendees.keys {
-//            guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-//            let imageRef = ref.child(teamID).child("users").child(eachUser).child("image72")
-//            
-//            imageRef.observeSingleEvent(of:.value, with: { (snapshot) in
-//                
-//                let url = snapshot.value as! String
-//                self.downloadImage(at: url, completion: { (success, image) in
-//                    arrayOfImages.append(image)
-//                    OperationQueue.main.addOperation {
-//                        self.profileImage.image = image
-//                        
-//                    }
-//                })
-//            })
-//        }
-        
-        
-
-    }
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)

@@ -225,12 +225,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
         FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
             
-            print("&&&&&&&&&&&&&&&&&\n\(activity.attendees.count)\n&&&&&&&&&&&&&&&&&&&&&&")
-            
-            print("%%%%%%%%%%%%%%%%%\n\(activity.name)\n%%%%%%%%%%%%")
-
             self.arrayOfImages = images
-            print("@@@@@@@@@@@@@@@@@@@\n\(self.arrayOfImages.count)\n@@@@@@@@@@@@@@@@@@@@@@@@")
             self.users = users
             
        
@@ -255,32 +250,32 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     }
 
     // download images
-    func downloadAttendeeImages(activity: Activity) {
-        
-        
-
-        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-            
-            self.arrayOfImages.removeAll()
-            
-            
-            self.arrayOfImages = images
-            self.users = users
-
-            OperationQueue.main.addOperation {
-                if self.arrayOfImages.count == 1 {
-                    self.firstProfileImage.image = self.arrayOfImages[0]
-                } else if self.arrayOfImages.count == 2 {
-                    self.firstProfileImage.image = self.arrayOfImages[0]
-                    self.secondProfileImage.image = self.arrayOfImages[1]
-                } else if self.arrayOfImages.count >= 3 {
-                    self.firstProfileImage.image = self.arrayOfImages[0]
-                    self.secondProfileImage.image = self.arrayOfImages[1]
-                    self.thirdProfileImage.image = self.arrayOfImages[2]
-                }
-            }
-        }
-
-    }
+//    func downloadAttendeeImages(activity: Activity) {
+//        
+//        
+//
+//        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
+//            
+//            self.arrayOfImages.removeAll()
+//            
+//            
+//            self.arrayOfImages = images
+//            self.users = users
+//
+//            OperationQueue.main.addOperation {
+//                if self.arrayOfImages.count == 1 {
+//                    self.firstProfileImage.image = self.arrayOfImages[0]
+//                } else if self.arrayOfImages.count == 2 {
+//                    self.firstProfileImage.image = self.arrayOfImages[0]
+//                    self.secondProfileImage.image = self.arrayOfImages[1]
+//                } else if self.arrayOfImages.count >= 3 {
+//                    self.firstProfileImage.image = self.arrayOfImages[0]
+//                    self.secondProfileImage.image = self.arrayOfImages[1]
+//                    self.thirdProfileImage.image = self.arrayOfImages[2]
+//                }
+//            }
+//        }
+//
+//    }
 
 }

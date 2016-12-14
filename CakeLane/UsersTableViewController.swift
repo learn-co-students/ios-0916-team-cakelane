@@ -32,15 +32,6 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         guard let activity = selectedActivity else { print("What happened?"); return }
         
         self.createLayout()
-        
-//        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-//            
-//            self.userArray = users
-//            self.userImages = images
-//
-//            self.usersTableView.reloadData()
-//        }
-        
         self.setUpTableViewCells()
         
     }
@@ -142,9 +133,5 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         self.present(detailVC, animated: true, completion: nil)
     }
     
-    // MARK: Update user table view cell
-    func updateUserTableViewCell() {
-        
-    }
     
 }
