@@ -162,7 +162,7 @@ class ActivityDetailsView: UIView {
         self.contentView.addSubview(reportButton)
         self.reportButton.translatesAutoresizingMaskIntoConstraints = false
         self.reportButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20.0).isActive = true
-        self.reportButton.rightAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.rightAnchor, constant: 0).isActive = true
+        self.reportButton.leftAnchor.constraint(equalTo: self.activityImageView.layoutMarginsGuide.leftAnchor, constant: 0).isActive = true
         self.reportButton.widthAnchor.constraint(equalTo: self.activityImageView.widthAnchor, multiplier: 0.14, constant: 0.0).isActive = true
         self.reportButton.heightAnchor.constraint(equalTo: self.reportButton.widthAnchor).isActive = true
         //self.reportButton.setTitle("?", for: .normal)
@@ -301,7 +301,7 @@ class ActivityDetailsView: UIView {
 
         descriptionTitlelabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionTitlelabel.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor, constant: 10).isActive = true
-        descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 20).isActive = true
+        descriptionTitlelabel.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 10).isActive = true
         
         self.contentView.addSubview(descriptionTextView)
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
