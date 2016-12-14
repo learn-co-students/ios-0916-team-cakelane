@@ -18,6 +18,12 @@
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
 		75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */; };
 		75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */; };
+		A201CC591E009DC700DBB96E /* EditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC581E009DC700DBB96E /* EditButtonView.swift */; };
+		A201CC5B1E009E0B00DBB96E /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC5A1E009E0B00DBB96E /* EditButton.swift */; };
+		A201CC5D1E009FF000DBB96E /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC5C1E009FF000DBB96E /* CloseButtonView.swift */; };
+		A201CC5F1E00A00300DBB96E /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC5E1E00A00300DBB96E /* CloseButton.swift */; };
+		A201CC611E00A1CA00DBB96E /* ReportButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC601E00A1CA00DBB96E /* ReportButtonView.swift */; };
+		A201CC631E00A1D900DBB96E /* ReportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC621E00A1D900DBB96E /* ReportButton.swift */; };
 		A2E0019C1DE9F2E200C24F49 /* ActivityDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */; };
 		A2EBB3C31DF89B8200F48426 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2EBB3C11DF89B8200F48426 /* Main.storyboard */; };
 		A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7A1DDD17A9000E3CC6 /* ActivityData.swift */; };
@@ -58,6 +64,12 @@
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
 		75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
 		75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackMessageStore.swift; sourceTree = "<group>"; };
+		A201CC581E009DC700DBB96E /* EditButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButtonView.swift; sourceTree = "<group>"; };
+		A201CC5A1E009E0B00DBB96E /* EditButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
+		A201CC5C1E009FF000DBB96E /* CloseButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButtonView.swift; sourceTree = "<group>"; };
+		A201CC5E1E00A00300DBB96E /* CloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		A201CC601E00A1CA00DBB96E /* ReportButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportButtonView.swift; sourceTree = "<group>"; };
+		A201CC621E00A1D900DBB96E /* ReportButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportButton.swift; sourceTree = "<group>"; };
 		A28C74161DF5CBD20076A023 /* CakeLane-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CakeLane-Bridging-Header.h"; sourceTree = "<group>"; };
 		A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailsView.xib; sourceTree = "<group>"; };
 		A2EBB3C21DF89B8200F48426 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -170,6 +182,12 @@
 				A2EBB3C11DF89B8200F48426 /* Main.storyboard */,
 				A2E0019B1DE9F2E200C24F49 /* ActivityDetailsView.xib */,
 				E53B16F61DEF2801009C84BC /* ActivityDetailsView.swift */,
+				A201CC581E009DC700DBB96E /* EditButtonView.swift */,
+				A201CC5A1E009E0B00DBB96E /* EditButton.swift */,
+				A201CC5C1E009FF000DBB96E /* CloseButtonView.swift */,
+				A201CC5E1E00A00300DBB96E /* CloseButton.swift */,
+				A201CC601E00A1CA00DBB96E /* ReportButtonView.swift */,
+				A201CC621E00A1D900DBB96E /* ReportButton.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -280,7 +298,7 @@
 				TargetAttributes = {
 					1BDF62341DDD06C400C3D12E = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = LQ8JCXM85J;
+						DevelopmentTeam = KXY9EDFTF5;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -381,6 +399,7 @@
 				E5D395E91DF604DA00016483 /* TabBarController.swift in Sources */,
 				A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */,
+				A201CC611E00A1CA00DBB96E /* ReportButtonView.swift in Sources */,
 				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
 				A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */,
 				E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */,
@@ -388,20 +407,25 @@
 				E5EE90A41DDE4FAA00A344A5 /* Extensions.swift in Sources */,
 				E53B16F71DEF2801009C84BC /* ActivityDetailsView.swift in Sources */,
 				A2F4B8D41DE4D46F00933A94 /* CoreDataStore.swift in Sources */,
+				A201CC631E00A1D900DBB96E /* ReportButton.swift in Sources */,
+				A201CC5D1E009FF000DBB96E /* CloseButtonView.swift in Sources */,
 				75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */,
 				E5DCB2411DF8BD9100E788D4 /* ActivityDetailsViewController.swift in Sources */,
 				1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */,
 				A2ECAA7E1DDD182F000E3CC6 /* AppDelegate.swift in Sources */,
 				A2ECAA7C1DDD17A9000E3CC6 /* ActivityData.swift in Sources */,
+				A201CC591E009DC700DBB96E /* EditButtonView.swift in Sources */,
 				75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */,
 				75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */,
 				750BAAA41DF89E7D004D2184 /* TeamInfo.swift in Sources */,
 				E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */,
+				A201CC5B1E009E0B00DBB96E /* EditButton.swift in Sources */,
 				A2F4B8D21DE39E5300933A94 /* Secrets.swift in Sources */,
 				7292DB741DEF8A02009BE840 /* UserInfoCell.swift in Sources */,
 				E51305A71DF1A984009F0560 /* FirebaseUsersDataStore.swift in Sources */,
 				72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */,
 				E50D139F1DDF651F00A3C41C /* Constants.swift in Sources */,
+				A201CC5F1E00A00300DBB96E /* CloseButton.swift in Sources */,
 				7292DB721DEF2A09009BE840 /* UserTableViewCell.swift in Sources */,
 				E5D395E51DF5D2BA00016483 /* FirebaseClient.swift in Sources */,
 			);
@@ -533,7 +557,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = LQ8JCXM85J;
+				DEVELOPMENT_TEAM = KXY9EDFTF5;
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -555,7 +579,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CakeLane/CakeLane.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = LQ8JCXM85J;
+				DEVELOPMENT_TEAM = KXY9EDFTF5;
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;

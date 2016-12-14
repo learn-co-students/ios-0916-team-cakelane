@@ -272,7 +272,7 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
             
             composeMail.mailComposeDelegate = self
             
-            composeMail.setToRecipients(["cakelane.flatiron@gmail.com"])
+            composeMail.setToRecipients(["teem.feedback@gmail.com"])
             composeMail.setSubject("Feedback for Activity")
             composeMail.setMessageBody("Tell us your thoughts about this activity", isHTML: false)
             

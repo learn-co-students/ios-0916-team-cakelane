@@ -14,7 +14,15 @@ import Firebase
 class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     var store = SlackMessageStore.sharedInstance
-
+    
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var activityName: UITextField!
+    @IBOutlet weak var activityDate: UITextField!
+    @IBOutlet weak var activityLocation: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var activityImage: UIImageView!
+    
     var databaseReference = FIRDatabase.database().reference()
     let imagePicker = UIImagePickerController()
     var selectedActivity: Activity?
@@ -23,12 +31,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     let userFirstName = UserDefaults.standard.string(forKey: "firstName") ?? " "
     let userIcon = UserDefaults.standard.string(forKey: "image72") ?? " "
     let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
-    
-    @IBOutlet weak var activityName: UITextField!
-    @IBOutlet weak var activityDate: UITextField!
-    @IBOutlet weak var activityLocation: UITextField!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var activityImage: UIImageView!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +47,25 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         descriptionTextView.font = UIFont(name: "TrebuchetMS-Bold", size: 14)
         // added gesture to the image with addImage func
         self.activityImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addImage)))
+        
+        
+        self.saveButton.layer.borderWidth = 1
+        self.saveButton.clipsToBounds = true
+        self.saveButton.layer.cornerRadius = 17
+        self.saveButton.layer.borderWidth = 2
+        self.saveButton.layer.borderColor = UIColor(red: 244/255.0, green: 88/255.0, blue: 53/255.0, alpha: 1.0).cgColor
+        self.saveButton.backgroundColor = UIColor.clear
+        
+        self.cancelButton.layer.borderWidth = 1
+        self.cancelButton.clipsToBounds = true
+        self.cancelButton.layer.cornerRadius = 17
+        self.cancelButton.layer.borderWidth = 2
+        self.cancelButton.layer.borderColor = UIColor(red: 244/255.0, green: 88/255.0, blue: 53/255.0, alpha: 1.0).cgColor
+        self.cancelButton.backgroundColor = UIColor.clear
+        
+        
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,7 +116,7 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
         // upload the activity to Firebase 
             
             // 1- create an instance of activity by the textField info
-            var newActivity = Activity(owner: self.slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description, imageNameFirebaseStorage: imageName)
+            let newActivity = Activity(owner: self.slackID, name: unwrappedName, date: date, image: activityImageUrl, location: location, description: description, imageNameFirebaseStorage: imageName)
             
 
                         // Create an attachment for the notification
@@ -169,8 +191,8 @@ class AddActivityController: UIViewController, UITextFieldDelegate, UITextViewDe
     func datePickerValueChanged(sender: UIDatePicker) {
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.long
-        dateFormatter.timeStyle = .long
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = .short
         self.activityDate.text = dateFormatter.string(from: sender.date)
 
     }
