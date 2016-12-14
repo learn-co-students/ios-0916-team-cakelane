@@ -25,11 +25,11 @@ class FirebaseClient {
 
         let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
         let activitiesRef = FIRDatabase.database().reference().child(teamID).child("activities")
-        var newActivities: [Activity] = []
 
         ////////////////////////////////////////////////////
 
         activitiesRef.observe(.value, with: { (snapshot) in
+            var newActivities: [Activity] = []
 
             for activity in snapshot.children {
                 let item = Activity(snapshot: activity as! FIRDataSnapshot)

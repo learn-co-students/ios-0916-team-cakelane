@@ -113,3 +113,10 @@ extension ActivitiesViewController {
         return filterArray
     }
 }
+
+extension UIFont {
+    
+    class func futuraFont(with size: CGFloat) -> UIFont {
+        return UIFont(name: "HelveticaNeue", size: size)!
+    }
+}

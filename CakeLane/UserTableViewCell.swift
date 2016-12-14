@@ -45,7 +45,7 @@ class UserTableViewCell: UITableViewCell {
         
         contentView.addSubview(nameLabel)
         nameLabel.text = ""
-        nameLabel.font = UIFont(name: "TrebuchetMS-Bold", size: 12)
+        nameLabel.font = UIFont.futuraFont(with: 12)
         nameLabel.textColor = UIColor.black
         nameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(profileImage.snp.right).offset(15)
