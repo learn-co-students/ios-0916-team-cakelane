@@ -121,7 +121,7 @@ class ActivityDetailsView: UIView {
         self.contentView.addSubview(editButton)
         self.editButton.translatesAutoresizingMaskIntoConstraints = false
         
-        self.editButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-70).isActive = true
+        self.editButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-50).isActive = true
         self.editButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.8).isActive = true
         self.editButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         
@@ -206,7 +206,7 @@ class ActivityDetailsView: UIView {
         
         self.contentView.addSubview(deleteButton)
         self.deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        self.deleteButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-30.0).isActive = true
+        self.deleteButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-10.0).isActive = true
         self.deleteButton.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.8).isActive = true
         self.deleteButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.deleteButton.setTitle("Delete", for: .normal)

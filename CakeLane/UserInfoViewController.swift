@@ -121,7 +121,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
             
             composeMail.mailComposeDelegate = self
             
-            composeMail.setToRecipients(["cakelane.flatiron@gmail.com"])
+            composeMail.setToRecipients(["teem.feedback@gmail.com"])
             composeMail.setSubject("General Feedback")
             composeMail.setMessageBody("Tell us your thoughts about the app", isHTML: false)
             
