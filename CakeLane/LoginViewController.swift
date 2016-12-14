@@ -15,6 +15,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     var safariViewController: SFSafariViewController!
 
+    let teamStore = TeamDataStore.sharedInstance
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -28,22 +30,22 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func signInWithSlackButtonTapped(_ sender: UIButton) {
-
+        
         // NOTE: Direct user to Slack for authentication
         let baseURL = "https://slack.com/oauth/"
         let path = "authorize"
-
+        
         // NOTE: set up initial scopes so that user doesn't have to go through authorization multiple times
         // let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,incoming-webhook,bot"
         let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,channels:read,channels:write,team:read"
-
+        
         let urlString = baseURL + path + query
-
+        
         let url = URL(string: urlString)!
-
-          self.safariViewController = SFSafariViewController(url: url)
-            present(self.safariViewController, animated: true, completion: nil)
-
+        
+        self.safariViewController = SFSafariViewController(url: url)
+        present(self.safariViewController, animated: true, completion: nil)
+        
     }
 
     func redirectFromSlack(_ notification: Notification) {
@@ -80,22 +82,29 @@ class LoginViewController: UIViewController {
                 
                 defaults.synchronize()
                 
-                // MARK:
-                var slackTeamExistsInTeamDatabase = false
                 FIRDatabase.database().reference().observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    let value = snapshot.value as! [String:Any]
+                    let firebaseTeemSnapshot = snapshot.value as? [String:Any]
                     
-                    for key in value.keys {
+                    print(firebaseTeemSnapshot)
+                    print(snapshot)
+                    
+                    if let unwrappedFirebaseTeemSnapshot = firebaseTeemSnapshot {
                         
-                        // check if currently registering Slack user is part of Teem's Database on Firebase
-                        if key == teamID {
+                        // does not execute if there is no team -> perform all firebase writing in AppController's secondAuthRedirect
+                        if let teamJSONContents = unwrappedFirebaseTeemSnapshot["\(teamID)"] as? [String:Any] {
                             
-                            // indicate that slack team is part of Teem database: toggle flag
-                            slackTeamExistsInTeamDatabase = true
-                            print(value)
+                            // try to get webhook value: nil if slack team does not have a webhook, toggle flag for second auth
+                            if let webhookURL = teamJSONContents["webhook"] as? String {
+                                
+                                self.teamStore.webhook =  webhookURL
+                                
+                                // storing webhook in User Defaults under "webhook" key (for not first user, i.e. someone already created a team in Firebase)
+                                UserDefaults.standard.set(webhookURL, forKey: "webhook")
+                                UserDefaults.standard.synchronize()
+                                
+                            }
                             
-                            let teamJSONContents = value["\(teamID)"] as! [String:Any]
                             let users = teamJSONContents["users"] as! [String:Any]
                             
                             print(users)
@@ -112,26 +121,10 @@ class LoginViewController: UIViewController {
                                     
                                 })
                                 
-                                break
-                                
                             }
                             
                         }
                         
-                    }
-                    // if there is no entry for a given slack team in Teem's Firebase, create it
-                    if slackTeamExistsInTeamDatabase == false {
-                        
-                        // create users entry
-                        FIRDatabase.database().reference().child(teamID).setValue(["users": slackID])
-                        
-                        // write user info to Firebase
-                        SlackAPIClient.storeUserInfo(handler: { (success) in
-                            
-                            // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                            FirebaseClient.writeUserInfo()
-                            
-                        })
                     }
                     
                     NotificationCenter.default.post(name: .closeLoginVC, object: self)
