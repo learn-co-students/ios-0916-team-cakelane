@@ -219,10 +219,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
             // placeholder image loads first, once downloaded, actual user image replaces placeholder
             cell.activityImageView.sd_setImage(with: URL(string: activity.image), placeholderImage: UIImage(named: "appLogo-black"))
 
-
-//            cell.downloadAttendeeImages(activity: activity)
-            
-
         }
 
         return cell

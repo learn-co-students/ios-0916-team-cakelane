@@ -14,6 +14,8 @@ class TeamDataStore {
     static let sharedInstance = TeamDataStore()
     fileprivate init() {}
     
+    var performedFirstAuth = false
+    var webhook: String? = UserDefaults.standard.string(forKey: "webhook")
     var teamInfo: [String:Any] = [:]
     var channelListJSON: [[String:Any]] = [[:]]
     var teemChannelName: String = ""

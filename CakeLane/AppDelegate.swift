@@ -48,12 +48,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let sourceAppKey = options[UIApplicationOpenURLOptionsKey.sourceApplication] {
             
             if (String(describing: sourceAppKey) == "com.apple.SafariViewService") {
+                
                 let code = url.getQueryItemValue(named: "code")
-                NotificationCenter.default.post(name: .closeSafariVC, object: code)
+                
+                print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                print(TeamDataStore.sharedInstance.performedFirstAuth)
+                print(TeamDataStore.sharedInstance.webhook)
+                print("%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                
+                // this flag check helps avoid first auth after it has already been performed
+                
+                print("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                print(TeamDataStore.sharedInstance.performedFirstAuth)
+                print("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                
+                if TeamDataStore.sharedInstance.performedFirstAuth == false {
+                    
+                    // indicate that we performed initial authorization, prompt to (potentially) perform second
+                    TeamDataStore.sharedInstance.performedFirstAuth = true
+                    
+                    // first authentication
+                    NotificationCenter.default.post(name: .closeSafariVC, object: code)
+                    
+                } else {
+                    
+                    // only if there is no webhook for a given slack team do we perform second auth (sole purpose := create webhook)
+                    print(UserDefaults.standard.string(forKey: "webhook"))
+                    if TeamDataStore.sharedInstance.webhook == nil {
+                        
+                        // second  authentication
+                        NotificationCenter.default.post(name: .finishSecondAuth, object: code)
+                        
+                    }
+                    
+                }
+                
                 return true
+                
             }
+            
         }
+        
         return false
+        
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

@@ -14,6 +14,7 @@ class UserTableViewCell: UITableViewCell {
 
     var profileImage = UIImageView()
     var nameLabel = UILabel()
+    var creatorLabel = UILabel()
     let ref = FIRDatabase.database().reference()
     
     override func awakeFromNib() {
@@ -45,14 +46,27 @@ class UserTableViewCell: UITableViewCell {
         
         contentView.addSubview(nameLabel)
         nameLabel.text = ""
-        nameLabel.font = UIFont.futuraFont(with: 12)
+        nameLabel.font = UIFont.helFont(with: 16)
         nameLabel.textColor = UIColor.black
         nameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(profileImage.snp.right).offset(15)
             make.centerY.equalTo(contentView.snp.centerY)
-            make.width.equalTo(contentView.snp.width).dividedBy(2)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.8)
             make.height.equalTo(contentView.snp.height).dividedBy(1.1)
         }
+        
+        contentView.addSubview(creatorLabel)
+        creatorLabel.text = "Creator"
+        creatorLabel.font = UIFont.helFont(with: 12)
+        creatorLabel.textColor = UIColor.orange
+        creatorLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(nameLabel.snp.left)
+            make.centerY.equalTo(contentView.snp.centerY).offset(17)
+            make.width.equalTo(contentView.snp.width).dividedBy(5)
+            make.height.equalTo(contentView.snp.height).dividedBy(1.1)
+        }
+        creatorLabel.isHidden = true
+    
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,32 +74,6 @@ class UserTableViewCell: UITableViewCell {
     }
     
     
-    // FIX: USER TABLE VIEW CELL NOT UPDATED
-    func updateCell(with activity: Activity) {
-       nameLabel.text = activity.name
-        
-        
-//        var arrayOfImages: [UIImage] = []
-//        for eachUser in activity.attendees.keys {
-//            guard let teamID = UserDefaults.standard.string(forKey: "teamID") else {return}
-//            let imageRef = ref.child(teamID).child("users").child(eachUser).child("image72")
-//            
-//            imageRef.observeSingleEvent(of:.value, with: { (snapshot) in
-//                
-//                let url = snapshot.value as! String
-//                self.downloadImage(at: url, completion: { (success, image) in
-//                    arrayOfImages.append(image)
-//                    OperationQueue.main.addOperation {
-//                        self.profileImage.image = image
-//                        
-//                    }
-//                })
-//            })
-//        }
-        
-        
-
-    }
     func downloadImage(at url:String, completion: @escaping (Bool, UIImage)->()){
         let session = URLSession.shared
         let newUrl = URL(string: url)

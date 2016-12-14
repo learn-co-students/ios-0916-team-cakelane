@@ -32,15 +32,6 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         guard let activity = selectedActivity else { print("What happened?"); return }
         
         self.createLayout()
-        
-//        FirebaseClient.downloadAttendeeImagesAndInfo(for: activity) { (images, users) in
-//            
-//            self.userArray = users
-//            self.userImages = images
-//
-//            self.usersTableView.reloadData()
-//        }
-        
         self.setUpTableViewCells()
         
     }
@@ -102,8 +93,16 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
         }
+        if indexPath.row == 0 {
+            cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
+            cell.profileImage.layer.borderColor = UIColor.orange.cgColor
+            cell.profileImage.layer.borderWidth = 4
+            cell.creatorLabel.isHidden = false
+        }
+        else {
         cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
-        
+        }
+    
         
         return cell
     }
@@ -134,9 +133,5 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         self.present(detailVC, animated: true, completion: nil)
     }
     
-    // MARK: Update user table view cell
-    func updateUserTableViewCell() {
-        
-    }
     
 }

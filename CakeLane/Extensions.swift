@@ -14,6 +14,7 @@ extension Notification.Name {
     static let closeLoginVC = Notification.Name("close-login-view-controller")
     static let closeProfileVC = Notification.Name("close-profile-view-controller")
     static let showActivityDetailsVC = Notification.Name("show-activity-details-view-controller")
+    static let finishSecondAuth = Notification.Name("finish-second-authentication")
 }
 
 // MARK: Helper method for query parsing -> used in AppDelegate during OAuth
@@ -116,7 +117,15 @@ extension ActivitiesViewController {
 
 extension UIFont {
     
-    class func futuraFont(with size: CGFloat) -> UIFont {
+    class func helFont(with size: CGFloat) -> UIFont {
         return UIFont(name: "HelveticaNeue", size: size)!
+    }
+    
+    class func helBoldFont(with size: CGFloat) -> UIFont {
+        return UIFont(name: "HelveticaNeue-Bold", size: size)!
+    }
+    
+    class func gilBoldFont(with size: CGFloat) -> UIFont {
+        return UIFont(name: "GillSans-SemiBold", size: size)!
     }
 }
