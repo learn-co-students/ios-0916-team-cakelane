@@ -27,6 +27,13 @@ class LoginViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(redirectFromSlack(_:)), name: .closeSafariVC, object: nil)
         
+        self.signInButton.layer.borderWidth = 1
+        self.signInButton.clipsToBounds = true
+        self.signInButton.layer.cornerRadius = 17
+        self.signInButton.layer.borderWidth = 2
+        self.signInButton.layer.borderColor = UIColor(red: 244/255.0, green: 88/255.0, blue: 53/255.0, alpha: 1.0).cgColor
+        self.signInButton.backgroundColor = UIColor.clear
+        
     }
 
     @IBAction func signInWithSlackButtonTapped(_ sender: UIButton) {

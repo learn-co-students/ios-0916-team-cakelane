@@ -213,7 +213,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZ5-Bq-Kcg">
-                                <rect key="frame" x="70" y="404" width="180" height="40"/>
+                                <rect key="frame" x="64" y="404" width="192" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Sign in with Slack"/>
                                 <connections>
@@ -231,6 +231,7 @@
                         <constraints>
                             <constraint firstItem="icD-hr-eYi" firstAttribute="height" secondItem="3bB-gu-5M8" secondAttribute="height" multiplier="0.4" id="Acs-IL-2uB"/>
                             <constraint firstItem="NZ5-Bq-Kcg" firstAttribute="centerX" secondItem="3bB-gu-5M8" secondAttribute="centerX" id="CBs-d3-oS2"/>
+                            <constraint firstItem="NZ5-Bq-Kcg" firstAttribute="width" secondItem="3bB-gu-5M8" secondAttribute="width" multiplier="0.6" id="CMx-GH-xz9"/>
                             <constraint firstItem="icD-hr-eYi" firstAttribute="centerY" secondItem="3bB-gu-5M8" secondAttribute="centerY" constant="-100" id="lfB-av-vnr"/>
                             <constraint firstItem="icD-hr-eYi" firstAttribute="centerX" secondItem="3bB-gu-5M8" secondAttribute="centerX" id="pjQ-8o-8x6"/>
                             <constraint firstItem="BVq-qL-KCD" firstAttribute="top" secondItem="NZ5-Bq-Kcg" secondAttribute="bottom" constant="124" id="vgc-IP-0fi"/>
@@ -242,7 +243,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J5W-MM-Eye" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-639" y="483"/>
+            <point key="canvasLocation" x="-639.375" y="482.74647887323943"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="w64-FI-cle">
