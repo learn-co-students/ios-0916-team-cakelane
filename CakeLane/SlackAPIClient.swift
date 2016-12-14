@@ -131,15 +131,16 @@ class SlackAPIClient {
         ]
 
         // NOTE: we're assuming webhook exists
-        guard let webhook = UserDefaults.standard.string(forKey: "webhook") else { return }
-        let webhookURL = webhook
-        
-        guard let url = URL(string: webhookURL) else { return }
-        // print(url)
-
-        Alamofire.request(url, method: .post, parameters: notificationParameters, encoding: JSONEncoding.default)
-        .response { (response) in
-        //            print("\n\n\nTHIS IS THE postSlackNotification COMPLETION!!! ++++++++++\(response)")
+        if let webhookURL = UserDefaults.standard.string(forKey: "webhook") {
+            
+            guard let url = URL(string: webhookURL) else { return }
+            // print(url)
+            
+            Alamofire.request(url, method: .post, parameters: notificationParameters, encoding: JSONEncoding.default)
+                .response { (response) in
+                    //            print("\n\n\nTHIS IS THE postSlackNotification COMPLETION!!! ++++++++++\(response)")
+            }
+            
         }
 
     }

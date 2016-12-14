@@ -84,56 +84,50 @@ class LoginViewController: UIViewController {
                 
                 FIRDatabase.database().reference().observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    guard let firebaseTeemSnapshot = snapshot.value as? [String:Any] else {
-                        
-                        SlackAPIClient.storeUserInfo(handler: { (success) in
-                        
-                        // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                        FirebaseClient.writeUserInfo()
-                        NotificationCenter.default.post(name: .closeLoginVC, object: self)
-                        
-                    }); return }
+                    let firebaseTeemSnapshot = snapshot.value as? [String:Any]
                     
                     print(firebaseTeemSnapshot)
                     print(snapshot)
                     
-                    // does not execute if there is no team -> perform all firebase writing in AppController's secondAuthRedirect
-                    if let teamJSONContents = firebaseTeemSnapshot["\(teamID)"] as? [String:Any] {
+                    if let unwrappedFirebaseTeemSnapshot = firebaseTeemSnapshot {
                         
-                        // try to get webhook value: nil if slack team does not have a webhook, toggle flag for second auth
-                        if let webhookURL = teamJSONContents["webhook"] as? String {
+                        // does not execute if there is no team -> perform all firebase writing in AppController's secondAuthRedirect
+                        if let teamJSONContents = unwrappedFirebaseTeemSnapshot["\(teamID)"] as? [String:Any] {
                             
-                            self.teamStore.webhook =  webhookURL
+                            // try to get webhook value: nil if slack team does not have a webhook, toggle flag for second auth
+                            if let webhookURL = teamJSONContents["webhook"] as? String {
+                                
+                                self.teamStore.webhook =  webhookURL
+                                
+                                // storing webhook in User Defaults under "webhook" key (for not first user, i.e. someone already created a team in Firebase)
+                                UserDefaults.standard.set(webhookURL, forKey: "webhook")
+                                UserDefaults.standard.synchronize()
+                                
+                            }
                             
-                            // storing webhook in User Defaults under "webhook" key (for not first user, i.e. someone already created a team in Firebase)
-                            UserDefaults.standard.set(webhookURL, forKey: "webhook")
-                            UserDefaults.standard.synchronize()
+                            let users = teamJSONContents["users"] as! [String:Any]
+                            
+                            print(users)
+                            
+                            let user = users["\(slackID)"] as? [String:Any] ?? nil
+                            
+                            // write to Firebase if there is no user
+                            if user == nil {
+                                
+                                SlackAPIClient.storeUserInfo(handler: { (success) in
+                                    
+                                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                                    FirebaseClient.writeUserInfo()
+                                    
+                                })
+                                
+                            }
                             
                         }
-                        
-                        let users = teamJSONContents["users"] as! [String:Any]
-                        
-                        print(users)
-                        
-                        let user = users["\(slackID)"] as? [String:Any] ?? nil
-                        
-                        // write to Firebase if there is no user
-                        if user == nil {
-                            
-                            SlackAPIClient.storeUserInfo(handler: { (success) in
-                                
-                                // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                                FirebaseClient.writeUserInfo()
-                                
-                            })
-                            
-                        }
-                        
-                        NotificationCenter.default.post(name: .closeLoginVC, object: self)
                         
                     }
                     
-                    
+                    NotificationCenter.default.post(name: .closeLoginVC, object: self)
                     
                 })
                 

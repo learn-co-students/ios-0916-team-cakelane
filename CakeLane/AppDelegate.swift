@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 } else {
                     
                     // only if there is no webhook for a given slack team do we perform second auth (sole purpose := create webhook)
-                    
+                    print(UserDefaults.standard.string(forKey: "webhook"))
                     if TeamDataStore.sharedInstance.webhook == nil {
                         
                         // second  authentication

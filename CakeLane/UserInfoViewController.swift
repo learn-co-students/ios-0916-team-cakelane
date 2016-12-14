@@ -240,8 +240,9 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
                 UserDefaults.standard.removePersistentDomain(forName: bundle)
             }
             
-            // MARK: set flag to false to allow user to switch teams without closing the app
+            // MARK: set auth and webhook flags to false and nil respectively to allow user to switch teams without closing the app
             TeamDataStore.sharedInstance.performedFirstAuth = false
+            TeamDataStore.sharedInstance.webhook = nil
             
             // post notification -> have app controller take user to login view
             NotificationCenter.default.post(name: .closeProfileVC, object: self)
