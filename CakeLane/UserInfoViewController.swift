@@ -240,6 +240,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: show alert, confirm user intention to nuke his profile
     func promptForConfirmation() {
+        
         let ac = UIAlertController(title: "Logout", message: "Are you sure you wish to logout?", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { [unowned self, ac] (action: UIAlertAction!) in

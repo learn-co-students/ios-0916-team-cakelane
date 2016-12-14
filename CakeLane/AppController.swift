@@ -97,7 +97,9 @@ class AppController: UIViewController {
                         
                         print(channelJSON)
                         
-                        self.startSecondAuth()
+                        self.presentSecondAuthAlert(with: { 
+                            self.startSecondAuth()
+                        })
                         
                     })
                     
@@ -221,6 +223,24 @@ class AppController: UIViewController {
             self.safariViewController.dismiss(animated: true, completion: nil)
             
         }
+        
+    }
+    
+    // MARK: notify user that he is the first member on his team to add a Teem integration
+    func presentSecondAuthAlert(with completion: @escaping ()->()) {
+        
+        // MARK: present alert notifying user to choose "teem_activities"
+        let ac = UIAlertController(title: "You are the first user on your team!", message: "Note: in order to avoid spamming your teammates, please choose \"teem_activities\" when creating your team's webhook. As a wise man once said, \"With great power comes great responsibility.\"", preferredStyle: .alert)
+        
+        // action
+        let submitAction = UIAlertAction(title: "Got it!", style: .default) { [unowned self, ac] (action: UIAlertAction!) in
+            completion()
+        }
+        
+        // add action to action controller
+        ac.addAction(submitAction)
+        // final step
+        present(ac, animated: true)
         
     }
     
