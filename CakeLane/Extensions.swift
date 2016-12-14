@@ -116,7 +116,15 @@ extension ActivitiesViewController {
 
 extension UIFont {
     
-    class func futuraFont(with size: CGFloat) -> UIFont {
+    class func helFont(with size: CGFloat) -> UIFont {
         return UIFont(name: "HelveticaNeue", size: size)!
+    }
+    
+    class func helBoldFont(with size: CGFloat) -> UIFont {
+        return UIFont(name: "HelveticaNeue-Bold", size: size)!
+    }
+    
+    class func gilBoldFont(with size: CGFloat) -> UIFont {
+        return UIFont(name: "GillSans-SemiBold", size: size)!
     }
 }

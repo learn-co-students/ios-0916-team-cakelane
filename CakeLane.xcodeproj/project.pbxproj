@@ -10,6 +10,7 @@
 		1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BDF623F1DDD06C500C3D12E /* CakeLane.xcdatamodeld */; };
 		1BDF62431DDD06C500C3D12E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62421DDD06C500C3D12E /* Assets.xcassets */; };
 		1BDF62461DDD06C500C3D12E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62441DDD06C500C3D12E /* LaunchScreen.storyboard */; };
+		721481631E01C59C007CA839 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721481621E01C59C007CA839 /* GradientView.swift */; };
 		7292DB721DEF2A09009BE840 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */; };
 		7292DB741DEF8A02009BE840 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB731DEF8A02009BE840 /* UserInfoCell.swift */; };
 		72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */; };
@@ -56,6 +57,7 @@
 		1BDF62451DDD06C500C3D12E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BDF62471DDD06C500C3D12E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CakeLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		721481621E01C59C007CA839 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		7292DB731DEF8A02009BE840 /* UserInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
 		72972BB81DEE185E00D3FA60 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				A201CC5E1E00A00300DBB96E /* CloseButton.swift */,
 				A201CC601E00A1CA00DBB96E /* ReportButtonView.swift */,
 				A201CC621E00A1D900DBB96E /* ReportButton.swift */,
+				721481621E01C59C007CA839 /* GradientView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				A201CC591E009DC700DBB96E /* EditButtonView.swift in Sources */,
 				75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */,
 				75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */,
+				721481631E01C59C007CA839 /* GradientView.swift in Sources */,
 				750BAAA41DF89E7D004D2184 /* TeamInfo.swift in Sources */,
 				E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */,
 				A201CC5B1E009E0B00DBB96E /* EditButton.swift in Sources */,

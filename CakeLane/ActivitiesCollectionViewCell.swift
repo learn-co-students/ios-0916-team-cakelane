@@ -16,7 +16,8 @@ protocol ActivitiesDelegate: class {
 }
 
 class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate {
-
+    
+    var gradientView = GradientView()
     var activityImageView = UIImageView()
     var activityOverlay = UIView()
     var transparentButton = UIButton(type: UIButtonType.system)
@@ -51,6 +52,12 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
             make.width.equalTo(contentView.snp.width)
             make.height.equalTo(contentView.snp.height)
         }
+        
+        activityImageView.addSubview(gradientView)
+        gradientView.snp.makeConstraints { (make) in
+            make.width.equalTo(activityImageView.snp.width)
+            make.height.equalTo(activityImageView.snp.height)
+        }
 
 
         activityImageView.addSubview(activityOverlay)
@@ -65,10 +72,10 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
 
         activityImageView.addSubview(activityLabel)
-        activityLabel.font = UIFont.futuraFont(with: 16)
-        activityLabel.shadowColor = UIColor.black
-        activityLabel.shadowOffset.height = 3
-        activityLabel.shadowOffset.width = 3
+        activityLabel.font = UIFont.gilBoldFont(with: 18)
+//        activityLabel.shadowColor = UIColor.black
+//        activityLabel.shadowOffset.height = 3
+//        activityLabel.shadowOffset.width = 3
         activityLabel.textColor = UIColor.white
         activityLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -77,10 +84,10 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
 
         activityImageView.addSubview(locationLabel)
-        locationLabel.font = UIFont.futuraFont(with: 16)
-        locationLabel.shadowColor = UIColor.black
-        locationLabel.shadowOffset.height = 3
-        locationLabel.shadowOffset.width = 3
+        locationLabel.font = UIFont.gilBoldFont(with: 18)
+//        locationLabel.shadowColor = UIColor.black
+//        locationLabel.shadowOffset.height = 3
+//        locationLabel.shadowOffset.width = 3
         locationLabel.textColor = UIColor.white
         locationLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -88,10 +95,10 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityImageView.addSubview(dateLabel)
-        dateLabel.font = UIFont.futuraFont(with: 16)
-        dateLabel.shadowColor = UIColor.black
-        dateLabel.shadowOffset.height = 3
-        dateLabel.shadowOffset.width = 3
+        dateLabel.font = UIFont.gilBoldFont(with: 18)
+//        dateLabel.shadowColor = UIColor.black
+//        dateLabel.shadowOffset.height = 3
+//        dateLabel.shadowOffset.width = 3
         dateLabel.textColor = UIColor.white
         dateLabel.snp.makeConstraints { (make) in
             make.left.equalTo(activityImageView.snp.left).offset(10)
@@ -100,10 +107,10 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
 
 
         activityImageView.addSubview(timeLabel)
-        timeLabel.font = UIFont.futuraFont(with: 16)
-        timeLabel.shadowColor = UIColor.black
-        timeLabel.shadowOffset.height = 3
-        timeLabel.shadowOffset.width = 3
+        timeLabel.font = UIFont.gilBoldFont(with: 18)
+//        timeLabel.shadowColor = UIColor.black
+//        timeLabel.shadowOffset.height = 3
+//        timeLabel.shadowOffset.width = 3
         timeLabel.textColor = UIColor.white
         timeLabel.snp.makeConstraints { (make) in
             make.left.equalTo(dateLabel.snp.right).offset(5)
@@ -151,7 +158,7 @@ class ActivitiesCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         }
 
         activityOverlay.addSubview(numberOfAttendeesLabel)
-        numberOfAttendeesLabel.font = UIFont.futuraFont(with: 11)
+        numberOfAttendeesLabel.font = UIFont.helFont(with: 14)
         numberOfAttendeesLabel.textColor = UIColor.black
         numberOfAttendeesLabel.snp.makeConstraints { (make) in
             make.right.equalTo(activityOverlay.snp.right).offset(-20)

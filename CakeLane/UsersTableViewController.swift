@@ -102,8 +102,16 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
         }
+        if indexPath.row == 0 {
+            cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
+            cell.profileImage.layer.borderColor = UIColor.orange.cgColor
+            cell.profileImage.layer.borderWidth = 4
+            cell.creatorLabel.isHidden = false
+        }
+        else {
         cell.nameLabel.text = ("\(user.firstName) \(user.lastName)")
-        
+        }
+    
         
         return cell
     }

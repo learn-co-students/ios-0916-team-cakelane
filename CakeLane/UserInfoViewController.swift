@@ -58,7 +58,17 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         // load user defaults data into cells
         let cell = tableView.dequeueReusableCell(withIdentifier: "userInfoCell") as! UserInfoCell
         
-        cell.keyLabel.text = userLabels[indexPath.row]
+        cell.keyLabel.font = UIFont.helBoldFont(with: 15)
+//        cell.keyLabel.numberOfLines = 1
+//        cell.keyLabel.minimumScaleFactor = 0.5
+        cell.keyLabel.adjustsFontSizeToFitWidth = true
+        
+        cell.valueLabel.font = UIFont.helFont(with: 15)
+//        cell.valueLabel.numberOfLines = 1
+//        cell.valueLabel.minimumScaleFactor = 0.5
+        cell.valueLabel.adjustsFontSizeToFitWidth = true
+        
+        cell.keyLabel.text = ("\(userLabels[indexPath.row]):")
         cell.valueLabel.text = userInfo[indexPath.row]
         
         return cell
