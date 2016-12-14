@@ -83,8 +83,25 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "usersCell", for: indexPath) as! UserTableViewCell
         
+        if userArray.count > 1 {
+        for (index,owner) in userArray.enumerated() {
+        
+            
+            if owner.slackID == selectedActivity?.owner  {
+                let newOwner = userArray[index]
+                userArray.remove(at: index)
+                userArray.insert(newOwner, at: 0)
+                
+            }
+        }
+        }
+        print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+        dump(userArray)
+        print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
         
         let user = userArray[indexPath.row]
+        
+        
         
         downloadImage(at: user.image72) { (success, image) in
             if success {

@@ -195,6 +195,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         UIApplication.shared.statusBarStyle = .lightContent
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.barTintColor = UIColor.black
       //  self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
         
