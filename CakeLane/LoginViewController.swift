@@ -84,7 +84,15 @@ class LoginViewController: UIViewController {
                 
                 FIRDatabase.database().reference().observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    let firebaseTeemSnapshot = snapshot.value as! [String:Any]
+                    guard let firebaseTeemSnapshot = snapshot.value as? [String:Any] else {
+                        
+                        SlackAPIClient.storeUserInfo(handler: { (success) in
+                        
+                        // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                        FirebaseClient.writeUserInfo()
+                        NotificationCenter.default.post(name: .closeLoginVC, object: self)
+                        
+                    }); return }
                     
                     print(firebaseTeemSnapshot)
                     print(snapshot)
@@ -121,9 +129,11 @@ class LoginViewController: UIViewController {
                             
                         }
                         
+                        NotificationCenter.default.post(name: .closeLoginVC, object: self)
+                        
                     }
                     
-                    NotificationCenter.default.post(name: .closeLoginVC, object: self)
+                    
                     
                 })
                 
