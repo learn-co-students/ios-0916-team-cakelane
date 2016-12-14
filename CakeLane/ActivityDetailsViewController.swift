@@ -17,7 +17,6 @@ class ActivityDetailsViewController: UIViewController, MFMailComposeViewControll
     let firebaseClient = FIRDatabase.database().reference()
     let slackID = UserDefaults.standard.string(forKey: "slackID") ?? " "
     let teamID = UserDefaults.standard.string(forKey: "teamID") ?? " "
-
     var selectedActivity: Activity?
     var editedActivity: Activity?
     var attendies = [String:Bool]()
@@ -28,8 +27,7 @@ class ActivityDetailsViewController: UIViewController, MFMailComposeViewControll
         self.detailView = ActivityDetailsView(frame: self.view.frame)
         self.view.addSubview(self.detailView)
         detailView.delegate = self
-
-        print("in the viewDidLoad of the activitiesDetailVC")
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -43,17 +41,12 @@ class ActivityDetailsViewController: UIViewController, MFMailComposeViewControll
     // check if the user is the owner and update the view with the suitable buttons
     func checkIfOwner() {
 
-        print("in checkIfOwner of the activitiesDetailVC")
-
         let activityRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
 
         activityRef.observe(.value, with: { (snapshot) in
-
-            print("in the activity observer of the activitiesDetailVC")
-
-
+            
             // Check that we have a value before attempting to create an Activity
-//            guard (snapshot.value != nil) else { print("snapshot is nil"); return }
+
             if let _ = snapshot.value as? [String: Any] {
 
                 print("they say we've got deets")
@@ -108,18 +101,16 @@ class ActivityDetailsViewController: UIViewController, MFMailComposeViewControll
     // Dismiss View
     func dismissView() {
 
-        print("about to dismiss details")
-
         let activityRef = FIRDatabase.database().reference().child(teamID).child("activities").child((self.selectedActivity?.id)!)
 
         activityRef.removeAllObservers()
-
         dismiss(animated: true, completion: nil)
 
     }
 
     // Join the user to the activity attendees and update firbase
     func joinActivity() {
+        
         UIView.animate(withDuration: 0.3, animations: {
             self.detailView.joinButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
 
@@ -258,6 +249,7 @@ extension ActivityDetailsViewController: ActivityDetailDelegate {
         present(alert, animated: true)
     }
     
+    // MARK: Send Report Email functions
     func reportButtonTapped(with sender: ActivityDetailsView) {
         
         let alert = UIAlertController(title: "Report Activity", message: "Are you sure you want to report this activity?", preferredStyle: .alert)

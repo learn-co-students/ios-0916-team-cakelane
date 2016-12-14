@@ -57,17 +57,16 @@ struct Activity {
     }
 
     // Mark: - create a dictionary
-
     func toAnyObject() -> Any {
 
         return [
             "name":name,
             "owner":owner,
             "date":date,
-           "image":image,
-           "location":location,
-           "description":description,
-           "attending": attendees,
+            "image":image,
+            "location":location,
+            "description":description,
+            "attending": attendees,
             "imageNameFirebaseStorage": imageNameFirebaseStorage
             
         ]

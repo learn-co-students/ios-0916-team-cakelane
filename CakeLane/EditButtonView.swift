@@ -11,6 +11,7 @@ import UIKit
 
 
 public class EditButtonView : NSObject {
+    
     //// Drawing Methods
     public dynamic class func drawEditButton(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 200, height: 200), resizing: ResizingBehavior = .aspectFit) {
         //// General Declarations
