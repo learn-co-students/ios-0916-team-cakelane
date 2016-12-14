@@ -233,11 +233,16 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
         let ac = UIAlertController(title: "Logout", message: "Are you sure you wish to logout?", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { [unowned self, ac] (action: UIAlertAction!) in
+            
             // perform logout
             // clear user defaults
             if let bundle = Bundle.main.bundleIdentifier {
                 UserDefaults.standard.removePersistentDomain(forName: bundle)
             }
+            
+            // MARK: set flag to false to allow user to switch teams without closing the app
+            TeamDataStore.sharedInstance.performedFirstAuth = false
+            
             // post notification -> have app controller take user to login view
             NotificationCenter.default.post(name: .closeProfileVC, object: self)
             

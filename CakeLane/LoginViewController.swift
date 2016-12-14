@@ -123,9 +123,6 @@ class LoginViewController: UIViewController {
                         
                     }
                     
-                    // indicate that we performed initial authorization, prompt to (potentially) perform second
-                    TeamDataStore.sharedInstance.performedFirstAuth = true
-                    
                     NotificationCenter.default.post(name: .closeLoginVC, object: self)
                     
                 })

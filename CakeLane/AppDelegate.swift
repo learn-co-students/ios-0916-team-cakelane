@@ -57,7 +57,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("%%%%%%%%%%%%%%%%%%%%%%%%%%")
                 
                 // this flag check helps avoid first auth after it has already been performed
+                
+                print("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                print(TeamDataStore.sharedInstance.performedFirstAuth)
+                print("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                
                 if TeamDataStore.sharedInstance.performedFirstAuth == false {
+                    
+                    // indicate that we performed initial authorization, prompt to (potentially) perform second
+                    TeamDataStore.sharedInstance.performedFirstAuth = true
                     
                     // first authentication
                     NotificationCenter.default.post(name: .closeSafariVC, object: code)
