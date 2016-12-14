@@ -8,26 +8,32 @@
 
 import UIKit
 import Firebase
+import SafariServices
 
 class AppController: UIViewController {
-
+    
     @IBOutlet weak var containerView: UIView!
     var actingViewController: UIViewController!
     var token: String?
     let defaults = UserDefaults.standard
+    var safariViewController: SFSafariViewController!
+    
     
     // View lifecycle
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         loadInitialViewController()
         addNotificationObservers()
+        
     }
     
     // Initial Set Up
     
     private func loadInitialViewController() {
+        
         // access defaults
         // NOTE: token is stored as Optional value
         if defaults.object(forKey: "slackToken") == nil {
@@ -35,15 +41,21 @@ class AppController: UIViewController {
         } else {
             actingViewController = loadViewController(withID: .tabBarController)
         }
+        
         addActing(viewController: actingViewController)
         
     }
     
     private func addNotificationObservers() {
+        
         // close login view controller & switch to activities once user has obtained an authorization token
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeLoginVC, object: nil)
+        
         // close activities if user has logged out
         NotificationCenter.default.addObserver(self, selector: #selector(switchViewController(with:)), name: .closeProfileVC, object: nil)
+        
+        // perform redirect for second auth
+        NotificationCenter.default.addObserver(self, selector: #selector(secondAuthRedirect(_:)), name: .finishSecondAuth, object: nil)
     }
     
     // MARK: View Controller Handling
@@ -74,8 +86,28 @@ class AppController: UIViewController {
         
         switch notification.name {
         case Notification.Name.closeLoginVC:
+            
+            DispatchQueue.main.async {
+                
+                // if there is no entry for a given slack team in Teem's Firebase, create it
+                if TeamDataStore.sharedInstance.webhook == nil {
+                    
+                    // start second auth to create webhook
+                    SlackAPIClient.userJoinChannel(with: { (channelJSON) in
+                        
+                        print(channelJSON)
+                        
+                        self.startSecondAuth()
+                        
+                    })
+                    
+                }
+                
+            }
+            
             // MARK: Switch from Login Flow to Main Flow (Activity Feed)
             switchToViewController(withID: .tabBarController)
+            
         case Notification.Name.closeProfileVC:
             switchToViewController(withID: .loginVC)
         default:
@@ -110,5 +142,86 @@ class AppController: UIViewController {
         }
         
     }
-
+    
+    // MARK: starts second authentication process for first user on a team
+    func startSecondAuth() {
+        
+        // NOTE: Direct user to Slack for authentication
+        let baseURL = "https://slack.com/oauth/"
+        let path = "authorize"
+        
+        // NOTE: set up initial scopes so that user doesn't have to go through authorization multiple times
+        // let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,incoming-webhook,bot"
+        let query = "?client_id=\(Secrets.clientID)&scope=identity.basic&scope=users:read,channels:read,channels:write,team:read,incoming-webhook"
+        
+        let urlString = baseURL + path + query
+        
+        let url = URL(string: urlString)!
+        
+        self.safariViewController = SFSafariViewController(url: url)
+        present(self.safariViewController, animated: true, completion: nil)
+        
+    }
+    
+    // selector for second auth redirect
+    func secondAuthRedirect(_ notification: Notification) {
+        
+        let code = notification.object as! String
+        
+        let baseURL = "https://slack.com/api/oauth.access"
+        let query = "?client_id=\(Secrets.clientID)&client_secret=\(Secrets.clientSecret)&code=\(code)"
+        var request = URLRequest(url: URL(string: baseURL + query)!)
+        request.httpMethod = "POST"
+        
+        OperationQueue().addOperation {
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                
+                let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
+                
+                print("+++++++++++++++*********++++++++++")
+                dump(json)
+                print("+++++++++++++++*********++++++++++")
+                
+                let token = json["access_token"] as! String
+                let slackID = json["user_id"] as! String
+                let teamID = json["team_id"] as! String
+                let teamName = json["team_name"] as! String
+                
+                if let webhook = json["incoming-webhook"] as? [String:Any], let webhookURL = webhook["url"] as? String {
+                    
+                    print(webhook)
+                    print(webhookURL)
+                    
+                    // MARK: actually write the webhook to Firebase
+                    FIRDatabase.database().reference().child(teamID).setValue([
+                        "webhook": webhookURL,
+                        "users": slackID
+                        ])
+                }
+                
+                // save *new* token with webhook
+                let defaults = UserDefaults.standard
+                defaults.setValue(token, forKey: "slackToken")
+                defaults.synchronize()
+                
+                SlackAPIClient.storeUserInfo(handler: { (success) in
+                    
+                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                    FirebaseClient.writeUserInfo()
+                    
+                })
+                
+                NotificationCenter.default.post(name: .closeLoginVC, object: self)
+                
+                
+                }.resume()
+            
+            self.safariViewController.dismiss(animated: true, completion: nil)
+            
+            
+        }
+        
+    }
+    
 }

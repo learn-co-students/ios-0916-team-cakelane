@@ -19,7 +19,7 @@ class SlackAPIClient {
 
     // MARK: POST channels.join specified on Slack - uses channels:write (Bejan)
     class func userJoinChannel(with completion: @escaping ([String: Any])->()) {
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
+        guard let token = UserDefaults.standard.object(forKey: "slackToken") else { return }
         let channelName = "teem_activities"
         let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelName)"
         guard let url = URL(string: urlString) else { return }
@@ -36,7 +36,7 @@ class SlackAPIClient {
     // MARK: GET channels.list from Slack - uses scope channels:read (Bejan)
     class func getChannelsList(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
+        guard let token = UserDefaults.standard.object(forKey: "slackToken") else { completion(nil); return }
         let excludedArchive = 1 // includes archived channels, else set to 0
         let urlString = "https://slack.com/api/channels.list?token=\(token)&excluded_archive=\(excludedArchive)"
         guard let url = URL(string: urlString) else { return }
@@ -88,7 +88,7 @@ class SlackAPIClient {
     // MARK: Get team.info from Slack - uses scope team:read (Bejan)
     class func getTeamInfo(with completion: @escaping ([String: Any]?)->()) {
         // extract slack token & user id from user defaults
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { completion(nil); return }
+        guard let token = UserDefaults.standard.object(forKey: "slackToken") else { completion(nil); return }
         let urlString = "https://slack.com/api/team.info?token=\(token)"
         guard let url = URL(string: urlString) else { return }
         print("\n\n\nTHIS IS THE getTeamInfo API REQUEST URL!!! ++++++++++\n\n\(url)\n\n\n\n")
@@ -103,7 +103,7 @@ class SlackAPIClient {
 
     // MARK: Post set.channelPurpose
     class func setChannelPurpose(with completion: @escaping ([String: Any])->()) {
-        guard let token = UserDefaults.standard.object(forKey: "SlackToken") else { return }
+        guard let token = UserDefaults.standard.object(forKey: "slackToken") else { return }
         let channelID = teamStore.teamInfo["teemChannelID"]
         let channelPurpose = teamStore.teamInfo["teemChannelPurpose"]
         let urlString = "https://slack.com/api/channels.join?token=\(token)&name=\(channelID)&purpose=\(channelPurpose)"

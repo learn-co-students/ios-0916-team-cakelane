@@ -48,12 +48,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let sourceAppKey = options[UIApplicationOpenURLOptionsKey.sourceApplication] {
             
             if (String(describing: sourceAppKey) == "com.apple.SafariViewService") {
+                
                 let code = url.getQueryItemValue(named: "code")
-                NotificationCenter.default.post(name: .closeSafariVC, object: code)
+                
+                print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                print(TeamDataStore.sharedInstance.performedFirstAuth)
+                print(TeamDataStore.sharedInstance.webhook)
+                print("%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                
+                // this flag check helps avoid first auth after it has already been performed
+                if TeamDataStore.sharedInstance.performedFirstAuth == false {
+                    
+                    // first authentication
+                    NotificationCenter.default.post(name: .closeSafariVC, object: code)
+                    
+                }
+                
+                // only if there is no webhook for a given slack team do we perform second auth (sole purpose := create webhook)
+                if TeamDataStore.sharedInstance.webhook != nil {
+                    
+                    // second  authentication
+                    NotificationCenter.default.post(name: .finishSecondAuth, object: code)
+                    
+                }
+                
                 return true
             }
+            
         }
+        
         return false
+        
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

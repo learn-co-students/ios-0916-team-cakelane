@@ -248,6 +248,7 @@ class UserInfoViewController: UIViewController, UITableViewDelegate, UITableView
             // TODO: remove user's activities (potentially change owner to random person -OR- prompt user to choose new activity owner)
             
         }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { [unowned self, ac] (action: UIAlertAction!) in
             // do nothing (for now)
         }

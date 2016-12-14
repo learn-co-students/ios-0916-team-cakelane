@@ -80,71 +80,41 @@ class LoginViewController: UIViewController {
                 
                 defaults.synchronize()
                 
-                // MARK:
-                var slackTeamExistsInTeamDatabase = false
                 FIRDatabase.database().reference().observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    let value = snapshot.value as! [String:Any]
+                    let firebaseTeemSnapshot = snapshot.value as! [String:Any]
                     
-                    for key in value.keys {
+                    print(firebaseTeemSnapshot)
+                    print
+                    
+                    if let teamJSONContents = firebaseTeemSnapshot["\(teamID)"] as? [String:Any] {
                         
-                        // check if currently registering Slack user is part of Teem's Database on Firebase
-                        if key == teamID {
+                        // try to get webhook value: nil if slack team does not have a webhook, toggle flag for second auth
+                        let webhook = teamJSONContents["webhook"] as? [String:String]
+                        TeamDataStore.sharedInstance.webhook =  webhook
+                        
+                        // indicate that we performed initial authorization, prompt to (potentially) perform second
+                        TeamDataStore.sharedInstance.performedFirstAuth = true
+                        
+                        let users = teamJSONContents["users"] as! [String:Any]
+                        
+                        print(users)
+                        
+                        let user = users["\(slackID)"] as? [String:Any] ?? nil
+                        
+                        // write to Firebase if there is no user
+                        if user == nil {
                             
-                            // indicate that slack team is part of Teem database: toggle flag
-                            slackTeamExistsInTeamDatabase = true
-                            print(value)
-                            
-                            let teamJSONContents = value["\(teamID)"] as! [String:Any]
-                            let users = teamJSONContents["users"] as! [String:Any]
-                            
-                            print(users)
-                            
-                            let user = users["\(slackID)"] as? [String:Any] ?? nil
-                            
-                            // write to Firebase if there is no user
-                            if user == nil {
+                            SlackAPIClient.storeUserInfo(handler: { (success) in
                                 
-                                SlackAPIClient.storeUserInfo(handler: { (success) in
-                                    
-                                    // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                                    FirebaseClient.writeUserInfo()
-                                    
-                                })
+                                // WARNING: THIS CAUSES INTENSE LOADING TIMES
+                                FirebaseClient.writeUserInfo()
                                 
-                                break
-                                
-                            }
+                            })
+                            
                             
                         }
                         
-                    }
-                    
-                    // if there is no entry for a given slack team in Teem's Firebase, create it
-                    if slackTeamExistsInTeamDatabase == false {
-                        
-                        /////////////////////////////////////////////
-                        
-                        // create webhook
-                        SlackAPIClient.userJoinChannel(with: { (channelJSON) in
-                            
-                            print(channelJSON)
-                            
-                            
-                        })
-                        
-                        /////////////////////////////////////////////
-                        
-                        // create users entry
-                        FIRDatabase.database().reference().child(teamID).setValue(["users": slackID])
-                        
-                        // write user info to Firebase
-                        SlackAPIClient.storeUserInfo(handler: { (success) in
-                            
-                            // WARNING: THIS CAUSES INTENSE LOADING TIMES
-                            FirebaseClient.writeUserInfo()
-                            
-                        })
                     }
                     
                     NotificationCenter.default.post(name: .closeLoginVC, object: self)
