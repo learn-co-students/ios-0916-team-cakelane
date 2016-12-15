@@ -124,9 +124,6 @@ class SlackAPIClient {
         
         //TODO: Turn this into a model, and include Attachment initialization
         let notificationParameters: [String:Any] = [
-            "icon_url": "http://gdurl.com/Ei8e",
-            "text": "This was posted by running the app",
-            "channel": "teem_activities",
             "attachments": [store.attachmentDictionary]
         ]
 

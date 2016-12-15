@@ -81,7 +81,6 @@ class ActivitiesViewController: UIViewController, UICollectionViewDelegateFlowLa
 
                     let item = Activity(snapshot: activity as! FIRDataSnapshot)
 
-
                     newActivities.append(item)
                 }
 
