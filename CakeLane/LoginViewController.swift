@@ -116,9 +116,11 @@ class LoginViewController: UIViewController {
                             
                             print(users)
                             
-                            let user = users["\(slackID)"] as? [String:Any] ?? nil
+                            let user = users["\(slackID)"] as? [String:Any]
                             
-                            // write to Firebase if there is no user
+                            // TODO: add refresh functionality ~ if user updates photo after signing in, it does not get overwritten in Firebase!!
+                            
+                            // write to Firebase if there is no user in Firebase
                             if user == nil {
                                 
                                 SlackAPIClient.storeUserInfo(handler: { (success) in

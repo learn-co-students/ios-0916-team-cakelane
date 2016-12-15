@@ -58,7 +58,7 @@ struct Attachment {
         self.imageURL = imageURL
         self.thumbURL = thumbURL
         self.footer = "posted by Teem!"
-        self.footerIcon = "http://gdurl.com/508R"
+        self.footerIcon = " http://gdurl.com/rucz"
         self.ts = Int(Date().timeIntervalSince1970)
         self.mrkdwnIn = ["fallback","text", "pretext"]
     }
