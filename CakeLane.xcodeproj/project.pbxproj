@@ -10,6 +10,7 @@
 		1BDF62411DDD06C500C3D12E /* CakeLane.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BDF623F1DDD06C500C3D12E /* CakeLane.xcdatamodeld */; };
 		1BDF62431DDD06C500C3D12E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62421DDD06C500C3D12E /* Assets.xcassets */; };
 		1BDF62461DDD06C500C3D12E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BDF62441DDD06C500C3D12E /* LaunchScreen.storyboard */; };
+		5B8FAC071E02ED5800E0C3D4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8FAC061E02ED5800E0C3D4 /* Secrets.swift */; };
 		721481631E01C59C007CA839 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721481621E01C59C007CA839 /* GradientView.swift */; };
 		7292DB721DEF2A09009BE840 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */; };
 		7292DB741DEF8A02009BE840 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7292DB731DEF8A02009BE840 /* UserInfoCell.swift */; };
@@ -19,7 +20,6 @@
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
 		75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */; };
 		75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */; };
-		7D908E1A1E02D0190033405B /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D908E191E02D0190033405B /* Secrets.swift */; };
 		A201CC591E009DC700DBB96E /* EditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC581E009DC700DBB96E /* EditButtonView.swift */; };
 		A201CC5B1E009E0B00DBB96E /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC5A1E009E0B00DBB96E /* EditButton.swift */; };
 		A201CC5D1E009FF000DBB96E /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC5C1E009FF000DBB96E /* CloseButtonView.swift */; };
@@ -51,11 +51,12 @@
 
 /* Begin PBXFileReference section */
 		0C96C09B4E1E1A8B4590C0E2 /* Pods-CakeLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CakeLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-CakeLane/Pods-CakeLane.release.xcconfig"; sourceTree = "<group>"; };
-		1BDF62351DDD06C500C3D12E /* CakeLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CakeLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BDF62351DDD06C500C3D12E /* Teem!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teem!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BDF62401DDD06C500C3D12E /* CakeLane.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CakeLane.xcdatamodel; sourceTree = "<group>"; };
 		1BDF62421DDD06C500C3D12E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BDF62451DDD06C500C3D12E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BDF62471DDD06C500C3D12E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B8FAC061E02ED5800E0C3D4 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		5E2A69614CCFA57E0A23707E /* Pods_CakeLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CakeLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		721481621E01C59C007CA839 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		7292DB711DEF2A09009BE840 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
@@ -66,7 +67,6 @@
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
 		75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
 		75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackMessageStore.swift; sourceTree = "<group>"; };
-		7D908E191E02D0190033405B /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		A201CC581E009DC700DBB96E /* EditButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButtonView.swift; sourceTree = "<group>"; };
 		A201CC5A1E009E0B00DBB96E /* EditButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
 		A201CC5C1E009FF000DBB96E /* CloseButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButtonView.swift; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 		1BDF62361DDD06C500C3D12E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1BDF62351DDD06C500C3D12E /* CakeLane.app */,
+				1BDF62351DDD06C500C3D12E /* Teem!.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -253,7 +253,7 @@
 				A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */,
 				E50D139E1DDF651F00A3C41C /* Constants.swift */,
 				E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */,
-				7D908E191E02D0190033405B /* Secrets.swift */,
+				5B8FAC061E02ED5800E0C3D4 /* Secrets.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -286,7 +286,7 @@
 			);
 			name = CakeLane;
 			productName = CakeLane;
-			productReference = 1BDF62351DDD06C500C3D12E /* CakeLane.app */;
+			productReference = 1BDF62351DDD06C500C3D12E /* Teem!.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -388,7 +388,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -403,7 +403,7 @@
 				A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */,
 				A201CC611E00A1CA00DBB96E /* ReportButtonView.swift in Sources */,
-				7D908E1A1E02D0190033405B /* Secrets.swift in Sources */,
+				5B8FAC071E02ED5800E0C3D4 /* Secrets.swift in Sources */,
 				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
 				A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */,
 				E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */,
@@ -566,7 +566,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-cake-lane";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Teem!";
 				SDKROOT = iphoneos10.1;
 				SWIFT_OBJC_BRIDGING_HEADER = "CakeLane/CakeLane-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -589,7 +589,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-cake-lane";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Teem!";
 				SDKROOT = iphoneos10.1;
 				SWIFT_OBJC_BRIDGING_HEADER = "CakeLane/CakeLane-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
