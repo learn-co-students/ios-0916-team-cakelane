@@ -19,6 +19,7 @@
 		75A98CCA1DDE2B0E0020E05E /* SlackAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */; };
 		75FCBDBA1DEF6D2A00F4D61D /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */; };
 		75FCBDBC1DF0756B00F4D61D /* SlackMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */; };
+		7D908E1A1E02D0190033405B /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D908E191E02D0190033405B /* Secrets.swift */; };
 		A201CC591E009DC700DBB96E /* EditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC581E009DC700DBB96E /* EditButtonView.swift */; };
 		A201CC5B1E009E0B00DBB96E /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC5A1E009E0B00DBB96E /* EditButton.swift */; };
 		A201CC5D1E009FF000DBB96E /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201CC5C1E009FF000DBB96E /* CloseButtonView.swift */; };
@@ -32,7 +33,6 @@
 		A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */; };
 		A2ECAA841DDD19F4000E3CC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2ECAA831DDD19F4000E3CC6 /* GoogleService-Info.plist */; };
 		A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ECAA851DDDED55000E3CC6 /* UserData.swift */; };
-		A2F4B8D21DE39E5300933A94 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D11DE39E5300933A94 /* Secrets.swift */; };
 		A2F4B8D41DE4D46F00933A94 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D31DE4D46F00933A94 /* CoreDataStore.swift */; };
 		A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */; };
 		A2F4B8D81DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */; };
@@ -66,6 +66,7 @@
 		75A98CC91DDE2B0D0020E05E /* SlackAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackAPIClient.swift; sourceTree = "<group>"; };
 		75FCBDB91DEF6D2A00F4D61D /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
 		75FCBDBB1DF0756B00F4D61D /* SlackMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlackMessageStore.swift; sourceTree = "<group>"; };
+		7D908E191E02D0190033405B /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		A201CC581E009DC700DBB96E /* EditButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButtonView.swift; sourceTree = "<group>"; };
 		A201CC5A1E009E0B00DBB96E /* EditButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
 		A201CC5C1E009FF000DBB96E /* CloseButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButtonView.swift; sourceTree = "<group>"; };
@@ -80,7 +81,6 @@
 		A2ECAA7F1DDD1866000E3CC6 /* AddActivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityController.swift; sourceTree = "<group>"; };
 		A2ECAA831DDD19F4000E3CC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A2ECAA851DDDED55000E3CC6 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		A2F4B8D11DE39E5300933A94 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		A2F4B8D31DE4D46F00933A94 /* CoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		A2F4B8D51DE4DB6200933A94 /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
 		A2F4B8D71DE4DB9C00933A94 /* ActivitiesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -251,9 +251,9 @@
 			isa = PBXGroup;
 			children = (
 				A2ECAA7D1DDD182F000E3CC6 /* AppDelegate.swift */,
-				A2F4B8D11DE39E5300933A94 /* Secrets.swift */,
 				E50D139E1DDF651F00A3C41C /* Constants.swift */,
 				E5EE90A31DDE4FAA00A344A5 /* Extensions.swift */,
+				7D908E191E02D0190033405B /* Secrets.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -403,6 +403,7 @@
 				A2ECAA861DDDED55000E3CC6 /* UserData.swift in Sources */,
 				A2ECAA801DDD1866000E3CC6 /* AddActivityController.swift in Sources */,
 				A201CC611E00A1CA00DBB96E /* ReportButtonView.swift in Sources */,
+				7D908E1A1E02D0190033405B /* Secrets.swift in Sources */,
 				E5EE90A61DDE50A300A344A5 /* LoginViewController.swift in Sources */,
 				A2F4B8D61DE4DB6200933A94 /* ActivitiesViewController.swift in Sources */,
 				E50D139C1DDF63F800A3C41C /* AppController.swift in Sources */,
@@ -424,7 +425,6 @@
 				750BAAA41DF89E7D004D2184 /* TeamInfo.swift in Sources */,
 				E53B16F31DEE39C2009C84BC /* UserInfoViewController.swift in Sources */,
 				A201CC5B1E009E0B00DBB96E /* EditButton.swift in Sources */,
-				A2F4B8D21DE39E5300933A94 /* Secrets.swift in Sources */,
 				7292DB741DEF8A02009BE840 /* UserInfoCell.swift in Sources */,
 				E51305A71DF1A984009F0560 /* FirebaseUsersDataStore.swift in Sources */,
 				72972BB91DEE185E00D3FA60 /* UsersTableViewController.swift in Sources */,
@@ -565,7 +565,7 @@
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.FlatironSchool.CakeLane;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-cake-lane";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos10.1;
 				SWIFT_OBJC_BRIDGING_HEADER = "CakeLane/CakeLane-Bridging-Header.h";
@@ -588,7 +588,7 @@
 				INFOPLIST_FILE = CakeLane/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.FlatironSchool.CakeLane;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-cake-lane";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos10.1;
 				SWIFT_OBJC_BRIDGING_HEADER = "CakeLane/CakeLane-Bridging-Header.h";
