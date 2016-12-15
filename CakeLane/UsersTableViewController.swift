@@ -24,6 +24,7 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Attendees"
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
